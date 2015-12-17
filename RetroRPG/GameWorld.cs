@@ -1,0 +1,70 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using RetroRPG.Objects;
+
+namespace RetroRPG
+{
+    // Třída pro udržování seznamů herních objektů
+    class GameWorld
+    {
+        public enum state
+        {
+            free,wall,enemy,player,gold
+        };
+
+        public int width = 100;
+        public int height = 100;
+
+        public state[,] map = new state[100, 200];
+
+        
+
+        public int id = 100;
+        public oPlayer player = new oPlayer('P', "oPlayer",ConsoleColor.Green, 10, 10, 40);
+        public List<oEnemy> enemyList = new List<oEnemy>();
+        public List<oWall> wallList = new List<oWall>();
+        public List<oGold> goldList = new List<oGold>();
+
+        private static GameWorld gameWorld;
+        private GameWorld()
+        {
+              for (int y = 0; y < height; y++)
+                {
+                 for (int x = 0; x < width; x++)
+                  {
+                  map[x, y] = state.free;
+                  }
+                }
+        }
+
+        public static GameWorld getInstance
+        {
+            get
+            {
+                if (gameWorld == null)
+                {
+                    gameWorld = new GameWorld();
+                }
+
+                return gameWorld;
+            }
+        }
+
+   
+
+
+        public void ShowInfo()
+        {
+           player.showStats();
+           
+            foreach(oEnemy enemy in enemyList)
+            {
+                enemy.showStats();
+            }
+            Console.ReadKey();
+        }
+    }
+}

@@ -1,0 +1,12 @@
+c:\users\spravce\documents\visual studio 2015\Projects\RetroRPG\RetroRPG\bin\Debug\RetroRPG.exe.config
+c:\users\spravce\documents\visual studio 2015\Projects\RetroRPG\RetroRPG\bin\Debug\RetroRPG.exe
+c:\users\spravce\documents\visual studio 2015\Projects\RetroRPG\RetroRPG\bin\Debug\RetroRPG.pdb
+c:\users\spravce\documents\visual studio 2015\Projects\RetroRPG\RetroRPG\obj\Debug\RetroRPG.exe
+c:\users\spravce\documents\visual studio 2015\Projects\RetroRPG\RetroRPG\obj\Debug\RetroRPG.pdb
+C:\Users\Spravce\Documents\Visual Studio 2015\Projects\RetroRPG\RetroRPG\obj\Debug\RetroRPG.csprojResolveAssemblyReference.cache
+C:\Users\Matěj\Desktop\RetroRPG\RetroRPG\bin\Debug\RetroRPG.exe.config
+C:\Users\Matěj\Desktop\RetroRPG\RetroRPG\obj\Debug\RetroRPG.exe
+C:\Users\Matěj\Desktop\RetroRPG\RetroRPG\obj\Debug\RetroRPG.pdb
+C:\Users\Matěj\Desktop\RetroRPG\RetroRPG\bin\Debug\RetroRPG.exe
+C:\Users\Matěj\Desktop\RetroRPG\RetroRPG\bin\Debug\RetroRPG.pdb
+C:\Users\Matěj\Desktop\RetroRPG\RetroRPG\obj\Debug\RetroRPG.csprojResolveAssemblyReference.cache
