@@ -204,7 +204,7 @@ namespace RetroRPG
             Console.CursorLeft = startX;
             DrawBar(GameWorld.getInstance.player.hp, GameWorld.getInstance.player.max_hp, "Zdraví", ConsoleColor.Red);
             Console.CursorLeft = startX;
-            DrawBar(GameWorld.getInstance.player.hp, GameWorld.getInstance.player.max_hp, "Výdrž", ConsoleColor.Green);
+            DrawBar(GameWorld.getInstance.player.stamina, GameWorld.getInstance.player.max_stamina, "Výdrž", ConsoleColor.Green);
 
             Buffer.Print();
         }

@@ -33,8 +33,12 @@ namespace RetroRPG.Objects
 
         public void Step()
         {
+            Console.SetCursorPosition(0, 0);
+            Render.getInstance.Buffer.Clear();
 
-        //    Intro.getInstance.DisplayIntro();
+            //    Intro.getInstance.DisplayIntro();
+            Parser.getInstance.parseImage("award.txt",true,ConsoleColor.Gray);
+            Console.ReadKey();
             Parser.getInstance.ParseMap();
 
             while (true)

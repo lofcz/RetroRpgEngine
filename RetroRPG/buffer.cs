@@ -11,11 +11,7 @@ namespace RetroRPG
 {
     public class buffer
     {
-     public buffer()
-        {
-            Console.SetBufferSize(120, 80);
-        }
-
+    
         private int width;
         private int height;
         private int windowWidth;
@@ -263,6 +259,44 @@ namespace RetroRPG
 
         }
 
+        public void DrawInt(String str, int Width, int Height, short pa) //Draws the image to the buffer
+        {
+            
+            short parsedAtribute = pa;
+
+          
+
+            if (Width > windowWidth - 1 || Height > windowHeight - 1)
+            {
+                //throw new System.ArgumentOutOfRangeException();
+            }
+
+            if (str != null)
+            {
+                Char[] temp = str.ToCharArray();
+                int tc = 0;
+                foreach (Char le in temp)
+                {
+                    bool cont = true;
+
+                    byte special = SpecialChars(le);
+                    if (special != 0) { buf[(Width + tc) + (Height * width)].Char.AsciiChar = special; cont = false; }
+
+                    if (cont)
+                    {
+                        buf[(Width + tc) + (Height * width)].Char.AsciiChar = (byte)le; //Height * width is to get to the correct spot (since this array is not two dimensions).
+                    }
+
+                    if (parsedAtribute != 0)
+                        buf[(Width + tc) + (Height * width)].Attributes = parsedAtribute;
+                    tc++;
+                }
+            }
+
+
+
+        }
+
         /// <summary>
         /// Inserts new line to the buffer
         /// </summary>
@@ -378,12 +412,14 @@ namespace RetroRPG
             if (znak == '║') { return 186; }
             if (znak == '╚') { return 200; }
             if (znak == '╝') { return 188; }
-            if (znak == '◎') { return 248; }
+            if (znak == '◎') { return 7; }
             if (znak == '░') { return 176; }
             if (znak == 'č') { return 159; }
             if (znak == 'í') { return 161; }
             if (znak == 'á') { return 160; }
             if (znak == '█') { return 219; }
+            if (znak == 'ý') { return 236; }
+            if (znak == 'ž') { return 167; }
 
             return 0;
         }

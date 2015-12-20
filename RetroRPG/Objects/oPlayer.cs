@@ -12,6 +12,9 @@ namespace RetroRPG.Objects
 
          int gold = 0;
         public string name = "LordOfFlies";
+        public int stamina = 20;
+        public int max_stamina = 20;
+
 
         public int Gold
             {

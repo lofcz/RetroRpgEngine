@@ -90,10 +90,34 @@ namespace RetroRPG
             sr.Close();
         }
 
-        public void parseImage(string file, bool center)
+        public void parseImage(string file, bool center, ConsoleColor color)
         {
             List<string> lineList = new List<string>();
+            string line;
+
+            StreamReader sr = new StreamReader(file);
+            int firstChar = 0;
+
+            while ((line = sr.ReadLine()) != null)
+            {
+               for (int i = 0; i < line.Length; i++)
+                {
+                    if (line[i] != ' ' )
+                    {
+                        firstChar = i;
+                        break;
+                    }
+                }
+
+                //    while(firstChar < Console.WindowWidth / 2 ) { }
+                  Render.getInstance.Buffer.DrawInsert(line, Console.CursorLeft + (Console.WindowWidth / 5), Console.CursorTop, color);
+                    Render.getInstance.Buffer.NewLine();
             
+            }
+
+            Render.getInstance.Buffer.Print();
+            sr.Close();
+
         }
     }
 }

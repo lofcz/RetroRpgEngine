@@ -48,10 +48,11 @@
     <Compile Include="buffer.cs" />
     <Compile Include="ColorBuffer.cs" />
     <Compile Include="Intro.cs" />
+    <Compile Include="Inventory.cs" />
     <Compile Include="Objects\oEnemy.cs" />
     <Compile Include="GameSettings.cs" />
     <Compile Include="GameWorld.cs" />
-    <Compile Include="MapParser.cs" />
+    <Compile Include="Parser.cs" />
     <Compile Include="GameLogic.cs" />
     <Compile Include="Objects\GameObject.cs" />
     <Compile Include="Objects\oGold.cs" />
