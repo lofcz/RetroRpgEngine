@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using RetroRPG.Objects;
+using System.Threading;
 
 namespace RetroRPG
 {
@@ -12,6 +13,11 @@ namespace RetroRPG
     {
         private static Parser mapParser;
         private Parser() { }
+
+        public enum Effects
+        {
+            none,slide,typewriter
+        }
 
         public static Parser getInstance
         {
@@ -33,12 +39,12 @@ namespace RetroRPG
             List<String> Comments = new List<string>();
 
             StreamReader sr = new StreamReader("map.retroRpgMap");
-
+            string[] metaTags = { "#MapName:", "#MapAuthor:", "#MapVersion:" };
             while ((line = sr.ReadLine()) != null)
             {
                 bool cont = true;
 
-                if (line.StartsWith("//"))
+                if (line.StartsWith("//", StringComparison.Ordinal) )
                 {
                     Comments.Add(line);
                     cont = false;
@@ -79,7 +85,25 @@ namespace RetroRPG
                 {
                     string str = ln;
                     str = str.Replace("//", "");
-                    Render.getInstance.Buffer.Draw(str, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                    bool cont = true;
+
+                    for (int i = 0; i < metaTags.Length; i++)
+                    {
+                        if (str.Contains(metaTags[i]))
+                        {
+                            str = str.Replace(metaTags[i] + " ", "");
+                            Render.getInstance.Buffer.Draw(metaTags[i], Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                            Render.getInstance.Buffer.Draw(str, Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
+                            cont = false;
+                            break;
+                        }
+                    }
+               
+                    if (cont)
+                    {
+                        Render.getInstance.Buffer.Draw(str, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                    }
+
                     Render.getInstance.Buffer.NewLine();              
                 }
 
@@ -90,31 +114,31 @@ namespace RetroRPG
             sr.Close();
         }
 
-        public void parseImage(string file, bool center, ConsoleColor color)
+        public void parseImage(string file, bool center, ConsoleColor color, Effects effect)
         {
-            List<string> lineList = new List<string>();
             string line;
-
             StreamReader sr = new StreamReader(file);
-            int firstChar = 0;
+
+            Console.CursorVisible = false;
 
             while ((line = sr.ReadLine()) != null)
             {
-               for (int i = 0; i < line.Length; i++)
+                if (effect == Effects.typewriter)
                 {
-                    if (line[i] != ' ' )
-                    {
-                        firstChar = i;
-                        break;
-                    }
-                }
-
-                //    while(firstChar < Console.WindowWidth / 2 ) { }
-                  Render.getInstance.Buffer.DrawInsert(line, Console.CursorLeft + (Console.WindowWidth / 5), Console.CursorTop, color);
+              
+                    Render.getInstance.Buffer.DrawInsert(line, Console.CursorLeft, Console.CursorTop, color);         
                     Render.getInstance.Buffer.NewLine();
-            
+                    Render.getInstance.Buffer.Print();
+                    Thread.Sleep(80);
+                }
+                else
+                {
+                    Render.getInstance.Buffer.DrawInsert(line, Console.CursorLeft + (Console.WindowWidth / 5), Console.CursorTop, color);
+                    Render.getInstance.Buffer.NewLine();
+                }
             }
 
+            Console.CursorVisible = true;
             Render.getInstance.Buffer.Print();
             sr.Close();
 
