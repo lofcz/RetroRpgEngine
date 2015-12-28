@@ -40,6 +40,10 @@ namespace RetroRPG.Objects
             Parser.getInstance.parseImage("award.txt",true,ConsoleColor.Gray, Parser.Effects.typewriter);
             Console.SetCursorPosition(0, 0);
             Console.ReadKey();
+            GameItem item = new GameItem();
+            item.attributes[(int)GameItem.atr.damage] = 10;
+            item.drawItemStats();
+            Console.ReadKey();
             Parser.getInstance.ParseMap();
 
             while (true)
