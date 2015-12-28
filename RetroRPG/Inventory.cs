@@ -41,10 +41,12 @@ namespace RetroRPG
                 Render.getInstance.Buffer.Clear();
                 Console.SetCursorPosition(0, 0);
                 actualItem = 0;
+                GameItem choosingItem = null;
 
                 foreach (GameItem item in items)
                 {
                     actualItem++;
+                    if (itemSelected == actualItem) { choosingItem = item; } 
 
                     if (itemSelected == actualItem) { Render.getInstance.Buffer.Draw(" > ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green); }
                     else
@@ -67,6 +69,18 @@ namespace RetroRPG
                     if (itemSelected < items.Count) { itemSelected++; }
                     else { itemSelected = 0; }
                 }
+
+                if (key == ConsoleKey.Enter)
+                {
+                    if (choosingItem != null && choosingItem.attributes[(int)GameItem.atr.equiped] == 0)
+                    {
+                        choosingItem.Equip();
+                        choosingItem.attributes[(int)GameItem.atr.equiped] = 1;
+                    }
+
+                    choosing = false;
+                }
+
                 Render.getInstance.Buffer.Print();
             }
         }

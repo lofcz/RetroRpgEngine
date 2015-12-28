@@ -46,10 +46,25 @@ namespace RetroRPG
                 output = output.Remove(output.Length - 2); // Odstraním poslední čárku v řetěztci.
                 Render.getInstance.Buffer.Draw(itemName, Console.CursorLeft, Console.CursorTop, itemColor);
                 Render.getInstance.Buffer.Draw(": " + output, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                if (attributes[(int)GameItem.atr.equiped] == 1) { Render.getInstance.Buffer.Draw("EQUIPED", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow); }
                 Render.getInstance.Buffer.Print();
             }
          
         }
+
+        public void Equip()
+        {
+            for (int i = 0; i < total_attributes; i++)
+            {
+                if (i == (int)atr.hp)
+                {
+                    GameWorld.getInstance.player.hp += attributes[i];
+                }
+              
+            }
+        }
+
+
 
     }
 }
