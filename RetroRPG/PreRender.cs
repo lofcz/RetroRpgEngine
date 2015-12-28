@@ -64,6 +64,12 @@ namespace RetroRPG
                         }
                         break;
                     }
+
+                case ConsoleKey.I:
+                    {
+                        Inventory.getInstance.drawInventory();
+                        break;
+                    }
             }
 
             CollisionAfter(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y);

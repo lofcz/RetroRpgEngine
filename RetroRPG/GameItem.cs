@@ -10,10 +10,11 @@ namespace RetroRPG
     {
         const int total_attributes = 3;
         public int[] attributes = new int[total_attributes];      
-        string[] attributesNames = {"Život","Poškození" };
+        string[] attributesNames = {"Život","Poškození","Equiped" };
         string itemName;
         ConsoleColor itemColor;
         string itemDescription = "";
+        //string[] itemOptions = {"Nasadit};
 
         public enum atr
         {
@@ -59,6 +60,14 @@ namespace RetroRPG
             Render.getInstance.Buffer.Draw(itemDescription, Console.CursorLeft, Console.CursorTop, ConsoleColor.DarkGray);
         }
 
+        public void drawItemOptions()
+        {
+            Render.getInstance.Buffer.Draw("   ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+
+            if (attributes[(int)GameItem.atr.equiped] == 0) { Render.getInstance.Buffer.Draw("[Nasadit]", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); }
+            else { Render.getInstance.Buffer.Draw("[Sundat]", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); }
+        }
+
         public void Equip()
         {
             for (int i = 0; i < total_attributes; i++)
@@ -66,6 +75,7 @@ namespace RetroRPG
                 if (i == (int)atr.hp)
                 {
                     GameWorld.getInstance.player.hp += attributes[i];
+                    GameWorld.getInstance.player.max_hp += attributes[i];
                 }
               
             }

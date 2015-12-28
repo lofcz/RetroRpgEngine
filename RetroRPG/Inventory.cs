@@ -42,16 +42,19 @@ namespace RetroRPG
                 Console.SetCursorPosition(0, 0);
                 actualItem = 0;
                 GameItem choosingItem = null;
+                int horizontalIndex = 0;
 
                 foreach (GameItem item in items)
                 {
                     actualItem++;
                     if (itemSelected == actualItem) { choosingItem = item; } 
 
+                    // Vykreslí info o hover předmětu
                     if (itemSelected == actualItem) 
                         { 
                         Render.getInstance.Buffer.Draw(" > ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
                         item.drawItemStats();
+                        item.drawItemOptions();
                         Render.getInstance.Buffer.NewLine();
                         item.drawItemDescription();
                         }
@@ -89,11 +92,13 @@ namespace RetroRPG
                 {
                     if (itemSelected > 0) { itemSelected--; }
                     else { itemSelected = items.Count + 1; }
+                    horizontalIndex = 0;
                 }
                 if (key == ConsoleKey.S)
                 {
                     if (itemSelected < items.Count + 1) { itemSelected++; }
                     else { itemSelected = 0; }
+                    horizontalIndex = 0;
                 }
 
                 if (key == ConsoleKey.Enter)
@@ -106,6 +111,8 @@ namespace RetroRPG
 
                     choosing = false;
                 }
+
+               
             }
         }
 
