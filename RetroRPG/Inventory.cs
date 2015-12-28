@@ -8,7 +8,7 @@ namespace RetroRPG
 {
     class Inventory
     {
-        public List<GameItem> items;
+        public List<GameItem> items = new List<GameItem>();
         private static Inventory inventory;
 
         Inventory()
@@ -35,8 +35,12 @@ namespace RetroRPG
 
             foreach (GameItem item in items)
             {
-               // Render.getInstance.Buffer.Draw()
+                Render.getInstance.Buffer.Draw("> ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                item.drawItemStats();
+                Render.getInstance.Buffer.NewLine();
             }
+
+            Render.getInstance.Buffer.Print();
         }
 
     }

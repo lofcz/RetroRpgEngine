@@ -40,13 +40,22 @@ namespace RetroRPG.Objects
             Parser.getInstance.parseImage("award.txt",true,ConsoleColor.Gray, Parser.Effects.typewriter);
             Console.SetCursorPosition(0, 0);
             Console.ReadKey();
-            GameItem item = new GameItem("Pirátská šavle", ConsoleColor.Green);
             Render.getInstance.Buffer.Clear();
+
+            // TEST INVENTÁŘE   
+            GameItem item = new GameItem("Pirátská šavle", ConsoleColor.Green);
+            GameItem item1 = new GameItem("Dýka", ConsoleColor.Gray);
             item.attributes[(int)GameItem.atr.damage] = 10;
+            item1.attributes[(int)GameItem.atr.damage] = 4;
             item.attributes[(int)GameItem.atr.hp] = 7;
-            item.drawItemStats();
+            Inventory.getInstance.items.Add(item);
+            Inventory.getInstance.items.Add(item1);
+            Inventory.getInstance.drawInventory();
+            Console.ReadKey();
+
+            // *****
             Render.getInstance.Buffer.NewLine();
-            Render.getInstance.Buffer.DrawColored("This is a fg of #rRed #xand now #ywe're#x back to normal.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+            Render.getInstance.Buffer.DrawColored("#rDvojitý buffer#x teď umí parsovat #ycolorflagy!#x ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
             Render.getInstance.Buffer.Print();
             Console.ReadKey();
             Parser.getInstance.ParseMap();

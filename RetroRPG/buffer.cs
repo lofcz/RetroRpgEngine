@@ -611,6 +611,7 @@ namespace RetroRPG
             if (znak == 'ž') { return 167; }
             if (znak == 'Ž') { return 166; }
             if (znak == 'š') { return 231; }
+            if (znak == 'ď') { return 212; }
 
             return 0;
         }
