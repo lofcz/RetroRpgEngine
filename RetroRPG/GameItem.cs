@@ -16,7 +16,7 @@ namespace RetroRPG
 
         public enum atr
         {
-            hp,damage
+            hp,damage,equiped
         };
 
         public GameItem(string itemName, ConsoleColor itemColor)
