@@ -16,3 +16,9 @@ C:\Users\Spravce\Documents\GitHub\RetroRpgEngine\RetroRPG\obj\Debug\RetroRPG.pdb
 C:\Users\Spravce\Documents\GitHub\RetroRpgEngine\RetroRPG\bin\Debug\RetroRPG.exe
 C:\Users\Spravce\Documents\GitHub\RetroRpgEngine\RetroRPG\bin\Debug\RetroRPG.pdb
 C:\Users\Spravce\Documents\GitHub\RetroRpgEngine\RetroRPG\obj\Debug\RetroRPG.csprojResolveAssemblyReference.cache
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\RetroRPG.exe.config
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\obj\Debug\RetroRPG.exe
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\obj\Debug\RetroRPG.pdb
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\RetroRPG.exe
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\RetroRPG.pdb
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\obj\Debug\RetroRPG.csprojResolveAssemblyReference.cache

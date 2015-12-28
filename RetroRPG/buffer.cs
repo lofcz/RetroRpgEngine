@@ -11,7 +11,12 @@ namespace RetroRPG
 {
     public class buffer
     {
-    
+
+        public static Dictionary<char, ConsoleColor> Colors;
+        public static char SpecialFGChar { get; set; }
+        public static char SpecialBGChar { get; set; }
+        public static char ResetChar { get; set; }
+
         private int width;
         private int height;
         private int windowWidth;
@@ -88,6 +93,25 @@ namespace RetroRPG
             }
         }
 
+        private static bool SetFGColor(char value)
+        {
+            // look at the next char and make sure we have the color code registered
+            if (Colors.ContainsKey(value))
+            {
+                Console.ForegroundColor = Colors[value];
+
+                return true;
+            }
+            else if (value == ResetChar)
+            {
+                Console.ResetColor();
+
+                return true;
+            }
+
+            return false;
+        }  
+
         /// <summary>
         /// Consctructor class for the buffer. Pass in the width and height you want the buffer to be.
         /// </summary>
@@ -95,6 +119,21 @@ namespace RetroRPG
         /// <param name="Height"></param>
         public buffer(int Width, int Height, int wWidth, int wHeight) // Create and fill in a multideminsional list with blank spaces.
         {
+
+            Colors = new Dictionary<char, ConsoleColor>();
+
+            // set some defaults
+            SpecialFGChar = '#';
+            SpecialBGChar = '¤';
+            ResetChar = 'x';
+
+            // add some default colors
+            Colors.Add('r', ConsoleColor.Red);
+            Colors.Add('y', ConsoleColor.Yellow);
+            Colors.Add('g', ConsoleColor.Green);
+            Colors.Add('b', ConsoleColor.Blue);
+            Colors.Add('w', ConsoleColor.White);
+
             if (Width > wWidth || Height > wHeight)
             {
                 throw new System.ArgumentException("The buffer width and height can not be greater than the window width and height.");
@@ -190,6 +229,156 @@ namespace RetroRPG
          
 
         }
+
+
+
+
+        // ***********************************************************************************************************************************
+        public void DrawColored(String str, int Width, int Height, ConsoleColor color) //Draws the image to the buffer
+        {
+
+            short parsedAtribute = 0;
+            short parsedAtribute2 = 0; 
+
+            switch (color)
+            {
+                case ConsoleColor.Black:
+                    {
+
+                        break;
+                    }
+
+                case ConsoleColor.Gray:
+                    {
+                        parsedAtribute = 7;
+                        break;
+                    }
+
+                case ConsoleColor.Red:
+                    {
+                        parsedAtribute = 12;
+                        break;
+                    }
+
+                case ConsoleColor.Green:
+                    {
+                        parsedAtribute = 10;
+                        break;
+                    }
+
+                case ConsoleColor.Yellow:
+                    {
+                        parsedAtribute = 14;
+                        break;
+                    }
+            }
+
+            if (Width > windowWidth - 1 || Height > windowHeight - 1)
+            {
+                //throw new System.ArgumentOutOfRangeException();
+            }
+            int back = 0; // Počet znaků o které vrátíme kurzor po dokončení výpisu
+
+            if (str != null)
+            {
+                Char[] temp = str.ToCharArray();
+                int tc = 0;
+                bool isSpecialOn = false;
+               
+
+                for (int i = 0; i < temp.Count(); i++)               //  foreach (Char i in temp)
+                {
+                    bool cont = true;                   
+                    bool specialColor = false;
+
+                  
+
+                    if (temp[i] == SpecialFGChar)
+                    {
+                        if (SetFGColor(temp[i + 1]))
+                        {
+                            i += 2;
+                            back += 2;
+                            isSpecialOn = !isSpecialOn;
+                          
+
+                            switch (Console.ForegroundColor)
+                            {
+                                case ConsoleColor.Black:
+                                    {
+
+                                        break;
+                                    }
+
+                                case ConsoleColor.Gray:
+                                    {
+                                        parsedAtribute2 = 7;
+                                        break;
+                                    }
+
+                                case ConsoleColor.Red:
+                                    {
+                                        parsedAtribute2 = 12;
+                                        break;
+                                    }
+
+                                case ConsoleColor.Green:
+                                    {
+                                        parsedAtribute2 = 10;
+                                        break;
+                                    }
+
+                                case ConsoleColor.Yellow:
+                                    {
+                                        parsedAtribute2 = 14;
+                                        break;
+                                    }
+                            }
+                        }
+                    }
+
+                    if (isSpecialOn) { specialColor = true; }
+
+                    byte special = SpecialChars(temp[i]);
+                    if (special != 0) { buf[(Width + tc) + (Height * width)].Char.AsciiChar = special; cont = false; }
+
+                    if (cont)
+                    {
+                        buf[(Width + tc) + (Height * width)].Char.AsciiChar = (byte)temp[i]; //Height * width is to get to the correct spot (since this array is not two dimensions).
+                    }
+
+                    if (!specialColor)
+                    {
+                        if (parsedAtribute != 0)
+                            buf[(Width + tc) + (Height * width)].Attributes = parsedAtribute;
+                    }
+                    else
+                    {
+                        buf[(Width + tc) + (Height * width)].Attributes = parsedAtribute2;
+                    }
+                    tc++;                
+                }
+
+             
+
+            }
+
+            if (str.Length > 0)
+            {
+                Console.CursorLeft += str.Length;
+            }
+
+            Console.CursorLeft -= back;
+
+
+        }
+        // ***********************************************************************************************************************************
+
+
+
+
+
+
 
         public void DrawInsert(String str, int Width, int Height, ConsoleColor color) //Draws the image to the buffer
         {
@@ -420,6 +609,8 @@ namespace RetroRPG
             if (znak == '█') { return 219; }
             if (znak == 'ý') { return 236; }
             if (znak == 'ž') { return 167; }
+            if (znak == 'Ž') { return 166; }
+            if (znak == 'š') { return 231; }
 
             return 0;
         }

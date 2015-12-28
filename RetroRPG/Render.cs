@@ -98,7 +98,9 @@ namespace RetroRPG
                 Buffer.NewLine();
                 if (y == Math.Min(cameraY + viewHeight, GameWorld.getInstance.height) - 1) { Buffer.Draw("╚", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); for (int i = Math.Max(0, cameraX + 10); i < Math.Min(cameraX + viewWidth, GameWorld.getInstance.width); i++) { Buffer.Draw("═", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); } Buffer.Draw("╝", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); Buffer.NewLine(); }
             }
+
             Console.CursorVisible = true;
+            Render.getInstance.Buffer.Print();
         }
 
         private void DrawIndex(GameWorld.state stav,int x, int y)
@@ -154,7 +156,8 @@ namespace RetroRPG
                                 }
                                     break;
                             }
-   }
+                        }
+
                         Buffer.Draw("◎", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow);
                         break;
                     }

@@ -8,32 +8,47 @@ namespace RetroRPG
 {
     class GameItem
     {
-        public int[] attributes;
-        const int total_attributes = 2;
+        const int total_attributes = 3;
+        public int[] attributes = new int[total_attributes];      
         string[] attributesNames = {"Život","Poškození" };
+        string itemName;
+        ConsoleColor itemColor;
 
         public enum atr
         {
             hp,damage
         };
 
-        public GameItem()
-        {
+        public GameItem(string itemName, ConsoleColor itemColor)
+        {      
             for (int i = 0; i < total_attributes; i++)
             {
                 attributes[i] = 0;
             }
+
+            this.itemName = itemName;
+            this.itemColor = itemColor;
         }
 
         public void drawItemStats()
         {
+            string output = "";
             for (int i = 0; i < total_attributes; i++)
             {
                 if (attributes[i] > 0)
                 {
-                    Render.getInstance.Buffer.Draw(attributesNames[i] + ":" + attributes[i], Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                    output += attributesNames[i] + ":" + attributes[i] + ", ";                
                 }
             }
+
+            if (output != "")
+            {
+                output = output.Remove(output.Length - 2); // Odstraním poslední čárku v řetěztci.
+                Render.getInstance.Buffer.Draw(itemName, Console.CursorLeft, Console.CursorTop, itemColor);
+                Render.getInstance.Buffer.Draw(": " + output, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                Render.getInstance.Buffer.Print();
+            }
+         
         }
 
     }
