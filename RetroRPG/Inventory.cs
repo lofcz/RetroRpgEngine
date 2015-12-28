@@ -48,25 +48,51 @@ namespace RetroRPG
                     actualItem++;
                     if (itemSelected == actualItem) { choosingItem = item; } 
 
-                    if (itemSelected == actualItem) { Render.getInstance.Buffer.Draw(" > ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green); }
+                    if (itemSelected == actualItem) 
+                        { 
+                        Render.getInstance.Buffer.Draw(" > ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
+                        item.drawItemStats();
+                        Render.getInstance.Buffer.NewLine();
+                        item
+                        }
                     else
                     {
                         Render.getInstance.Buffer.Draw("> ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                        item.drawItemStats();
                     }
-                    item.drawItemStats();
+                   
                     Render.getInstance.Buffer.NewLine();
                 }
+
+
+                // Vykreslí možnost "zpět"
+                if (itemSelected == items.Count + 1)
+                {
+                    Render.getInstance.Buffer.Draw(" > ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
+
+                }    
+                else
+                {
+                    Render.getInstance.Buffer.Draw("> ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                }
+
+                Render.getInstance.Buffer.Draw("Zpět", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                Render.getInstance.Buffer.NewLine();
+                // **********
+
+                Render.getInstance.Buffer.Print();
+
 
                 ConsoleKey key = Console.ReadKey().Key;
 
                 if (key == ConsoleKey.W)
                 {
                     if (itemSelected > 0) { itemSelected--; }
-                    else { itemSelected = items.Count; }
+                    else { itemSelected = items.Count + 1; }
                 }
                 if (key == ConsoleKey.S)
                 {
-                    if (itemSelected < items.Count) { itemSelected++; }
+                    if (itemSelected < items.Count + 1) { itemSelected++; }
                     else { itemSelected = 0; }
                 }
 
@@ -80,8 +106,6 @@ namespace RetroRPG
 
                     choosing = false;
                 }
-
-                Render.getInstance.Buffer.Print();
             }
         }
 

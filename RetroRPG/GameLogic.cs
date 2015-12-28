@@ -44,8 +44,8 @@ namespace RetroRPG.Objects
             Render.getInstance.Buffer.Clear();
 
             // TEST INVENTÁŘE   
-            GameItem item = new GameItem("Pirátská šavle", ConsoleColor.Yellow);
-            GameItem item1 = new GameItem("Dýka", ConsoleColor.Gray);
+            GameItem item = new GameItem("Pirátská šavle", ConsoleColor.Yellow, "Stará šavle nějakého piráta");
+            GameItem item1 = new GameItem("Dýka", ConsoleColor.Gray, "Zubatá a špatně vyvážená dýka");
 
             item.attributes[(int)GameItem.atr.damage] = 10;
             item1.attributes[(int)GameItem.atr.damage] = 4;
@@ -55,7 +55,6 @@ namespace RetroRPG.Objects
             Inventory.getInstance.itemAdd(item1);
             
             Inventory.getInstance.drawInventory();
-            Console.ReadKey();
 
             // *****
             Render.getInstance.Buffer.NewLine();

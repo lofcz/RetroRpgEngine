@@ -13,13 +13,14 @@ namespace RetroRPG
         string[] attributesNames = {"Život","Poškození" };
         string itemName;
         ConsoleColor itemColor;
+        string itemDescription = "";
 
         public enum atr
         {
             hp,damage,equiped
         };
 
-        public GameItem(string itemName, ConsoleColor itemColor)
+        public GameItem(string itemName, ConsoleColor itemColor, string itemDescription)
         {      
             for (int i = 0; i < total_attributes; i++)
             {
@@ -28,6 +29,7 @@ namespace RetroRPG
 
             this.itemName = itemName;
             this.itemColor = itemColor;
+            this.itemDescription = itemDescription;
         }
 
         public void drawItemStats()
@@ -51,6 +53,8 @@ namespace RetroRPG
             }
          
         }
+
+        public void Draw
 
         public void Equip()
         {
