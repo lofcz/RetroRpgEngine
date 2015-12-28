@@ -176,6 +176,12 @@ namespace RetroRPG
                         break;
                     }
 
+                case ConsoleColor.DarkGray:
+                    {
+                        parsedAtribute = 8;
+                        break;
+                    }
+
                 case ConsoleColor.Red:
                     {
                         parsedAtribute = 12;
@@ -613,6 +619,8 @@ namespace RetroRPG
             if (znak == 'š') { return 231; }
             if (znak == 'ď') { return 212; }
             if (znak == 'ě') { return 216; }
+            if (znak == 'é') { return 130; }
+
 
             return 0;
         }

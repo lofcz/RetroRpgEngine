@@ -32,8 +32,8 @@ namespace RetroRPG
      public void drawInventory()
         {
             bool choosing = true;
-            int itemSelected = 0;
-            int actualItem = 0;
+            int itemSelected = 1;
+            int actualItem = 1;
             int length = 0;
 
             while (choosing)
@@ -53,7 +53,7 @@ namespace RetroRPG
                         Render.getInstance.Buffer.Draw(" > ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
                         item.drawItemStats();
                         Render.getInstance.Buffer.NewLine();
-                        item
+                        item.drawItemDescription();
                         }
                     else
                     {

@@ -54,7 +54,10 @@ namespace RetroRPG
          
         }
 
-        public void Draw
+        public void drawItemDescription()
+        {
+            Render.getInstance.Buffer.Draw(itemDescription, Console.CursorLeft, Console.CursorTop, ConsoleColor.DarkGray);
+        }
 
         public void Equip()
         {
