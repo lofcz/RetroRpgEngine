@@ -1,0 +1,11 @@
+c:\users\matěj\documents\visual studio 2013\Projects\RetroRpgLevelEditor\RetroRpgLevelEditor\bin\Debug\RetroRpgLevelEditor.exe.config
+c:\users\matěj\documents\visual studio 2013\Projects\RetroRpgLevelEditor\RetroRpgLevelEditor\bin\Debug\RetroRpgLevelEditor.exe
+c:\users\matěj\documents\visual studio 2013\Projects\RetroRpgLevelEditor\RetroRpgLevelEditor\bin\Debug\RetroRpgLevelEditor.pdb
+c:\users\matěj\documents\visual studio 2013\Projects\RetroRpgLevelEditor\RetroRpgLevelEditor\bin\Debug\SyntaxHighlightingTextBox.dll
+c:\users\matěj\documents\visual studio 2013\Projects\RetroRpgLevelEditor\RetroRpgLevelEditor\bin\Debug\SyntaxHighlightingTextBox.pdb
+c:\users\matěj\documents\visual studio 2013\Projects\RetroRpgLevelEditor\RetroRpgLevelEditor\obj\Debug\RetroRpgLevelEditor.csprojResolveAssemblyReference.cache
+c:\users\matěj\documents\visual studio 2013\Projects\RetroRpgLevelEditor\RetroRpgLevelEditor\obj\Debug\RetroRpgLevelEditor.Form1.resources
+c:\users\matěj\documents\visual studio 2013\Projects\RetroRpgLevelEditor\RetroRpgLevelEditor\obj\Debug\RetroRpgLevelEditor.Properties.Resources.resources
+c:\users\matěj\documents\visual studio 2013\Projects\RetroRpgLevelEditor\RetroRpgLevelEditor\obj\Debug\RetroRpgLevelEditor.csproj.GenerateResource.Cache
+c:\users\matěj\documents\visual studio 2013\Projects\RetroRpgLevelEditor\RetroRpgLevelEditor\obj\Debug\RetroRpgLevelEditor.exe
+c:\users\matěj\documents\visual studio 2013\Projects\RetroRpgLevelEditor\RetroRpgLevelEditor\obj\Debug\RetroRpgLevelEditor.pdb
