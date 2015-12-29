@@ -1,28 +1,13 @@
-﻿// #MapName: TestParser
-// #MapAuthor: LordOfFlies
-// #MapVersion: 1.0.0
-
-//   ********* MapInfo *********
-//First attempt to create map with RetroRPG parser.
-//
-
-#######        ######################################################
-#                 #                                                 #
-#                  #                                                #
-#                                               P◎                  #
-# #####    ####                         ◎                           #
-#             #                                                     #
-#              #                                       ##############
-#               #                                      #            #
-#                #                                     #            #
-#                 #                                    #            #
-#                                ◎                 ######           #
-#                                                                   #
-#                 #                                                 #
-#                #                                 #####            #
-#              ##                                      #            #
-#            ##            ◎◎◎◎                        #            #
-#◎         ##                                          #            #
-###########                                            #            #
-#                                                      #        ◎◎ ◎#
-#####################################################################                                                          
+[oWall]
+[oWall]
+[oWall]
+[oWall]
+[oWall]
+[oWall]
+[oWall]
+[oWall]
+#NewLine
+[oWall]
+#NewLine
+[oWall]
+#NewLine

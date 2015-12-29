@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace RetroRPG.Objects
 {
@@ -31,6 +33,8 @@ namespace RetroRPG.Objects
             oGold gold = new oGold('◎', "Gold coin", ConsoleColor.Yellow, x, y, value);
             GameWorld.getInstance.goldList.Add(gold);
         }
+
+        
     
     }
 }

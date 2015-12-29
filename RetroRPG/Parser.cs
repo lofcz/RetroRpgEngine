@@ -58,6 +58,16 @@ namespace RetroRPG
 
                 if (cont)
                 {
+                    if (line.Contains("[oWall]"))
+                    {
+                        oWall.addWall(x, y);
+                    }
+                    else if (line.Contains("[oWall]"))
+                    {
+                        oWall.addWall(x, y);
+                    }
+
+                    /*
                     foreach (char znak in line)
                     {
                         switch (znak)
@@ -68,69 +78,18 @@ namespace RetroRPG
                                     break;
                                 }
                             case ('◎'):
-                                {
-                                    string xx = "";
-                                    string yy = "";
-                                    int parsedVar = 0;
-                                    string value = "";
+                                {                                
+                                   oGold.addGold(x, y);
 
-                                    while ((dataLine = streamData.ReadLine()) != null)
-                                    {
-                                        bool parsing = true;
-
-                                            foreach (char Dznak in dataLine)
-                                            {
-                                                if (parsing)
-                                                {
-                                                    if (Dznak == ' ')
-                                                    {
-                                                        parsing = false;
-                                                    }
-                                                    else if (Dznak == ',')
-                                                    {
-                                                        parsedVar++;
-                                                    }
-                                                    else if (parsedVar == 0)
-                                                    {
-                                                        xx += Dznak;
-                                                    }
-                                                    else if (parsedVar == 1)
-                                                    {
-                                                        yy += Dznak;
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    if (Dznak == ' ')
-                                                    {
-                                                        break;
-                                                    }
-                                                    else
-                                                    {
-                                                        value += Dznak;
-                                                    }
-                                                }
-                                                
-                                            }
-                                        
-                                    }
-
-                                    if (Convert.ToInt32(xx) == x && Convert.ToInt32(yy) == y)
-                                    {
-                                        oGold.addGold(x, y, Convert.ToInt32(value));
-                                    }
-                                    //oGold.addGold(x, y);
                                     break;
                                 }
                         }
 
-                        x++;
-                    }
+                       
+                    }*/
+                    x++;
                 }
-                if (cont) { y++; }
-                x = 0;
-
-               
+                if (line == "#NewLine") { y++; x = 0; }       
             }
          
             if (Comments.Count > 0)
