@@ -11,8 +11,8 @@ namespace RetroRPG
         const int total_attributes = 3;
         public int[] attributes = new int[total_attributes];      
         string[] attributesNames = {"Život","Poškození","Equiped" };
-        string itemName;
-        ConsoleColor itemColor;
+        public string itemName;
+        public ConsoleColor itemColor;
         string itemDescription = "";
         //string[] itemOptions = {"Nasadit};
 
@@ -40,7 +40,10 @@ namespace RetroRPG
             {
                 if (attributes[i] > 0)
                 {
-                    output += attributesNames[i] + ":" + attributes[i] + ", ";                
+                    if (i != (int)GameItem.atr.equiped) // Speciální atributy vyškrteme ze seznamu na vykreslení
+                    {
+                        output += attributesNames[i] + ":" + attributes[i] + ", ";
+                    }
                 }
             }
 
@@ -49,7 +52,6 @@ namespace RetroRPG
                 output = output.Remove(output.Length - 2); // Odstraním poslední čárku v řetěztci.
                 Render.getInstance.Buffer.Draw(itemName, Console.CursorLeft, Console.CursorTop, itemColor);
                 Render.getInstance.Buffer.Draw(": " + output, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
-                if (attributes[(int)GameItem.atr.equiped] == 1) { Render.getInstance.Buffer.Draw("EQUIPED", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow); }
                 Render.getInstance.Buffer.Print();
             }
          
@@ -64,8 +66,8 @@ namespace RetroRPG
         {
             Render.getInstance.Buffer.Draw("   ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
 
-            if (attributes[(int)GameItem.atr.equiped] == 0) { Render.getInstance.Buffer.Draw("[Nasadit]", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); }
-            else { Render.getInstance.Buffer.Draw("[Sundat]", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); }
+            if (attributes[(int)GameItem.atr.equiped] == 0) { Render.getInstance.Buffer.Draw("[Nasadit]", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow); }
+            else { Render.getInstance.Buffer.Draw("[Sundat]", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow); }
         }
 
         public void Equip()
@@ -78,6 +80,19 @@ namespace RetroRPG
                     GameWorld.getInstance.player.max_hp += attributes[i];
                 }
               
+            }
+        }
+
+        public void UnEquip()
+        {
+            for (int i = 0; i < total_attributes; i++)
+            {
+                if (i == (int)atr.hp)
+                {
+                    GameWorld.getInstance.player.hp -= attributes[i];
+                    GameWorld.getInstance.player.max_hp -= attributes[i];
+                }
+
             }
         }
 

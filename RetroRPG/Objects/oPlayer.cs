@@ -14,7 +14,12 @@ namespace RetroRPG.Objects
         public string name = "LordOfFlies";
         public int stamina = 20;
         public int max_stamina = 20;
+        public bool[] equiped = { false, false };
 
+        public enum ItemsEquiped
+        {
+            Weapon,Armor
+        };
 
         public int Gold
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RetroRPG.Objects;
 
 namespace RetroRPG
 {
@@ -43,11 +44,48 @@ namespace RetroRPG
                 actualItem = 0;
                 GameItem choosingItem = null;
                 int horizontalIndex = 0;
+                string equipedItems = "";
+                ConsoleColor equipedItemsColors = ConsoleColor.Gray;
+
+                foreach (GameItem item in items)
+                {
+                    if (item.attributes[(int)GameItem.atr.equiped] == 1)
+                    {
+                        equipedItems = item.itemName;
+                        equipedItemsColors = item.itemColor;
+                    }
+
+                }
+
+                Render.getInstance.Buffer.Draw("Inventář", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                Render.getInstance.Buffer.NewLine();
+                Render.getInstance.Buffer.Draw(Strings.getInstance.horizontalLine, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                Render.getInstance.Buffer.NewLine();
+                Render.getInstance.Buffer.Draw("Používané věci", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                Render.getInstance.Buffer.NewLine();
+                Render.getInstance.Buffer.Draw(" • Zbraň: ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                if (equipedItems == "")
+                {
+                    Render.getInstance.Buffer.Draw("Holé ruce", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                }
+                else
+                {
+                    Render.getInstance.Buffer.Draw(equipedItems, Console.CursorLeft, Console.CursorTop, equipedItemsColors);
+                }
+                Render.getInstance.Buffer.NewLine();
+                Render.getInstance.Buffer.Draw(Strings.getInstance.horizontalLine, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                Render.getInstance.Buffer.NewLine();
+                Render.getInstance.Buffer.NewLine();
 
                 foreach (GameItem item in items)
                 {
                     actualItem++;
-                    if (itemSelected == actualItem) { choosingItem = item; } 
+                    if (itemSelected == actualItem) { choosingItem = item; }
+
+                    if (item.attributes[(int)GameItem.atr.equiped] == 1)
+                    {
+                        Render.getInstance.Buffer.Draw("[Nasazeno]", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
+                    }
 
                     // Vykreslí info o hover předmětu
                     if (itemSelected == actualItem) 
@@ -70,7 +108,8 @@ namespace RetroRPG
 
                 // Vykreslí možnost "zpět"
                 if (itemSelected == items.Count + 1)
-                {
+                {                
+
                     Render.getInstance.Buffer.Draw(" > ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
 
                 }    
@@ -97,19 +136,26 @@ namespace RetroRPG
                 if (key == ConsoleKey.S)
                 {
                     if (itemSelected < items.Count + 1) { itemSelected++; }
-                    else { itemSelected = 0; }
+                    else { itemSelected = 1; }
                     horizontalIndex = 0;
                 }
 
                 if (key == ConsoleKey.Enter)
                 {
-                    if (choosingItem != null && choosingItem.attributes[(int)GameItem.atr.equiped] == 0)
+                    if (choosingItem != null && choosingItem.attributes[(int)GameItem.atr.equiped] == 0 && (GameWorld.getInstance.player.equiped[(int)oPlayer.ItemsEquiped.Weapon] == false))
                     {
                         choosingItem.Equip();
                         choosingItem.attributes[(int)GameItem.atr.equiped] = 1;
+                        GameWorld.getInstance.player.equiped[(int)oPlayer.ItemsEquiped.Weapon] = true;
+                    }
+                    else if (choosingItem != null && choosingItem.attributes[(int)GameItem.atr.equiped] == 1 && (GameWorld.getInstance.player.equiped[(int)oPlayer.ItemsEquiped.Weapon] == true))
+                    {
+                        choosingItem.UnEquip();
+                        choosingItem.attributes[(int)GameItem.atr.equiped] = 0;
+                        GameWorld.getInstance.player.equiped[(int)oPlayer.ItemsEquiped.Weapon] = false;
                     }
 
-                    choosing = false;
+                    if (itemSelected == items.Count + 1) { choosing = false; } 
                 }
 
                
