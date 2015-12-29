@@ -24,6 +24,13 @@ namespace RetroRPG.Objects
             oGold gold = new oGold('◎', "Gold coin", ConsoleColor.Yellow, x, y, 5);
             GameWorld.getInstance.goldList.Add(gold);
         }
+
+        public static void addGold(int x, int y, int value)
+        {
+
+            oGold gold = new oGold('◎', "Gold coin", ConsoleColor.Yellow, x, y, value);
+            GameWorld.getInstance.goldList.Add(gold);
+        }
     
     }
 }

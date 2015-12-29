@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using RetroRPG.Objects;
 using System.Threading;
+using System.Xml;
 
 namespace RetroRPG
 {
@@ -35,15 +36,20 @@ namespace RetroRPG
         public void ParseMap()
         {
             string line = "";
+            string dataLine = "";
             int x = 0, y = 0;
             List<String> Comments = new List<string>();
 
             StreamReader sr = new StreamReader("map.retroRpgMap");
+            StreamReader streamData = new StreamReader("map.retroRpgMapData");
             string[] metaTags = { "#MapName:", "#MapAuthor:", "#MapVersion:" };
+            
+            
             while ((line = sr.ReadLine()) != null)
             {
                 bool cont = true;
 
+                if (line == "") { cont = false; }
                 if (line.StartsWith("//", StringComparison.Ordinal) )
                 {
                     Comments.Add(line);
@@ -63,7 +69,57 @@ namespace RetroRPG
                                 }
                             case ('◎'):
                                 {
-                                    oGold.addGold(x, y);
+                                    string xx = "";
+                                    string yy = "";
+                                    int parsedVar = 0;
+                                    string value = "";
+
+                                    while ((dataLine = streamData.ReadLine()) != null)
+                                    {
+                                        bool parsing = true;
+
+                                            foreach (char Dznak in dataLine)
+                                            {
+                                                if (parsing)
+                                                {
+                                                    if (Dznak == ' ')
+                                                    {
+                                                        parsing = false;
+                                                    }
+                                                    else if (Dznak == ',')
+                                                    {
+                                                        parsedVar++;
+                                                    }
+                                                    else if (parsedVar == 0)
+                                                    {
+                                                        xx += Dznak;
+                                                    }
+                                                    else if (parsedVar == 1)
+                                                    {
+                                                        yy += Dznak;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (Dznak == ' ')
+                                                    {
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        value += Dznak;
+                                                    }
+                                                }
+                                                
+                                            }
+                                        
+                                    }
+
+                                    if (Convert.ToInt32(xx) == x && Convert.ToInt32(yy) == y)
+                                    {
+                                        oGold.addGold(x, y, Convert.ToInt32(value));
+                                    }
+                                    //oGold.addGold(x, y);
                                     break;
                                 }
                         }
@@ -71,7 +127,7 @@ namespace RetroRPG
                         x++;
                     }
                 }
-                y++;
+                if (cont) { y++; }
                 x = 0;
 
                
@@ -112,6 +168,7 @@ namespace RetroRPG
                 Render.getInstance.Buffer.Clear();
             }
             sr.Close();
+            streamData.Close();
         }
 
         public void parseImage(string file, bool center, ConsoleColor color, Effects effect)
