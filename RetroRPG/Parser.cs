@@ -62,9 +62,58 @@ namespace RetroRPG
                     {
                         oWall.addWall(x, y);
                     }
-                    else if (line.Contains("[oWall]"))
+                    else if (line.Contains("[oGold]"))
                     {
-                        oWall.addWall(x, y);
+                        string str = line;
+                        List<string> csvDeserializedText = new List<string>();
+                        List<string> csvDeserializedValue = new List<string>();
+
+                        line = line.Replace("[oGold]", "");
+                        string currentValueText = "";
+                        string currentValueValue = "";
+                        bool parsingValueText = true;
+                        int coinValue = 5;
+                        int i = 0;
+
+
+                        foreach(char znak in line)
+                        {
+                            if (znak != ' ' && znak != '[' && znak != ']' && znak != '=' && znak != ';')
+                            {
+                                if (parsingValueText)
+                                {
+                                    currentValueText += znak;
+                                }
+                                else
+                                {
+                                    currentValueValue += znak;
+                                }
+                            }
+                            if (znak == '=')
+                            {
+                                parsingValueText = !parsingValueText;
+                            }
+                            if (znak == ';')
+                            {
+                                csvDeserializedText.Add(currentValueText);
+                                csvDeserializedValue.Add(currentValueValue);
+
+                                currentValueText = "";
+                                currentValueValue = "";
+                            }
+
+                        }
+
+                        foreach(string value in csvDeserializedText)
+                        {
+                            if (value == "value")
+                            {
+                                coinValue = Convert.ToInt32(csvDeserializedValue[i]);
+                            }
+
+                            i++;
+                        }
+                        oGold.addGold(x, y, coinValue);
                     }
 
                     /*

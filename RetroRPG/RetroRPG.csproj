@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="buffer.cs" />
     <Compile Include="ColorBuffer.cs" />
+    <Compile Include="Crafting.cs" />
     <Compile Include="GameItem.cs" />
     <Compile Include="Intro.cs" />
     <Compile Include="Inventory.cs" />

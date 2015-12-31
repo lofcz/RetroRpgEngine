@@ -44,15 +44,15 @@ namespace RetroRPG
                 actualItem = 0;
                 GameItem choosingItem = null;
                 int horizontalIndex = 0;
-                string equipedItems = "";
-                ConsoleColor equipedItemsColors = ConsoleColor.Gray;
+                string[] equipedItems = {"","",""};
+                ConsoleColor[] equipedItemsColors = {ConsoleColor.Gray,ConsoleColor.Gray,ConsoleColor.Gray};
 
                 foreach (GameItem item in items)
                 {
                     if (item.attributes[(int)GameItem.atr.equiped] == 1)
                     {
-                        equipedItems = item.itemName;
-                        equipedItemsColors = item.itemColor;
+                        equipedItems[item.attributes[(int)GameItem.atr.type]] = item.itemName;
+                        equipedItemsColors[item.attributes[(int)GameItem.atr.type]] = item.itemColor;
                     }
 
                 }
@@ -64,15 +64,30 @@ namespace RetroRPG
                 Render.getInstance.Buffer.Draw("Používané věci", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
                 Render.getInstance.Buffer.NewLine();
                 Render.getInstance.Buffer.Draw(" • Zbraň: ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
-                if (equipedItems == "")
+
+                if (equipedItems[(int)oPlayer.ItemsEquiped.Weapon] == "")
                 {
                     Render.getInstance.Buffer.Draw("Holé ruce", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
                 }
                 else
                 {
-                    Render.getInstance.Buffer.Draw(equipedItems, Console.CursorLeft, Console.CursorTop, equipedItemsColors);
+                    Render.getInstance.Buffer.Draw(equipedItems[(int)oPlayer.ItemsEquiped.Weapon], Console.CursorLeft, Console.CursorTop, equipedItemsColors[(int)oPlayer.ItemsEquiped.Weapon]);
                 }
                 Render.getInstance.Buffer.NewLine();
+
+                Render.getInstance.Buffer.Draw(" • Brnění: ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+
+                if (equipedItems[(int)oPlayer.ItemsEquiped.Armor] == "")
+                {
+                    Render.getInstance.Buffer.Draw("Nic", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                }
+                else
+                {
+                    Render.getInstance.Buffer.Draw(equipedItems[(int)oPlayer.ItemsEquiped.Armor], Console.CursorLeft, Console.CursorTop, equipedItemsColors[(int)oPlayer.ItemsEquiped.Armor]);
+                }
+                Render.getInstance.Buffer.NewLine();
+
+
                 Render.getInstance.Buffer.Draw(Strings.getInstance.horizontalLine, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
                 Render.getInstance.Buffer.NewLine();
                 Render.getInstance.Buffer.NewLine();
@@ -142,18 +157,25 @@ namespace RetroRPG
 
                 if (key == ConsoleKey.Enter)
                 {
-                    if (choosingItem != null && choosingItem.attributes[(int)GameItem.atr.equiped] == 0 && (GameWorld.getInstance.player.equiped[(int)oPlayer.ItemsEquiped.Weapon] == false))
-                    {
-                        choosingItem.Equip();
-                        choosingItem.attributes[(int)GameItem.atr.equiped] = 1;
-                        GameWorld.getInstance.player.equiped[(int)oPlayer.ItemsEquiped.Weapon] = true;
-                    }
-                    else if (choosingItem != null && choosingItem.attributes[(int)GameItem.atr.equiped] == 1 && (GameWorld.getInstance.player.equiped[(int)oPlayer.ItemsEquiped.Weapon] == true))
-                    {
-                        choosingItem.UnEquip();
-                        choosingItem.attributes[(int)GameItem.atr.equiped] = 0;
-                        GameWorld.getInstance.player.equiped[(int)oPlayer.ItemsEquiped.Weapon] = false;
-                    }
+                  
+                        // Klasické předměty (zbraň, brnění...)
+
+                        // Equip
+                        if (choosingItem != null && choosingItem.attributes[(int)GameItem.atr.equiped] == 0 && (GameWorld.getInstance.player.equiped[choosingItem.attributes[(int)GameItem.atr.type]] == false))
+                        {
+                            choosingItem.Equip();
+                            choosingItem.attributes[(int)GameItem.atr.equiped] = 1;
+                            GameWorld.getInstance.player.equiped[choosingItem.attributes[(int)GameItem.atr.type]] = true;
+                        }
+                        // Unequip
+                        else if (choosingItem != null && choosingItem.attributes[(int)GameItem.atr.equiped] == 1 && (GameWorld.getInstance.player.equiped[choosingItem.attributes[(int)GameItem.atr.type]] == true))
+                        {
+                            choosingItem.UnEquip();
+                            choosingItem.attributes[(int)GameItem.atr.equiped] = 0;
+                            GameWorld.getInstance.player.equiped[choosingItem.attributes[(int)GameItem.atr.type]] = false;
+                        }
+                    
+                  
 
                     if (itemSelected == items.Count + 1) { choosing = false; } 
                 }

@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RetroRPG.Objects;
 
 namespace RetroRPG
 {
     class GameItem
     {
-        const int total_attributes = 3;
+        const int total_attributes = 4;
         public int[] attributes = new int[total_attributes];      
-        string[] attributesNames = {"Život","Poškození","Equiped" };
+        string[] attributesNames = {"Život","Poškození","Equiped","Typ předmětu" };
         public string itemName;
         public ConsoleColor itemColor;
         string itemDescription = "";
@@ -18,10 +19,10 @@ namespace RetroRPG
 
         public enum atr
         {
-            hp,damage,equiped
+            hp,damage,equiped,type
         };
 
-        public GameItem(string itemName, ConsoleColor itemColor, string itemDescription)
+        public GameItem(string itemName, ConsoleColor itemColor, string itemDescription, oPlayer.ItemsEquiped itemType)
         {      
             for (int i = 0; i < total_attributes; i++)
             {
@@ -31,6 +32,7 @@ namespace RetroRPG
             this.itemName = itemName;
             this.itemColor = itemColor;
             this.itemDescription = itemDescription;
+            this.attributes[(int)atr.type] = (int)itemType;
         }
 
         public void drawItemStats()

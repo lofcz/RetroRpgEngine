@@ -18,7 +18,7 @@ namespace RetroRPG.Objects
 
         public enum ItemsEquiped
         {
-            Weapon,Armor
+            Weapon,Armor,Consumable
         };
 
         public int Gold

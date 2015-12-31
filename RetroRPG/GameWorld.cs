@@ -23,7 +23,7 @@ namespace RetroRPG
         
 
         public int id = 100;
-        public oPlayer player = new oPlayer('P', "oPlayer",ConsoleColor.Green, 10, 10, 40);
+        public oPlayer player = new oPlayer('P', "oPlayer",ConsoleColor.Green, 10, 3, 40);
         public List<oEnemy> enemyList = new List<oEnemy>();
         public List<oWall> wallList = new List<oWall>();
         public List<oGold> goldList = new List<oGold>();
