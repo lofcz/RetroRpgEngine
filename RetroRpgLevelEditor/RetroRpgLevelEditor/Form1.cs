@@ -214,6 +214,7 @@ namespace RetroRpgLevelEditor
             string line = "";
             int total_lines = File.ReadLines("map.RetroRpgMap").Count();
             int current_line = 0;
+            int currentID = 0;
 
             while ((line = load.ReadLine()) != null)
             {
@@ -233,15 +234,76 @@ namespace RetroRpgLevelEditor
                     // shtb.Text += " ";
                     SetText(" ");
                 }
+                else if (line.Contains("[oGold]"))
+                {
+                    SetText("¤");
+
+                    string str = line;
+                    List<string> csvDeserializedText = new List<string>();
+                    List<string> csvDeserializedValue = new List<string>();
+
+                    line = line.Replace("[oGold]", "");
+                    string currentValueText = "";
+                    string currentValueValue = "";
+                    bool parsingValueText = true;
+                    int coinValue = 5;
+                    int i = 0;
+
+
+                    foreach (char znak in line)
+                    {
+                        if (znak != ' ' && znak != '[' && znak != ']')
+                        {
+                            if (parsingValueText)
+                            {
+                                currentValueText += znak;
+                            }
+                            else
+                            {
+                                currentValueValue += znak;
+                            }
+                        }
+                        if (znak == ';')
+                        {
+                            csvDeserializedText.Add(currentValueText);
+
+                            currentValueText = "";
+                            currentValueValue = "";
+                        }
+
+                    }
+
+                    SetText(" [ " + currentID + " ]");
+
+                    if (!oIDEditor.Text.Contains("@DataPipeline"))
+                    {
+                        oIDEditor.Text += "@DataPipeline";
+                    }
+
+                        oIDEditor.Text += "\n" + "[ " + currentID + " ]" + "[ ";
+                        foreach (string value in csvDeserializedText)
+                        {
+                            oIDEditor.Text += csvDeserializedText[i];
+                            i++;
+                        }
+
+                        oIDEditor.Text += " ]";
+                    
+
+                    currentID++;
+
+                }
                 else if (line == "#NewLine")
                 {
                     //shtb.Text += "\n";
                     SetText("\n");
                 }
-
+                
                // int percents = ((current_line * 100) / total_lines);
               //  backgroundWorker1.ReportProgress(percents, 1);
             }
+            shtb.Text += oIDEditor.Text;
+            oIDEditor.Text = "";
             load.Close();
         }
 
@@ -549,6 +611,11 @@ namespace RetroRpgLevelEditor
             {
 
             }
+        }
+
+        private void oIDEditor_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

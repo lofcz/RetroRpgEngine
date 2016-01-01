@@ -14,10 +14,11 @@ namespace RetroRPG
     {
         private static Parser mapParser;
         private Parser() { }
+        Random random = new Random();
 
         public enum Effects
         {
-            none,slide,typewriter
+            none,slide,typewriter,numbersToText
         }
 
         public static Parser getInstance
@@ -183,24 +184,64 @@ namespace RetroRPG
         {
             string line;
             StreamReader sr = new StreamReader(file);
-
+            string[] fileLines = new string[File.ReadLines(file).Count()];
+            int fileLinesInt = File.ReadLines(file).Count();
             Console.CursorVisible = false;
 
-            while ((line = sr.ReadLine()) != null)
+            if (effect != Effects.numbersToText)
             {
-                if (effect == Effects.typewriter)
+                while ((line = sr.ReadLine()) != null)
                 {
+
+                    if (effect == Effects.typewriter)
+                    {
+
+                        Render.getInstance.Buffer.DrawInsert(line, Console.CursorLeft, Console.CursorTop, color);
+                        Render.getInstance.Buffer.NewLine();
+                        Render.getInstance.Buffer.Print();
+                        Thread.Sleep(80);
+                    }
+                    else
+                    {
+                        Render.getInstance.Buffer.DrawColored(line, Console.CursorLeft + (Console.WindowWidth / 5) + 5, Console.CursorTop, color, true);
+                        Render.getInstance.Buffer.NewLine();
+                    }
+                }
+            }
+            else
+            {
+                int originalLine = Console.CursorTop;
+                int currentLine = 0;
+
+                while ((line = sr.ReadLine()) != null)
+                {
+                    fileLines[currentLine] = line;
+                    currentLine++;    
+                }
+
+                for (int i = 0; i <= 20; i++)
+                {
+                    Console.SetCursorPosition(0, originalLine);
+
+                    for (int j = 0; j < fileLinesInt; j++)
+                    {
+                        foreach(char znak in fileLines[j])
+                        {
+                            char randomChar = (char)random.Next(32, 128);
+                            if ((Math.Abs((int)randomChar - (int)znak) < i * 5) || (i == 20)) { randomChar = znak; }
+                            if (znak == ' ') {randomChar = ' ';}
+
+                            Render.getInstance.Buffer.Draw(Convert.ToString(randomChar), Console.CursorLeft, Console.CursorTop, color);                       
+                        }
+
+                       Render.getInstance.Buffer.NewLine();
+                       Render.getInstance.Buffer.Print();
+                    }
+
+                    Thread.Sleep(100);
+                }
+
               
-                    Render.getInstance.Buffer.DrawInsert(line, Console.CursorLeft, Console.CursorTop, color);         
-                    Render.getInstance.Buffer.NewLine();
-                    Render.getInstance.Buffer.Print();
-                    Thread.Sleep(80);
-                }
-                else
-                {
-                    Render.getInstance.Buffer.DrawInsert(line, Console.CursorLeft + (Console.WindowWidth / 5), Console.CursorTop, color);
-                    Render.getInstance.Buffer.NewLine();
-                }
             }
 
             Console.CursorVisible = true;

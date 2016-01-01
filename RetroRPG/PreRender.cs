@@ -11,6 +11,8 @@ namespace RetroRPG
     class PreRender
     {
         private static PreRender render;
+        int playerXprev = 0;
+        int playerYprev = 0;
 
         public static PreRender getInstance
         {
@@ -27,6 +29,9 @@ namespace RetroRPG
 
         public void PlayerMove()
         {
+            playerXprev = GameWorld.getInstance.player.x;
+            playerYprev = GameWorld.getInstance.player.y;
+
             ConsoleKey key = Console.ReadKey(true).Key;
 
             switch(key)
@@ -90,6 +95,21 @@ namespace RetroRPG
                                 GameWorld.getInstance.player.hp -= 5;
 
                                 GameWorld.getInstance.goldList.Remove(gold);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                case GameWorld.state.enemy:
+                    {
+                        foreach (oEnemy enemy in GameWorld.getInstance.enemyList)
+                        {
+                            if (enemy.x == x && enemy.y == y)
+                            {
+                                Combat combat = new Combat(enemy);
+                                combat.drawEntrance();
+                                GameWorld.getInstance.player.setPosition(playerXprev, playerYprev);
+                               // GameWorld.getInstance.enemyList.Remove(enemy);
                                 break;
                             }
                         }

@@ -23,7 +23,7 @@ namespace RetroRPG
         public int actualID = 100;
 
         private Render()  { }
-        public buffer Buffer = new buffer(80,30,80,30);
+        public buffer Buffer = new buffer(110,60,110,60);
         
         public static Render getInstance
         {

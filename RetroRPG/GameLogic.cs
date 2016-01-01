@@ -58,7 +58,7 @@ namespace RetroRPG.Objects
 
             // *****
             Render.getInstance.Buffer.NewLine();
-            Render.getInstance.Buffer.DrawColored("#rDvojitý buffer#x teď umí parsovat #ycolorflagy!#x ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+            Render.getInstance.Buffer.DrawColored("#rDvojitý buffer#x teď umí parsovat #ycolorflagy!#x ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false);
             Render.getInstance.Buffer.Print();
             Console.ReadKey();
             Parser.getInstance.ParseMap();

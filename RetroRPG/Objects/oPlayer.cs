@@ -26,7 +26,11 @@ namespace RetroRPG.Objects
             get { return gold; }
             set { gold = value; }
             }
-        
+        public void setPosition(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
       
 
         

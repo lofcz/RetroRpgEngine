@@ -29,7 +29,7 @@ namespace RetroRPG
         {
             Console.Title = "RetroRPG";
             Console.SetWindowSize(100, 28);
-            Console.SetBufferSize(200, 40);
+            Console.SetBufferSize(100, 40);
         }
     }
 }

@@ -240,7 +240,7 @@ namespace RetroRPG
 
 
         // ***********************************************************************************************************************************
-        public void DrawColored(String str, int Width, int Height, ConsoleColor color) //Draws the image to the buffer
+        public void DrawColored(String str, int Width, int Height, ConsoleColor color, bool insert) //Draws the image to the buffer
         {
 
             short parsedAtribute = 0;
@@ -257,6 +257,12 @@ namespace RetroRPG
                 case ConsoleColor.Gray:
                     {
                         parsedAtribute = 7;
+                        break;
+                    }
+
+                case ConsoleColor.DarkGray:
+                    {
+                        parsedAtribute = 8;
                         break;
                     }
 
@@ -322,6 +328,12 @@ namespace RetroRPG
                                         break;
                                     }
 
+                                case ConsoleColor.DarkGray:
+                                    {
+                                        parsedAtribute2 = 8;
+                                        break;
+                                    }
+
                                 case ConsoleColor.Red:
                                     {
                                         parsedAtribute2 = 12;
@@ -369,12 +381,15 @@ namespace RetroRPG
 
             }
 
-            if (str.Length > 0)
+            if (insert)
             {
-                Console.CursorLeft += str.Length;
+                if (str.Length > 0)
+                {
+                    Console.CursorLeft += str.Length;
+                }
+                Console.CursorLeft -= back;
             }
-
-            Console.CursorLeft -= back;
+          
 
 
         }
@@ -493,11 +508,12 @@ namespace RetroRPG
         }
 
         /// <summary>
-        /// Inserts new line to the buffer
+        /// Prints new line to the buffer
         /// </summary>
-        public void NewLine()
+        /// <param name="times">Number of new lines</param>
+        public void NewLine(int times = 1)
         {
-            Console.CursorTop++;
+            Console.CursorTop += times;
             Console.CursorLeft = 0;
         }
         /// <summary>
@@ -623,7 +639,7 @@ namespace RetroRPG
             if (znak == 'ř') { return 253; }
             if (znak == 'ň') { return 229; }
             if (znak == '•') { return 7; }
-
+            if (znak == ' ') { return 255; }
 
             return 0;
         }

@@ -9,7 +9,7 @@ namespace RetroRPG
     class Strings
     {
         // *********** Constants *************
-        public string horizontalLine = "+------------------------------------------+";
+        public string horizontalLine = "+-------------------------------------------------------------------------------------------------+";
 
         private static Strings strings;
 
