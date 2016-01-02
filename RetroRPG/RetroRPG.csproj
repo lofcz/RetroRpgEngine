@@ -57,7 +57,7 @@
     <Compile Include="Objects\oEnemy.cs" />
     <Compile Include="GameSettings.cs" />
     <Compile Include="GameWorld.cs" />
-    <Compile Include="Objects\ResourceTree.cs" />
+    <Compile Include="ResourceTree.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="GameLogic.cs" />
     <Compile Include="Objects\GameObject.cs" />

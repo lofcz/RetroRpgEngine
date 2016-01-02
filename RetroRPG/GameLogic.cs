@@ -35,8 +35,8 @@ namespace RetroRPG.Objects
         {
             Console.SetCursorPosition(0, 0);
             Render.getInstance.Buffer.Clear();
-     
 
+            CharacterCreation.getInstance.GetPlayerClass();
             //    Intro.getInstance.DisplayIntro();
             Parser.getInstance.parseImage("award.txt",true,ConsoleColor.Gray, Parser.Effects.typewriter);
             Console.SetCursorPosition(0, 0);

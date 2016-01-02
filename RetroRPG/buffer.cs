@@ -236,6 +236,92 @@ namespace RetroRPG
 
         }
 
+        public void Draw(String str, ConsoleColor color = ConsoleColor.Gray) //Draws the image to the buffer
+        {
+            short parsedAtribute = 0;
+            int Width = Console.CursorLeft;
+            int Height = Console.CursorTop;
+
+            switch (color)
+            {
+                case ConsoleColor.Black:
+                    {
+
+                        break;
+                    }
+
+                case ConsoleColor.Gray:
+                    {
+                        parsedAtribute = 7;
+                        break;
+                    }
+
+                case ConsoleColor.DarkGray:
+                    {
+                        parsedAtribute = 8;
+                        break;
+                    }
+
+                case ConsoleColor.Red:
+                    {
+                        parsedAtribute = 12;
+                        break;
+                    }
+
+                case ConsoleColor.Green:
+                    {
+                        parsedAtribute = 10;
+                        break;
+                    }
+
+                case ConsoleColor.Yellow:
+                    {
+                        parsedAtribute = 14;
+                        break;
+                    }
+            }
+
+            if (Width > windowWidth - 1 || Height > windowHeight - 1)
+            {
+                //throw new System.ArgumentOutOfRangeException();
+            }
+
+            if (str != null)
+            {
+                Char[] temp = str.ToCharArray();
+                int tc = 0;
+                foreach (Char le in temp)
+                {
+                    bool cont = true;
+                    byte special = SpecialChars(le);
+                    if (special != 0) { buf[(Width + tc) + (Height * width)].Char.AsciiChar = special; cont = false; }
+
+
+                    if (cont)
+                    {
+                        buf[(Width + tc) + (Height * width)].Char.AsciiChar = (byte)le; //Height * width is to get to the correct spot (since this array is not two dimensions).
+                    }
+
+                    if (parsedAtribute != 0)
+                        buf[(Width + tc) + (Height * width)].Attributes = parsedAtribute;
+                    tc++;
+                }
+            }
+
+            if (str.Length > 0)
+            {
+                try
+                {
+                    Console.CursorLeft += str.Length;
+                }
+                catch
+                {
+                }
+            }
+
+
+        }
+
 
 
 

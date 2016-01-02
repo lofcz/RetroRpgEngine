@@ -42,7 +42,6 @@ namespace RetroRPG
             List<String> Comments = new List<string>();
 
             StreamReader sr = new StreamReader("map.retroRpgMap");
-            StreamReader streamData = new StreamReader("map.retroRpgMapData");
             string[] metaTags = { "#MapName:", "#MapAuthor:", "#MapVersion:" };
             
             
@@ -156,7 +155,6 @@ namespace RetroRPG
                 Render.getInstance.Buffer.Clear();
             }
             sr.Close();
-            streamData.Close();
         }
 
         public void parseImage(string file, bool center, ConsoleColor color, Effects effect)

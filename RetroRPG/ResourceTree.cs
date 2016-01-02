@@ -9,5 +9,6 @@ namespace RetroRPG.Objects
     static class ResourceTree
     {
         public const string graphicsFoes = "graphics/foes/";
+        public const string graphicsCharCreation = "graphics/charCreation/";
     }
 }
