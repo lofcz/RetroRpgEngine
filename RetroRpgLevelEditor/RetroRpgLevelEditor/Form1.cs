@@ -252,7 +252,7 @@ namespace RetroRpgLevelEditor
 
                     foreach (char znak in line)
                     {
-                        if (znak != ' ' && znak != '[' && znak != ']')
+                        if (znak != '[' && znak != ']')
                         {
                             if (parsingValueText)
                             {
@@ -568,7 +568,7 @@ namespace RetroRpgLevelEditor
                                     {
                                         int returnToY = y;
                                        // ScrollToLine(dataLine);
-                                        shtb.AppendText("[ " + id + " ]" + "[ oCoin ]" + "\n");
+                                        shtb.AppendText("[ " + id + " ]" + "[ oCoin; ]" + "\n");
                                      //   ScrollToLine(returnToY);
                                         break;
                                     }

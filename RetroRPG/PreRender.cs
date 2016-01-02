@@ -49,7 +49,7 @@ namespace RetroRPG
                     {
                         if (GameWorld.getInstance.map[GameWorld.getInstance.player.x, GameWorld.getInstance.player.y + 1] != GameWorld.state.wall)
                         {
-                            GameWorld.getInstance.player.y++;
+                            GameWorld.getInstance.player.y++; 
                         }
                         break;
                     }

@@ -116,27 +116,6 @@ namespace RetroRPG
                         }
                         oGold.addGold(x, y, coinValue);
                     }
-
-                    /*
-                    foreach (char znak in line)
-                    {
-                        switch (znak)
-                        {
-                            case ('#'):
-                                {
-                                    oWall.addWall(x, y);
-                                    break;
-                                }
-                            case ('◎'):
-                                {                                
-                                   oGold.addGold(x, y);
-
-                                    break;
-                                }
-                        }
-
-                       
-                    }*/
                     x++;
                 }
                 if (line == "#NewLine") { y++; x = 0; }       

@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="buffer.cs" />
+    <Compile Include="CharacterCreation.cs" />
     <Compile Include="ColorBuffer.cs" />
     <Compile Include="Combat.cs" />
     <Compile Include="Crafting.cs" />
