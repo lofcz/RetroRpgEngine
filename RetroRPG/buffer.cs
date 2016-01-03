@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Win32.SafeHandles;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace RetroRPG
 {
@@ -62,7 +63,7 @@ namespace RetroRPG
             [FieldOffset(0)]
             public char UnicodeChar;
             [FieldOffset(0)]
-            public byte AsciiChar;
+            public short AsciiChar;
         }
 
         [StructLayout(LayoutKind.Explicit)]
@@ -110,7 +111,7 @@ namespace RetroRPG
             }
 
             return false;
-        }  
+        }
 
         /// <summary>
         /// Consctructor class for the buffer. Pass in the width and height you want the buffer to be.
@@ -213,7 +214,7 @@ namespace RetroRPG
                 foreach (Char le in temp)
                 {
                     bool cont = true;
-                    byte special = SpecialChars(le);
+                    short special = SpecialChars(le); // BYTE
                     if (special != 0) { buf[(Width + tc) + (Height * width)].Char.AsciiChar = special; cont = false; }
 
 
@@ -232,7 +233,7 @@ namespace RetroRPG
             {
                 Console.CursorLeft += str.Length;
             }
-         
+
 
         }
 
@@ -293,7 +294,7 @@ namespace RetroRPG
                 foreach (Char le in temp)
                 {
                     bool cont = true;
-                    byte special = SpecialChars(le);
+                    short special = SpecialChars(le); // BYTE
                     if (special != 0) { buf[(Width + tc) + (Height * width)].Char.AsciiChar = special; cont = false; }
 
 
@@ -330,7 +331,7 @@ namespace RetroRPG
         {
 
             short parsedAtribute = 0;
-            short parsedAtribute2 = 0; 
+            short parsedAtribute2 = 0;
 
             switch (color)
             {
@@ -382,100 +383,132 @@ namespace RetroRPG
                 Char[] temp = str.ToCharArray();
                 int tc = 0;
                 bool isSpecialOn = false;
-               
+                bool escaping = false;
+                int CurrentChar = 0;
+                string strBackup = str;
+                char escapeChar = '\\';
 
                 for (int i = 0; i < temp.Count(); i++)               //  foreach (Char i in temp)
                 {
-                    bool cont = true;                   
+                    bool cont = true;
                     bool specialColor = false;
 
-                  
-
-                    if (temp[i] == SpecialFGChar)
-                    {
-                        if (SetFGColor(temp[i + 1]))
-                        {
-                            i += 2;
-                            back += 2;
-                            isSpecialOn = !isSpecialOn;
-                          
-
-                            switch (Console.ForegroundColor)
-                            {
-                                case ConsoleColor.Black:
-                                    {
-
-                                        break;
-                                    }
-
-                                case ConsoleColor.Gray:
-                                    {
-                                        parsedAtribute2 = 7;
-                                        break;
-                                    }
-
-                                case ConsoleColor.DarkGray:
-                                    {
-                                        parsedAtribute2 = 8;
-                                        break;
-                                    }
-
-                                case ConsoleColor.Red:
-                                    {
-                                        parsedAtribute2 = 12;
-                                        break;
-                                    }
-
-                                case ConsoleColor.Green:
-                                    {
-                                        parsedAtribute2 = 10;
-                                        break;
-                                    }
-
-                                case ConsoleColor.Yellow:
-                                    {
-                                        parsedAtribute2 = 14;
-                                        break;
-                                    }
-                            }
-                        }
-                    }
-
-                    if (isSpecialOn) { specialColor = true; }
-
-                    byte special = SpecialChars(temp[i]);
-                    if (special != 0) { buf[(Width + tc) + (Height * width)].Char.AsciiChar = special; cont = false; }
-
-                    if (cont)
-                    {
-                        buf[(Width + tc) + (Height * width)].Char.AsciiChar = (byte)temp[i]; //Height * width is to get to the correct spot (since this array is not two dimensions).
-                    }
-
-                    if (!specialColor)
-                    {
-                        if (parsedAtribute != 0)
-                            buf[(Width + tc) + (Height * width)].Attributes = parsedAtribute;
-                    }
+                    if (temp[i] == '\n')  //◙
+                    {                        
+                       NewLine();
+                       CurrentChar = 0;
+                       Height++;
+                       DrawColored(strBackup.Remove(0, 2), Width, Height, color, insert);
+                    }                   
                     else
                     {
-                        buf[(Width + tc) + (Height * width)].Attributes = parsedAtribute2;
+
+                        if (temp[i] == SpecialFGChar)
+                        {
+                            if (SetFGColor(temp[i + 1]))
+                            {
+                                i += 2;
+                                back += 2;
+                                isSpecialOn = !isSpecialOn;
+
+
+                                switch (Console.ForegroundColor)
+                                {
+                                    case ConsoleColor.Black:
+                                        {
+
+                                            break;
+                                        }
+
+                                    case ConsoleColor.Gray:
+                                        {
+                                            parsedAtribute2 = 7;
+                                            break;
+                                        }
+
+                                    case ConsoleColor.DarkGray:
+                                        {
+                                            parsedAtribute2 = 8;
+                                            break;
+                                        }
+
+                                    case ConsoleColor.Red:
+                                        {
+                                            parsedAtribute2 = 12;
+                                            break;
+                                        }
+
+                                    case ConsoleColor.Green:
+                                        {
+                                            parsedAtribute2 = 10;
+                                            break;
+                                        }
+
+                                    case ConsoleColor.Yellow:
+                                        {
+                                            parsedAtribute2 = 14;
+                                            break;
+                                        }
+                                }
+                            }
+                        }
+
+                        if (isSpecialOn) { specialColor = true; }
+
+                        short special = SpecialChars(temp[i]);
+                        if (special != 0) { buf[(Width + tc) + (Height * width)].Char.UnicodeChar = (char)special; cont = false; }
+
+                        if (cont)
+                        {
+                            buf[(Width + tc) + (Height * width)].Char.UnicodeChar = (char)temp[i]; //Height * width is to get to the correct spot (since this array is not two dimensions).
+                        }
+
+                        if (!specialColor)
+                        {
+                            if (parsedAtribute != 0)
+                                buf[(Width + tc) + (Height * width)].Attributes = parsedAtribute;
+                        }
+                        else
+                        {
+                            buf[(Width + tc) + (Height * width)].Attributes = parsedAtribute2;
+                        }
+                        tc++;
+
+                        if (CurrentChar >= 100)
+                        {
+                            NewLine();
+                            CurrentChar = 0;
+                            Height++;
+                            DrawColored(strBackup.Remove(0, 1), Width, Height, color, insert);
+
+                        }
+
+                        CurrentChar++;
+                        strBackup = strBackup.Remove(0, 1);
                     }
-                    tc++;                
+
+
+
                 }
 
-             
-
-            }
-
-            if (insert)
-            {
-                if (str.Length > 0)
+                if (insert)
                 {
-                    Console.CursorLeft += str.Length;
+                    try
+                    {
+                        if (str.Length > 0)
+                        {
+                            Console.CursorLeft += str.Length;
+                        }
+                        Console.CursorLeft -= back;
+                    }
+                    catch
+                    {
+
+                    }
                 }
-                Console.CursorLeft -= back;
             }
-          
+
+
 
 
         }
@@ -537,7 +570,7 @@ namespace RetroRPG
                 {
                     bool cont = true;
 
-                    byte special = SpecialChars(le);
+                    short special = SpecialChars(le); // BYTE
                     if (special != 0) { buf[(Width + tc) + (Height * width)].Char.AsciiChar = special; cont = false; }
 
                     if (cont)
@@ -551,16 +584,16 @@ namespace RetroRPG
                 }
             }
 
-       
+
 
         }
 
         public void DrawInt(String str, int Width, int Height, short pa) //Draws the image to the buffer
         {
-            
+
             short parsedAtribute = pa;
 
-          
+
 
             if (Width > windowWidth - 1 || Height > windowHeight - 1)
             {
@@ -575,7 +608,7 @@ namespace RetroRPG
                 {
                     bool cont = true;
 
-                    byte special = SpecialChars(le);
+                    short special = SpecialChars(le); // BYTE
                     if (special != 0) { buf[(Width + tc) + (Height * width)].Char.AsciiChar = special; cont = false; }
 
                     if (cont)
@@ -700,7 +733,7 @@ namespace RetroRPG
             return new KeyValuePair<byte, byte>((byte)buf[((y * width + x))].Char.AsciiChar, (byte)buf[((y * width + x))].Attributes);
         }
 
-        private byte SpecialChars(char znak)
+        private short SpecialChars(char znak)
         {
 
             if (znak == '╔') { return 201; }
@@ -725,7 +758,8 @@ namespace RetroRPG
             if (znak == 'ř') { return 253; }
             if (znak == 'ň') { return 229; }
             if (znak == '•') { return 7; }
-            if (znak == ' ') { return 255; }
+            if (znak == ' ') { return 255; }
+            if (znak == 'ů') { return 133; }
 
             return 0;
         }

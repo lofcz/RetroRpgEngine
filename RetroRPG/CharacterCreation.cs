@@ -29,6 +29,9 @@ namespace RetroRPG
 
         buffer buffer = Render.getInstance.Buffer;
 
+        /// <summary>
+        /// Shows a list of current classes and force player to pick one.
+        /// </summary>
         public void GetPlayerClass()
         {
             bool choosing = true;
@@ -46,12 +49,13 @@ namespace RetroRPG
 
 
                 buffer.Draw(Strings.getInstance.horizontalLine, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
-                buffer.NewLine();
+                buffer.NewLine(2);
                 // INTRO HERE
                 switch(choosedIndex)
                 {
                     case 0:
                         {
+                            buffer.DrawColored("+- Barbar -+", Console.CursorLeft + ((Console.WindowWidth / 2) - "+- Barbar +-".ToString().Length / 2) + 5, Console.CursorTop, ConsoleColor.Red, true);
                             Console.CursorTop = 3;
                             Parser.getInstance.parseImage(ResourceTree.graphicsCharCreation + "/barbarian.txt", true, ConsoleColor.Gray, Parser.Effects.none);
                             break;
@@ -82,12 +86,42 @@ namespace RetroRPG
                 // /INTRO
                 buffer.Draw(Strings.getInstance.horizontalLine, Console.CursorLeft, 14, ConsoleColor.Gray);
                 Console.CursorTop = 14;
+                buffer.NewLine();               
+                // CHARACTER STATS
+                switch (choosedIndex)
+                {
+                    case 0:
+                        {
+                            buffer.DrawColored("Už stovky let podnikají barbaři z Mlžných hor nájezdy na království. Válečný řev, který je předchází na míle daleko je postrachem všech vesničanů v okolí.\n Barbaři jsou divocí válečnící, kteří neznají strach a bojiště ovládají zbraněmi děsivých velikostí - od nordických seker, přes objruční meče, až po obří kyje.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true);
+                            break;
+                        }
+
+                    case 1:
+                        {
+                           break;
+                        }
+                    case 2:
+                        {
+                            break;
+                        }
+                    case 3:
+                        {
+                            break;
+                        }
+                    case 4:
+                        {
+                             break;
+                        }
+                }
+                // /CHARACTER STATS
+                buffer.NewLine();
+                buffer.Draw(Strings.getInstance.horizontalLine, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
                 buffer.NewLine();
 
                 for (int i = 0; i < items.Length; i++)
                 {
                     if (choosedIndex != i) { buffer.Draw("> " + items[i]); }
-                    else { buffer.Draw("> " + items[i], ConsoleColor.Yellow); } 
+                    else { buffer.Draw(">  " + items[i], ConsoleColor.Yellow); } 
 
                     buffer.NewLine();
                 }
