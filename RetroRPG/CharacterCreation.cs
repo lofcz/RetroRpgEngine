@@ -29,6 +29,11 @@ namespace RetroRPG
 
         buffer buffer = Render.getInstance.Buffer;
 
+        private enum classes
+        {
+            barbarian,mage,warrior,monk,thief
+        };
+
         /// <summary>
         /// Shows a list of current classes and force player to pick one.
         /// </summary>
@@ -92,7 +97,7 @@ namespace RetroRPG
                 {
                     case 0:
                         {
-                            buffer.DrawColored("Už stovky let podnikají barbaři z Mlžných hor nájezdy na království. Válečný řev, který je předchází na míle daleko je postrachem všech vesničanů v okolí.\n Barbaři jsou divocí válečnící, kteří neznají strach a bojiště ovládají zbraněmi děsivých velikostí - od nordických seker, přes objruční meče, až po obří kyje.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true);
+                            buffer.DrawColored("Už stovky let podnikají barbaři z #hMlžných hor#x nájezdy na království. Válečný řev, který je\npředchází na míle daleko je postrachem všech vesničanů v okolí. Barbaři jsou divocí válečnící,\nkteří neznají strach a bojiště ovládají zbraněmi děsivých velikostí - od #hnordických seker#x, přes\n#hobouruční meče#x, až po #hobří kyje#x. V boji získávají #rzuřivost#x, díky které mohou provádět mocná komba.\nDíky vysoké konstituci pasivně #rsnižují#x přijaté poškození a mají zvýšenou odolnost proti nemocím.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true); 
                             break;
                         }
 
@@ -158,7 +163,28 @@ namespace RetroRPG
 
                             break;
                         }
+                    case ConsoleKey.Enter:
+                        {
+
+                            buffer.Clear();
+                            choosing = false;
+                            Console.SetCursorPosition(0, 0);
+                            GetPlayerClassPartTwo(choosedIndex);
+                            break;
+                        }
                 }
+            }
+        }
+
+        void GetPlayerClassPartTwo(int index)
+        {
+            switch(index)
+            {
+                case (int)classes.barbarian:
+                    {
+
+                        break;
+                    }
             }
         }
     }

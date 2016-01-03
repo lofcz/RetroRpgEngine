@@ -130,6 +130,7 @@ namespace RetroRPG
 
             // add some default colors
             Colors.Add('r', ConsoleColor.Red);
+            Colors.Add('h', ConsoleColor.DarkGray);
             Colors.Add('y', ConsoleColor.Yellow);
             Colors.Add('g', ConsoleColor.Green);
             Colors.Add('b', ConsoleColor.Blue);
@@ -394,22 +395,27 @@ namespace RetroRPG
                     bool specialColor = false;
 
                     if (temp[i] == '\n')  //◙
-                    {                        
+                    {            
                        NewLine();
                        CurrentChar = 0;
                        Height++;
-                       DrawColored(strBackup.Remove(0, 2), Width, Height, color, insert);
+
+                        DrawColored(strBackup.Remove(0, 1), 0, Height, color, false);
+                        break;
                     }                   
                     else
                     {
 
                         if (temp[i] == SpecialFGChar)
                         {
+                            strBackup = strBackup.Remove(0, 1);
+
                             if (SetFGColor(temp[i + 1]))
                             {
                                 i += 2;
                                 back += 2;
                                 isSpecialOn = !isSpecialOn;
+                                strBackup = strBackup.Remove(0, 1);
 
 
                                 switch (Console.ForegroundColor)
@@ -476,10 +482,10 @@ namespace RetroRPG
 
                         if (CurrentChar >= 100)
                         {
-                            NewLine();
-                            CurrentChar = 0;
-                            Height++;
-                            DrawColored(strBackup.Remove(0, 1), Width, Height, color, insert);
+                     //       NewLine();
+                       //     CurrentChar = 0;
+                       //     Height++;
+                          //  DrawColored(strBackup.Remove(0, 1), Width, Height, color, insert);
 
                         }
 
