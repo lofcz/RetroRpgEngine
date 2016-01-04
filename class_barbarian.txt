@@ -1,0 +1,4 @@
+// sila,konstituce,obratnost,odolnost,inteligence,charisma,vule,zrucnost,postreh,stesti
+// hackovani_zamku,plizeni,presvedcovani,zastrasovani,runova_magie,elementarni_magie,zarikavani,smlouvani,zapal,vira
+[vlastnosti] 12,10,6,8,4,4,6,5,7,6 
+[dovednosti] 4,5,8,11,4,4,4,7,11,8

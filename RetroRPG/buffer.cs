@@ -13,6 +13,11 @@ namespace RetroRPG
     public class buffer
     {
 
+        public enum type
+        {
+            common,characterCreation
+        };
+
         public static Dictionary<char, ConsoleColor> Colors;
         public static char SpecialFGChar { get; set; }
         public static char SpecialBGChar { get; set; }
@@ -335,8 +340,21 @@ namespace RetroRPG
 
 
         // ***********************************************************************************************************************************
-        public void DrawColored(String str, int Width, int Height, ConsoleColor color, bool insert, bool newLine = false) //Draws the image to the buffer
+        public void DrawColored(String str, int Width, int Height, ConsoleColor color, bool insert, bool newLine = false, type type = type.common, int typeValue = 0) //Draws the image to the buffer
         {
+            if (type == type.characterCreation && typeValue != 0)
+            {
+                string brake = "";
+                if (typeValue < 10) {  brake = "  "; } else { brake = " "; }
+
+                if (typeValue >= 11) { str = str + "#y" + typeValue + "#x" + brake + "(#g+++#x)"; }
+                else if (typeValue == 10) { str = str + "#y" + typeValue + "#x" + brake + "(#g++#x)"; }
+                else if (typeValue == 9) { str = str + "#y" + typeValue + "#x" + brake + "(#g+#x)"; }
+                else if (typeValue == 8) { str = str + "#y" + typeValue + brake + "#x"; }
+                else if (typeValue == 7) { str = str + "#y" + typeValue + "#x" + brake +  "(#r-#x)"; }
+                else if (typeValue == 6) { str = str + "#y" + typeValue + "#x" + brake + "(#r--#x)"; }
+                else { str = str + "#y" + typeValue + "#x" + brake +  "(#r+++#x)"; }
+            }
 
             short parsedAtribute = 0;
             short parsedAtribute2 = 0;
