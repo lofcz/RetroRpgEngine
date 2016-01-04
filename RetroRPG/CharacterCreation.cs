@@ -182,105 +182,168 @@ namespace RetroRPG
 
         void GetPlayerClassPartTwo(int index)
         {
+
+            string fileString = "";
+
             switch(index)
             {
                 case (int)classes.barbarian:
                     {
-                        StreamReader sr = new StreamReader(ResourceTree.dataClasses + "class_barbarian.txt");
-                        string line = "";
-                        string[] parsed = new string[File.ReadLines(ResourceTree.dataClasses + "class_barbarian.txt").Count()];
-                        int i = 0;
-                        int[] parsedVlastnosti = new int[Enum.GetNames(typeof(oPlayer.vlastnosti)).Length];
-                        int[] parsedDovednosti = new int[Enum.GetNames(typeof(oPlayer.dovednosti)).Length];
-                        string[] parsedVlastnostiText = new string[Enum.GetNames(typeof(oPlayer.vlastnosti)).Length];
-                        string[] parsedDovednostiText = new string[Enum.GetNames(typeof(oPlayer.dovednosti)).Length];
-
-
-                        for (int j = 0; j < parsed.Length; j++)
-                        {
-                            parsed[j] = "";
-                        }
-                            while ((line = sr.ReadLine()) != null)
-                        {
-                           parsed[i] = line;
-                            i++;
-                        }
-
-                        for (int j = 0; j < parsed.Length; j++)
-                        {
-                            // Vlastnosti [int]                            
-                            if (parsed[j].StartsWith("[vlastnosti]"))
-                                {
-                                    parsed[j] = parsed[j].Replace("[vlastnosti]", "");
-                                    parsedVlastnosti = parsed[j].Split(',').Select(n => Convert.ToInt32(n)).ToArray();
-                                }
-
-                            // Dovednosti [int]
-                                if (parsed[j].StartsWith("[dovednosti]"))
-                                {
-                                    parsed[j] = parsed[j].Replace("[dovednosti]", "");
-                                    parsedDovednosti = parsed[j].Split(',').Select(n => Convert.ToInt32(n)).ToArray();
-                                }
-                        }
-
-                        buffer.Draw(Strings.getInstance.horizontalLine);
-                        buffer.NewLine();
-                        buffer.DrawColored("+- Barbar -+", Console.CursorLeft + ((Console.WindowWidth / 2) - "+- Barbar +-".ToString().Length / 2), Console.CursorTop, ConsoleColor.Red, true);
-
-                        buffer.NewLine();
-                        buffer.Draw(Strings.getInstance.horizontalLine);
-                        buffer.NewLine();
-                        // Základní vlastnosti
-                        buffer.DrawColored("[Vlastnosti]", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow, false, true);
-                        buffer.NewLine();
-                        buffer.DrawColored("Síla:         ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedVlastnosti[(int)oPlayer.vlastnosti.sila]);
-                        buffer.DrawColored("Konstituce:   ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedVlastnosti[(int)oPlayer.vlastnosti.konstituce]);
-                        buffer.DrawColored("Obratnost:    #y6#x  (#r--#x)", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Odolnost:     #y8#x ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Inteligence:  #y4#x  (#r---#x)", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Charisma:     #y4#x  (#r---#x)", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Vůle:         #y6#x  (#r--#x)", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Zručnost:     #y5#x  (#r---#x)", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Postřeh:      #y7#x ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Štěstí:       #y6#x  (#r-#x)", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        // Dovednosti
-                        Console.CursorTop = 3;
-
-                        buffer.DrawColored("[Dovednosti]", 30, Console.CursorTop, ConsoleColor.Yellow, false, true);
-                        buffer.NewLine();
-                        buffer.DrawColored("Háčkování zámků:    #y4#x (#r---#x)", 30, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Plížení:            #y5#x (#r---#x)", 30, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Přesvědčování:      #y8#x ", 30, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Zastrašování:       #y11#x (#g+++#x)", 30, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Runová magie:       #y4#x (#r---#x)", 30, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Elementární magie:  #y4#x (#r---#x)", 30, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Zaříkávání:         #y4#x (#r---#x)", 30, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Smlouvání:          #y7#x ", 30, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Zápal:              #y11#x (#g+++#x)", 30, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Víra :              #y8#x ", 30, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        // Specializace
-                        Console.CursorTop = 3;
-
-                        buffer.DrawColored("[Specializace]", 63, Console.CursorTop, ConsoleColor.Yellow, false, true);
-                        buffer.NewLine();
-                        buffer.DrawColored("Reflexe poškození:  #y+5%#x  - level 5", 63, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Ochrana vůči jedu:  #y+10%#x - level 15", 63, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Prodloužené kombo:  #y+1#x   - level 30", 63, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Ochrana vůči ohni:  #y+10%#x - level 50", 63, Console.CursorTop, ConsoleColor.Gray, false, true);
-
-                        Console.CursorTop = 16;
-
-
-                        buffer.DrawColored("[Bonusy povolání]", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow, false, true);
-                        buffer.NewLine();
-                        buffer.DrawColored("Nemoci trvají o #gpolovinu#x kol méně.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Úspěšně dokončené kombo má #g5%#x šanci na aplikování efektu #hzlomenina#x.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Útoky generují #rzuřivost#x, kterou můžeš uvolnit do mocného komba.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
-                        buffer.DrawColored("Omráčení protivníka má #g25%#x šanci na prodloužení svého efektu o #gdalší kolo#x.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
-
+                        fileString = "class_barbarian.txt";
                         break;
                     }
             }
+
+
+            StreamReader sr = new StreamReader(ResourceTree.dataClasses + fileString, Encoding.UTF8);
+            string line = "";
+            string header = "";
+            string[] parsed = new string[File.ReadLines(ResourceTree.dataClasses + fileString).Count()];
+            int i = 0;
+            int[] parsedVlastnosti = new int[Enum.GetNames(typeof(oPlayer.vlastnosti)).Length];
+            int[] parsedDovednosti = new int[Enum.GetNames(typeof(oPlayer.dovednosti)).Length];
+            string[] parsedVlastnostiText = new string[Enum.GetNames(typeof(oPlayer.vlastnosti)).Length];
+            string[] parsedDovednostiText = new string[Enum.GetNames(typeof(oPlayer.dovednosti)).Length];
+            int parsingStatus = 0;
+            List<string> specializaceList = new List<string>();
+            List<string> bonusyList = new List<string>();
+
+            for (int j = 0; j < parsed.Length; j++)
+            {
+                parsed[j] = "";
+            }
+            while ((line = sr.ReadLine()) != null)
+            {
+                parsed[i] = line;
+                i++;
+            }
+
+            sr.Close();
+
+            for (int j = 0; j < parsed.Length; j++)
+            {
+                if (parsingStatus == 0)
+                {
+                    // Vlastnosti [int]                            
+                    if (parsed[j].StartsWith("[vlastnosti]"))
+                    {
+                        parsed[j] = parsed[j].Replace("[vlastnosti]", "");
+                        parsedVlastnosti = parsed[j].Split(',').Select(n => Convert.ToInt32(n)).ToArray();
+                    }
+
+                    // Dovednosti [int]
+                    if (parsed[j].StartsWith("[dovednosti]"))
+                    {
+                        parsed[j] = parsed[j].Replace("[dovednosti]", "");
+                        parsedDovednosti = parsed[j].Split(',').Select(n => Convert.ToInt32(n)).ToArray();
+                    }
+
+                    // Specializace [string]
+                    if (parsed[j].StartsWith("[specializace]"))
+                    {
+                        parsed[j] = parsed[j].Replace("[specializace]", "");
+                        parsingStatus = 1;
+                    }
+
+                    // Bonusy [string]
+                    if (parsed[j].StartsWith("[bonusy_povolani]"))
+                    {
+                        parsed[j] = parsed[j].Replace("[bonusy_povolani]", "");
+                        parsingStatus = 2;
+                    }
+
+                    // Header [string]
+                    if (parsed[j].StartsWith("[nazev]"))
+                    {
+                        parsed[j] = parsed[j].Replace("[nazev]", "");
+                        header = parsed[j];
+                    }
+                }
+
+                // PARSING SPECIALIZACE
+                if (parsingStatus == 1)
+                {
+                    if (parsed[j].StartsWith("[/specializace]")) // Koncový metaTag
+                    {
+                        parsed[j] = parsed[j].Replace("[/specializace]", "");
+                        parsingStatus = 0;
+                    }
+                    else
+                    {
+                        specializaceList.Add(parsed[j]);
+                    }
+                }
+
+                // PARSING BONUSY POVOLANI
+                if (parsingStatus == 2)
+                {
+                    if (parsed[j].StartsWith("[/bonusy_povolani]")) // Koncový metaTag
+                    {
+                        parsed[j] = parsed[j].Replace("[/bonusy_povolani]", "");
+                        parsingStatus = 0;
+                    }
+                    else
+                    {
+                        bonusyList.Add(parsed[j]);
+                    }
+                }
+            }
+
+            // Hlavička
+            buffer.Draw(Strings.getInstance.horizontalLine);
+            buffer.NewLine();
+            buffer.DrawColored(header, Console.CursorLeft + ((Console.WindowWidth / 2) - header.ToString().Length / 2), Console.CursorTop, ConsoleColor.Yellow, true);
+
+            buffer.NewLine();
+            buffer.Draw(Strings.getInstance.horizontalLine);
+            buffer.NewLine();
+
+            // Vlastnosti
+            buffer.DrawColored("[Vlastnosti]", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow, false, true);
+            buffer.NewLine();
+            buffer.DrawColored("Síla:         ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedVlastnosti[(int)oPlayer.vlastnosti.sila]);
+            buffer.DrawColored("Konstituce:   ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedVlastnosti[(int)oPlayer.vlastnosti.konstituce]);
+            buffer.DrawColored("Obratnost:    ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedVlastnosti[(int)oPlayer.vlastnosti.obratnost]);
+            buffer.DrawColored("Odolnost:     ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedVlastnosti[(int)oPlayer.vlastnosti.odolnost]);
+            buffer.DrawColored("Inteligence:  ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedVlastnosti[(int)oPlayer.vlastnosti.inteligence]);
+            buffer.DrawColored("Charisma:     ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedVlastnosti[(int)oPlayer.vlastnosti.charisma]);
+            buffer.DrawColored("Vůle:         ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedVlastnosti[(int)oPlayer.vlastnosti.vule]);
+            buffer.DrawColored("Zručnost:     ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedVlastnosti[(int)oPlayer.vlastnosti.zrucnost]);
+            buffer.DrawColored("Postřeh:      ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedVlastnosti[(int)oPlayer.vlastnosti.postreh]);
+            buffer.DrawColored("Štěstí:       ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedVlastnosti[(int)oPlayer.vlastnosti.stesti]);
+
+            // Dovednosti
+            Console.CursorTop = 3;
+            buffer.DrawColored("[Dovednosti]", 30, Console.CursorTop, ConsoleColor.Yellow, false, true);
+            buffer.NewLine();
+            buffer.DrawColored("Háčkování zámků:    ", 30, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedDovednosti[(int)oPlayer.dovednosti.hackovani_zamku]);
+            buffer.DrawColored("Plížení:            ", 30, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedDovednosti[(int)oPlayer.dovednosti.plizeni]);
+            buffer.DrawColored("Přesvědčování:      ", 30, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedDovednosti[(int)oPlayer.dovednosti.presvedcovani]);
+            buffer.DrawColored("Zastrašování:       ", 30, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedDovednosti[(int)oPlayer.dovednosti.zastrasovani]);
+            buffer.DrawColored("Runová magie:       ", 30, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedDovednosti[(int)oPlayer.dovednosti.runova_magie]);
+            buffer.DrawColored("Elementární magie:  ", 30, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedDovednosti[(int)oPlayer.dovednosti.elementarni_magie]);
+            buffer.DrawColored("Zaříkávání:         ", 30, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedDovednosti[(int)oPlayer.dovednosti.zarikavani]);
+            buffer.DrawColored("Smlouvání:          ", 30, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedDovednosti[(int)oPlayer.dovednosti.smlouvani]);
+            buffer.DrawColored("Zápal:              ", 30, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedDovednosti[(int)oPlayer.dovednosti.zapal]);
+            buffer.DrawColored("Víra :              ", 30, Console.CursorTop, ConsoleColor.Gray, false, true, buffer.type.characterCreation, parsedDovednosti[(int)oPlayer.dovednosti.vira]);
+
+            // Specializace
+            Console.CursorTop = 3;
+            buffer.DrawColored("[Specializace]", 63, Console.CursorTop, ConsoleColor.Yellow, false, true);
+            foreach (string str in specializaceList)
+            {
+                buffer.DrawColored(str, 63, Console.CursorTop, ConsoleColor.Gray, false, true);
+            }
+
+            // Bonusy povolání
+            Console.CursorTop = 16;
+            buffer.DrawColored("[Bonusy povolání]", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow, false, true);
+            foreach (string str in bonusyList)
+            {
+                buffer.DrawColored(str, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
+            }
+
+            // Nabídka
             buffer.Print();
             buffer.NewLine();
             Console.CursorLeft = 0;
@@ -291,12 +354,12 @@ namespace RetroRPG
 
             while(choosing)
             {
-                for (int i = 0; i < items.Length; i++)
+                for (int k = 0; k < items.Length; k++)
                 {
-                    if (i != choosed) {buffer.DrawColored("> " + items[i], Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true); }
+                    if (k != choosed) {buffer.DrawColored("> " + items[k], Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true); }
                     else
                     {
-                        buffer.DrawColored(" #g> #x" + items[i], Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow, false, true);
+                        buffer.DrawColored(" #g> #x" + items[k], Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow, false, true);
                     }
                 }
 
@@ -369,9 +432,9 @@ namespace RetroRPG
                         }
                 }
 
-                for (int i = 0; i < items.Length; i++)
+                for (int l = 0; l < items.Length; l++)
                 {
-                    buffer.clearRow(top + i);
+                    buffer.clearRow(top + l);
                 }
 
                 Console.CursorTop = top;

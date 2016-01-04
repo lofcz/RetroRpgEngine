@@ -347,13 +347,13 @@ namespace RetroRPG
                 string brake = "";
                 if (typeValue < 10) {  brake = "  "; } else { brake = " "; }
 
-                if (typeValue >= 11) { str = str + "#y" + typeValue + "#x" + brake + "(#g+++#x)"; }
-                else if (typeValue == 10) { str = str + "#y" + typeValue + "#x" + brake + "(#g++#x)"; }
-                else if (typeValue == 9) { str = str + "#y" + typeValue + "#x" + brake + "(#g+#x)"; }
-                else if (typeValue == 8) { str = str + "#y" + typeValue + brake + "#x"; }
-                else if (typeValue == 7) { str = str + "#y" + typeValue + "#x" + brake +  "(#r-#x)"; }
-                else if (typeValue == 6) { str = str + "#y" + typeValue + "#x" + brake + "(#r--#x)"; }
-                else { str = str + "#y" + typeValue + "#x" + brake +  "(#r+++#x)"; }
+                if (typeValue >= 11) { str = str + "#y" + typeValue + "#x" + brake + "(#g+++#x) "; }
+                else if (typeValue == 10) { str = str + "#y" + typeValue + "#x" + brake + "(#g++#x) "; }
+                else if (typeValue == 9) { str = str + "#y" + typeValue + "#x" + brake + "(#g+#x) "; }
+                else if (typeValue == 8) { str = str + "#y" + typeValue + brake + "#x "; }
+                else if (typeValue == 7) { str = str + "#y" + typeValue + "#x" + brake +  "(#r-#x) "; }
+                else if (typeValue == 6) { str = str + "#y" + typeValue + "#x" + brake + "(#r--#x) "; }
+                else { str = str + "#y" + typeValue + "#x" + brake +  "(#r---#x) "; }
             }
 
             short parsedAtribute = 0;

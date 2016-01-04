@@ -27,7 +27,7 @@ namespace RetroRPG.Objects
 
         public enum dovednosti
         {
-            hackovani_zamku,plizeni,presvedcovani,zastrasovani,runova_magie,elementarni_magie,zatikavani,smlouvani,zapal,vira
+            hackovani_zamku,plizeni,presvedcovani,zastrasovani,runova_magie,elementarni_magie,zarikavani,smlouvani,zapal,vira
         };
 
         public enum ItemsEquiped
