@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RetroRPG.Objects
 {
@@ -37,6 +38,7 @@ namespace RetroRPG.Objects
             Render.getInstance.Buffer.Clear();
 
             CharacterCreation.getInstance.GetPlayerClass();
+            MessageBox.Show(Convert.ToString(GameWorld.getInstance.player.gameClass));
             //    Intro.getInstance.DisplayIntro();
             Parser.getInstance.parseImage("award.txt",true,ConsoleColor.Gray, Parser.Effects.typewriter);
             Console.SetCursorPosition(0, 0);

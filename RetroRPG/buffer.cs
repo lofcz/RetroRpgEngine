@@ -232,7 +232,14 @@ namespace RetroRPG
 
             if (str.Length > 0)
             {
-                Console.CursorLeft += str.Length;
+                try
+                {
+                    Console.CursorLeft += str.Length;
+                }
+                catch
+                {
+
+                }
             }
 
 
@@ -328,7 +335,7 @@ namespace RetroRPG
 
 
         // ***********************************************************************************************************************************
-        public void DrawColored(String str, int Width, int Height, ConsoleColor color, bool insert) //Draws the image to the buffer
+        public void DrawColored(String str, int Width, int Height, ConsoleColor color, bool insert, bool newLine = false) //Draws the image to the buffer
         {
 
             short parsedAtribute = 0;
@@ -511,6 +518,11 @@ namespace RetroRPG
                     {
 
                     }
+                }
+
+            if(newLine)
+                {
+                    NewLine();
                 }
             }
 
@@ -766,6 +778,8 @@ namespace RetroRPG
             if (znak == '•') { return 7; }
             if (znak == ' ') { return 255; }
             if (znak == 'ů') { return 133; }
+            if (znak == 'Š') { return 230; }
+            if (znak == 'Ú') { return 233; }
 
             return 0;
         }

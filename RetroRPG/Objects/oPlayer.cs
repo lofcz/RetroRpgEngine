@@ -15,6 +15,20 @@ namespace RetroRPG.Objects
         public int stamina = 20;
         public int max_stamina = 20;
         public bool[] equiped = { false, false };
+        public CharacterCreation.classes gameClass;
+
+        public int[] Vlastnosti = new int[Enum.GetNames(typeof(vlastnosti)).Length];
+        public int[] Dovednosti = new int[Enum.GetNames(typeof(dovednosti)).Length];
+
+        public enum vlastnosti
+        {
+            sila,konstituce,obratnost,odolnost,inteligence,charisma,vule,zrucnost,postreh,stesti
+        };
+
+        public enum dovednosti
+        {
+            hackovani_zamku,plizeni,presvedcovani,zastrasovani,runova_magie,elementarni_magie,zatikavani,smlouvani,zapal,vira
+        };
 
         public enum ItemsEquiped
         {
