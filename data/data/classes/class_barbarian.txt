@@ -1,0 +1,23 @@
+﻿// ----> KONSTRUKTOR PRO TŘÍDU BARBARIAN <----
+// Konstruktor MUSÍ BÝT ULOŽEN VE FORMÁTU *UTF-8*
+	
+// sila,konstituce,obratnost,odolnost,inteligence,charisma,vule,zrucnost,postreh,stesti
+// hackovani_zamku,plizeni,presvedcovani,zastrasovani,runova_magie,elementarni_magie,zarikavani,smlouvani,zapal,vira
+[nazev] +- Barbar -+
+
+[vlastnosti] 11,10,6,8,4,4,6,5,7,6 
+[dovednosti] 4,5,8,11,4,4,4,7,11,8
+
+[specializace]
+Reflexe poškození:  #y+5%#x  - level 5
+Ochrana vůči jedu:  #y+10%#x - level 15
+Prodloužené kombo:  #y+1#x   - level 30
+Ochrana vůči ohni:  #y+10%#x - level 50
+[/specializace]
+
+[bonusy_povolani]
+Nemoci trvají o #gpolovinu#x kol méně.
+Úspěšně dokončené kombo má #g5%#x šanci na aplikování efektu #hzlomenina#x.
+Útoky generují #rzuřivost#x, kterou můžeš uvolnit do mocného komba.
+Omráčení protivníka má #g25%#x šanci na prodloužení svého efektu o #gdalší kolo#x.
+[/bonusy_povolani]

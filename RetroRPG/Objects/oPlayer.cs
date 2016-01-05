@@ -12,13 +12,22 @@ namespace RetroRPG.Objects
 
          int gold = 0;
         public string name = "LordOfFlies";
+        public string title = "Neznámý cestující";
+        public ConsoleColor titleColor = ConsoleColor.DarkGray;
         public int stamina = 20;
         public int max_stamina = 20;
         public bool[] equiped = { false, false };
         public CharacterCreation.classes gameClass;
 
+        public int lvlupVlastnosti = 5;
+        public int lvlupDovednosti = 0;
+
         public int[] Vlastnosti = new int[Enum.GetNames(typeof(vlastnosti)).Length];
         public int[] Dovednosti = new int[Enum.GetNames(typeof(dovednosti)).Length];
+
+        public string[] vlastnostiName = { "Síla:         ", "Konstituce:   ", "Obratnost:    ", "Odolnost:     ", "Inteligence:  ", "Charisma:     ", "Vůle:         ", "Zručnost:     ", "Postřeh:      ", "Štěstí:       " };
+        public string[] dovednostiName = { "Háčkování zámků:    ", "Plížení:            ", "Přesvědčování:      ", "Zastrašování:       ", "Runová magie:       ", "Elementární magie:  ", "Zaříkávání:         ", "Smlouvání:          ", "Zápal:              ", "Víra :              " };
+
 
         public enum vlastnosti
         {
