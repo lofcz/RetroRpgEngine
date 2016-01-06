@@ -10,7 +10,7 @@ namespace RetroRPG.Objects
     {
         public oPlayer(char symbol, string accessName, ConsoleColor color, int x, int y, int hp) : base(symbol, accessName, color, x, y, hp) {  }
 
-         int gold = 0;
+        int gold = 0;
         public string name = "LordOfFlies";
         public string title = "Neznámý cestující";
         public ConsoleColor titleColor = ConsoleColor.DarkGray;
@@ -18,6 +18,7 @@ namespace RetroRPG.Objects
         public int max_stamina = 20;
         public bool[] equiped = { false, false };
         public CharacterCreation.classes gameClass;
+
 
         public int lvlupVlastnosti = 5;
         public int lvlupDovednosti = 0;

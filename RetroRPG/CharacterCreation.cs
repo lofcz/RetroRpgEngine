@@ -454,6 +454,9 @@ namespace RetroRPG
             bool choosingAction = true;
             string[] vlastnostiName = player.vlastnostiName;
             string[] dovednostiName = player.dovednostiName;
+            int choosingHor = 0;
+            int choosingVer = 0;
+            Console.CursorVisible = false;
 
             while (choosing == "main_menu")
             {
@@ -635,7 +638,16 @@ namespace RetroRPG
                 buffer.NewLine();
                 for (int i = 0; i < vlastnostiName.Length; i++)
                 {
-                    buffer.DrawColored(vlastnostiName[i] + "#y" + player.Vlastnosti[i] + "#x ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
+                    if (choosingHor == 0 && choosingVer == i)
+                    {
+                        buffer.DrawColored("#g" + vlastnostiName[i] + "#x #y[" + player.Vlastnosti[i] + "]#x ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
+                    }
+                    else
+                    {
+                        buffer.DrawColored(vlastnostiName[i] + "#y" + player.Vlastnosti[i] + "#x ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
+
+                    }
+
                 }
 
                 // Dovednosti
@@ -644,133 +656,157 @@ namespace RetroRPG
                 buffer.NewLine();
                 for (int i = 0; i < dovednostiName.Length; i++)
                 {
-                    buffer.DrawColored(vlastnostiName[i] + "#y" + player.Dovednosti[i] + "#x ", 30, Console.CursorTop, ConsoleColor.Gray, false, true);
+                    if (choosingHor == 1 && choosingVer == i)
+                    {
+                        buffer.DrawColored("#g" + vlastnostiName[i] + "#x #y[" + player.Dovednosti[i] + "]#x ", 30, Console.CursorTop, ConsoleColor.Gray, false, true);
+                    }
+                    else
+                    {
+                        buffer.DrawColored(vlastnostiName[i] + "#y" + player.Dovednosti[i] + "#x ", 30, Console.CursorTop, ConsoleColor.Gray, false, true);
+                    }
                 }
+
+                // Status
+                Console.CursorTop = 3;
+                buffer.DrawColored("[Status]", 63, Console.CursorTop, ConsoleColor.Yellow, false, true);
                 buffer.NewLine();
+                string remVlastnosti = "";
+                string remDovednosti = "";
 
-                buffer.Print();
-                int choosed = 0;
-                string[] items = { "Inventááář", "Level-up", "Status postavy", "Statistiky", "Zpět" };
-                int top = Console.CursorTop;
-                int choosed_ver = 0;
-
-                while (choosingAction)
+                if (player.lvlupVlastnosti > 0)
                 {
-                    for (int k = 0; k < items.Length; k++)
-                    {
-                        if (k != 1)
-                        {
-                            if (k != choosed) { buffer.DrawColored("> " + items[k], Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true); }
-                            else
-                            {
-                                buffer.DrawColored(" #g> #x" + items[k], Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow, false, true);
-                            }
-                        }
-                        else
-                        {
-                            if (player.lvlupDovednosti + player.lvlupVlastnosti > 0)
-                            {
-                                if (k != choosed) { buffer.DrawColored("> " + items[k] + " (#g" + Convert.ToString(player.lvlupDovednosti + player.lvlupVlastnosti) + "#x)", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true); }
-                                else
-                                {
-                                    buffer.DrawColored(" #g> #x" + items[k] + " (#g" + Convert.ToString(player.lvlupDovednosti + player.lvlupVlastnosti) + "#x)", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow, false, true);
-                                }
-                            }
-                            else
-                            {
-                                if (k != choosed) { buffer.DrawColored("> " + items[k] + " (#h0#x)", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true); }
-                                else
-                                {
-                                    buffer.DrawColored(" #g> #x" + items[k] + " (#h0#x)", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow, false, true);
-                                }
-                            }
-                        }
-                    }
-
-                    buffer.Print();
-                    ConsoleKey key = Console.ReadKey().Key;
-
-
-                    switch (key)
-                    {
-                        case ConsoleKey.W:
-                            {
-                                if (choosed > 0)
-                                {
-                                    choosed--;
-                                }
-                                else
-                                {
-                                    choosed = items.Length - 1;
-                                }
-                                break;
-                            }
-
-                        case ConsoleKey.S:
-                            {
-                                if (choosed < items.Length - 1)
-                                {
-                                    choosed++;
-                                }
-                                else
-                                {
-                                    choosed = 0;
-                                }
-                                break;
-                            }
-
-                        case ConsoleKey.Enter:
-                            {
-                                switch (choosed)
-                                {
-                                    case 0:
-                                        {
-                                            //    choosingAction = false;
-                                            buffer.Clear();
-                                            Console.SetCursorPosition(0, 0);
-                                            buffer.Print();
-
-                                            Inventory.getInstance.drawInventory();
-                                            choosing = "end";
-                                            choosingAction = false;
-                                            //   GetPlayerClass(index);
-                                            break;
-                                        }
-                                    case 1:
-                                        {
-                                            //    choosingAction = false;
-                                            buffer.Clear();
-                                            Console.SetCursorPosition(0, 0);
-                                            buffer.Print();
-                                            choosing = "lvl_up";
-                                            choosingAction = false;
-                                            //   GetPlayerClass(index);
-                                            break;
-                                        }
-                                    case 4:
-                                        {
-                                            buffer.Clear();
-                                            Console.SetCursorPosition(0, 0);
-                                            buffer.Print();
-                                            choosing = "end";
-                                            choosingAction = false;
-                                            break;
-                                        }
-                                }
-
-                                break;
-                            }
-                    }
-
-                    for (int l = 0; l < items.Length; l++)
-                    {
-                        buffer.clearRow(top + l);
-                    }
-
-                    Console.CursorTop = top;
-                    Console.CursorLeft = 0;
+                     remVlastnosti = "#g" + Convert.ToString(player.lvlupVlastnosti) + "#x ";
                 }
+                else
+                {
+                     remVlastnosti = "#h0#x ";
+                }
+
+                if (player.lvlupDovednosti > 0)
+                {
+                    remDovednosti = "#g" + Convert.ToString(player.lvlupDovednosti) + "#x ";
+                }
+                else
+                {
+                    remDovednosti = "#h0#x ";
+                }
+                buffer.DrawColored("#y" + remVlastnosti, 63, Console.CursorTop, ConsoleColor.Gray, false, true);
+                buffer.DrawColored("Bodů vlastností: " + remVlastnosti, 63, Console.CursorTop, ConsoleColor.Gray, false, true);
+                buffer.DrawColored("Bodů dovedností: " + remDovednosti, 63, Console.CursorTop, ConsoleColor.Gray, false, true);
+
+
+
+
+                int choosed = 0;
+                buffer.Print();
+                ConsoleKey key = Console.ReadKey(true).Key;
+
+
+                switch (key)
+                {
+                    case ConsoleKey.W:
+                        {
+                            if (choosingVer > 0)
+                            {
+                                choosingVer--;
+                            }
+                            else
+                            {
+                                if (choosingHor > 0)
+                                {
+                                    choosingVer = player.Vlastnosti.Length - 1;
+                                    choosingHor--;
+                                }
+                                else
+                                {
+                                    choosingVer = player.Vlastnosti.Length - 1;
+                                    choosingHor = 1;  
+                                }
+                            }
+                            break;
+                        }
+
+                    case ConsoleKey.S:
+                        {
+                            if (choosingVer < player.Vlastnosti.Length - 1)
+                            {
+                                choosingVer++;
+                            }
+                            else
+                            {
+                                if (choosingHor <1)
+                                {
+                                    choosingVer = 0;
+                                    choosingHor++;
+                                }
+                                else
+                                {
+                                   
+                                    choosingVer = 0;
+                                    choosingHor = 0;
+                                }
+                            }
+                            break;
+                        }
+
+                    case ConsoleKey.D:
+                        {
+                            if (choosingHor < 1)
+                            {
+                                choosingHor++;
+                            }
+                            else
+                            {
+                                choosingHor = 0;
+                            }
+                            break;
+                        }
+
+                    case ConsoleKey.A:
+                        {
+                            if (choosingHor > 0)
+                            {
+                                choosingHor--;
+                            }
+                            else
+                            {
+                                choosingHor = 1;
+                            }
+                            break;
+                        }
+
+                    case ConsoleKey.Enter:
+                        {
+                            switch (choosingHor)
+                            {
+                                case 0:
+                                    {
+                                       if (player.lvlupVlastnosti > 0)
+                                        {
+                                            player.Vlastnosti[choosingVer]++;
+                                            player.lvlupVlastnosti--;
+                                        }
+
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        if (player.lvlupDovednosti > 0)
+                                        {
+                                            player.Dovednosti[choosingVer]++;
+                                            player.lvlupDovednosti--;
+                                        }
+                                        break;
+                                    }
+                           
+                            }
+
+                            break;
+                        }
+                }             
             }
+
+            Console.CursorVisible = true;
         }
 
         public void getName()
