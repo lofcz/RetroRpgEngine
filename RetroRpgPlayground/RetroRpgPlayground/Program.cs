@@ -1,23 +1,90 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace RetroRpgPlayground
 {
     class Program
     {
-        static void Main(string[] args)
+        public void SerializeObject<T>(T serializableObject, string fileName)
         {
-            for (int i = 0; i < 400; i++)
+            if (serializableObject == null) { return; }
+
+            try
             {
-                // Get ascii character.
-                char c = (char)i;
-                Console.Write("\n");
+                XmlDocument xmlDocument = new XmlDocument();
+                XmlSerializer serializer = new XmlSerializer(serializableObject.GetType());
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    serializer.Serialize(stream, serializableObject);
+                    stream.Position = 0;
+                    xmlDocument.Load(stream);
+                    xmlDocument.Save(fileName);
+                    stream.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                //Log exception here
+            }
+        }
+
+
+        public T DeSerializeObject<T>(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName)) { return default(T); }
+
+            T objectOut = default(T);
+
+            try
+            {
+                string attributeXml = string.Empty;
+
+                XmlDocument xmlDocument = new XmlDocument();
+                xmlDocument.Load(fileName);
+                string xmlString = xmlDocument.OuterXml;
+
+                using (StringReader read = new StringReader(xmlString))
+                {
+                    Type outType = typeof(T);
+
+                    XmlSerializer serializer = new XmlSerializer(outType);
+                    using (XmlReader reader = new XmlTextReader(read))
+                    {
+                        objectOut = (T)serializer.Deserialize(reader);
+                        reader.Close();
+                    }
+
+                    read.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                //Log exception here
             }
 
+            return objectOut;
+        }
+
+        static void Main(string[] args)
+        {
+            List<GameObject> go = new List<GameObject>();
+            GameObject obj = new GameObject();
+            obj.value = 4;
+            Serialize
+            go.Add(obj);
+           
+            
             Console.ReadKey();
         }
+
+    
+
+
     }
 }

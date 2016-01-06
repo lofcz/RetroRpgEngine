@@ -489,7 +489,7 @@ namespace RetroRPG
 
                 buffer.Print();
                 int choosed = 0;
-                string[] items = { "Inventář", "Level-up", "Status postavy", "Statistiky" };
+                string[] items = { "Inventář", "Level-up", "Status postavy", "Statistiky","Zpět" };
                 int top = Console.CursorTop;
 
                 while (choosingAction)
@@ -563,16 +563,35 @@ namespace RetroRPG
                                 {
                                     case 0:
                                         {
-                                            choosingAction = false;
+                                        //    choosingAction = false;
                                             buffer.Clear();
                                             Console.SetCursorPosition(0, 0);
-                                         //   GetPlayerClass(index);
+                                            buffer.Print();
+
+                                            Inventory.getInstance.drawInventory();
+                                            choosing = "end";
+                                            choosingAction = false;
+                                            //   GetPlayerClass(index);
                                             break;
                                         }
-
                                     case 1:
                                         {
-
+                                            //    choosingAction = false;
+                                            buffer.Clear();
+                                            Console.SetCursorPosition(0, 0);
+                                            buffer.Print();
+                                            choosing = "lvl_up";
+                                            choosingAction = false;
+                                            //   GetPlayerClass(index);
+                                            break;
+                                        }
+                                    case 4:
+                                        {
+                                            buffer.Clear();
+                                            Console.SetCursorPosition(0, 0);
+                                            buffer.Print();
+                                            choosing = "end";
+                                            choosingAction = false;
                                             break;
                                         }
                                 }
@@ -590,7 +609,168 @@ namespace RetroRPG
                     Console.CursorLeft = 0;
                 }
             }
-            
+
+            // Level Up ...............................................................................................................
+
+
+
+            while (choosing == "lvl_up")
+            {
+                choosingAction = true;
+
+                buffer.Clear();
+                Console.SetCursorPosition(0, 0);
+
+                // Hlavička
+                buffer.Draw(Strings.getInstance.horizontalLine);
+                buffer.NewLine();
+                buffer.DrawColored(player.name, Console.CursorLeft + ((Console.WindowWidth / 2) - player.name.ToString().Length / 2), Console.CursorTop, ConsoleColor.Yellow, true);
+
+                buffer.NewLine();
+                buffer.Draw(Strings.getInstance.horizontalLine);
+                buffer.NewLine();
+
+                // Vlastnosti
+                buffer.DrawColored("[Vlastnosti]", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow, false, true);
+                buffer.NewLine();
+                for (int i = 0; i < vlastnostiName.Length; i++)
+                {
+                    buffer.DrawColored(vlastnostiName[i] + "#y" + player.Vlastnosti[i] + "#x ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
+                }
+
+                // Dovednosti
+                Console.CursorTop = 3;
+                buffer.DrawColored("[Dovednosti]", 30, Console.CursorTop, ConsoleColor.Yellow, false, true);
+                buffer.NewLine();
+                for (int i = 0; i < dovednostiName.Length; i++)
+                {
+                    buffer.DrawColored(vlastnostiName[i] + "#y" + player.Dovednosti[i] + "#x ", 30, Console.CursorTop, ConsoleColor.Gray, false, true);
+                }
+                buffer.NewLine();
+
+                buffer.Print();
+                int choosed = 0;
+                string[] items = { "Inventááář", "Level-up", "Status postavy", "Statistiky", "Zpět" };
+                int top = Console.CursorTop;
+                int choosed_ver = 0;
+
+                while (choosingAction)
+                {
+                    for (int k = 0; k < items.Length; k++)
+                    {
+                        if (k != 1)
+                        {
+                            if (k != choosed) { buffer.DrawColored("> " + items[k], Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true); }
+                            else
+                            {
+                                buffer.DrawColored(" #g> #x" + items[k], Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow, false, true);
+                            }
+                        }
+                        else
+                        {
+                            if (player.lvlupDovednosti + player.lvlupVlastnosti > 0)
+                            {
+                                if (k != choosed) { buffer.DrawColored("> " + items[k] + " (#g" + Convert.ToString(player.lvlupDovednosti + player.lvlupVlastnosti) + "#x)", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true); }
+                                else
+                                {
+                                    buffer.DrawColored(" #g> #x" + items[k] + " (#g" + Convert.ToString(player.lvlupDovednosti + player.lvlupVlastnosti) + "#x)", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow, false, true);
+                                }
+                            }
+                            else
+                            {
+                                if (k != choosed) { buffer.DrawColored("> " + items[k] + " (#h0#x)", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true); }
+                                else
+                                {
+                                    buffer.DrawColored(" #g> #x" + items[k] + " (#h0#x)", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow, false, true);
+                                }
+                            }
+                        }
+                    }
+
+                    buffer.Print();
+                    ConsoleKey key = Console.ReadKey().Key;
+
+
+                    switch (key)
+                    {
+                        case ConsoleKey.W:
+                            {
+                                if (choosed > 0)
+                                {
+                                    choosed--;
+                                }
+                                else
+                                {
+                                    choosed = items.Length - 1;
+                                }
+                                break;
+                            }
+
+                        case ConsoleKey.S:
+                            {
+                                if (choosed < items.Length - 1)
+                                {
+                                    choosed++;
+                                }
+                                else
+                                {
+                                    choosed = 0;
+                                }
+                                break;
+                            }
+
+                        case ConsoleKey.Enter:
+                            {
+                                switch (choosed)
+                                {
+                                    case 0:
+                                        {
+                                            //    choosingAction = false;
+                                            buffer.Clear();
+                                            Console.SetCursorPosition(0, 0);
+                                            buffer.Print();
+
+                                            Inventory.getInstance.drawInventory();
+                                            choosing = "end";
+                                            choosingAction = false;
+                                            //   GetPlayerClass(index);
+                                            break;
+                                        }
+                                    case 1:
+                                        {
+                                            //    choosingAction = false;
+                                            buffer.Clear();
+                                            Console.SetCursorPosition(0, 0);
+                                            buffer.Print();
+                                            choosing = "lvl_up";
+                                            choosingAction = false;
+                                            //   GetPlayerClass(index);
+                                            break;
+                                        }
+                                    case 4:
+                                        {
+                                            buffer.Clear();
+                                            Console.SetCursorPosition(0, 0);
+                                            buffer.Print();
+                                            choosing = "end";
+                                            choosingAction = false;
+                                            break;
+                                        }
+                                }
+
+                                break;
+                            }
+                    }
+
+                    for (int l = 0; l < items.Length; l++)
+                    {
+                        buffer.clearRow(top + l);
+                    }
+
+                    Console.CursorTop = top;
+                    Console.CursorLeft = 0;
+                }
+            }
         }
 
         public void getName()
