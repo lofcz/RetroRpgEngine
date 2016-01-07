@@ -51,6 +51,7 @@
     <Compile Include="ColorBuffer.cs" />
     <Compile Include="Combat.cs" />
     <Compile Include="Crafting.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="GameItem.cs" />
     <Compile Include="Intro.cs" />
     <Compile Include="Inventory.cs" />

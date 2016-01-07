@@ -641,11 +641,13 @@ namespace RetroRPG
                     if (choosingHor == 0 && choosingVer == i)
                     {
                         buffer.DrawColored("#g" + vlastnostiName[i] + "#x #y[" + player.Vlastnosti[i] + "]#x ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
+                        buffer.DrawColored(player.vlastnostiPopis[i], Console.CursorLeft, 17, ConsoleColor.DarkGray, false, false);
+                        Console.CursorTop--;
                     }
                     else
                     {
                         buffer.DrawColored(vlastnostiName[i] + "#y" + player.Vlastnosti[i] + "#x ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
-
+           
                     }
 
                 }
@@ -690,11 +692,13 @@ namespace RetroRPG
                 {
                     remDovednosti = "#h0#x ";
                 }
-                buffer.DrawColored("#y" + remVlastnosti, 63, Console.CursorTop, ConsoleColor.Gray, false, true);
+                buffer.DrawColored("Úroveň postavy:  " + "#y" + player.level + "#x" + " (#y" + player.xp + "#x / #y" + player.max_xp + "#x)", 63, Console.CursorTop, ConsoleColor.Gray, false, true);
+                buffer.NewLine();
                 buffer.DrawColored("Bodů vlastností: " + remVlastnosti, 63, Console.CursorTop, ConsoleColor.Gray, false, true);
                 buffer.DrawColored("Bodů dovedností: " + remDovednosti, 63, Console.CursorTop, ConsoleColor.Gray, false, true);
 
-
+                Console.CursorTop = 21;
+                buffer.DrawColored("[" + "#g" + "X#x" + "]" + " - Zpět", 0, Console.CursorTop, ConsoleColor.Gray, false, true);
 
 
                 int choosed = 0;
@@ -772,6 +776,14 @@ namespace RetroRPG
                             {
                                 choosingHor = 1;
                             }
+                            break;
+                        }
+
+                    case ConsoleKey.X:
+                        {
+                            choosing = "main_menu";
+                            choosingAction = true;
+                            increasePlayerStats(player.lvlupVlastnosti, player.lvlupDovednosti);
                             break;
                         }
 
