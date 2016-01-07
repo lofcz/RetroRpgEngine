@@ -11,5 +11,6 @@ namespace RetroRPG.Objects
         public const string graphicsFoes = "graphics/foes/";
         public const string graphicsCharCreation = "graphics/charCreation/";
         public const string dataClasses = "data/classes/";
+        public const string sound = "fx/";
     }
 }

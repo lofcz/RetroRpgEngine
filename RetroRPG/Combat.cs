@@ -41,5 +41,10 @@ namespace RetroRPG
             Console.ReadKey();
             Console.CursorVisible = true;
         }
+
+        public void DrawCombat()
+        {
+
+        }
     }
 }

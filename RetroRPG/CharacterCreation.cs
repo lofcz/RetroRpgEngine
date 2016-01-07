@@ -705,6 +705,10 @@ namespace RetroRPG
                 buffer.Print();
                 ConsoleKey key = Console.ReadKey(true).Key;
 
+                using (System.Media.SoundPlayer soundPLayer = new System.Media.SoundPlayer(ResourceTree.sound + "menu.wav"))
+                {
+                   // soundPLayer.Play();
+                }
 
                 switch (key)
                 {
