@@ -18,5 +18,3 @@ C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRpgLevelEditor\RetroRpgLevelEditor\o
 C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRpgLevelEditor\RetroRpgLevelEditor\obj\Debug\RetroRpgLevelEditor.Form1.resources
 C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRpgLevelEditor\RetroRpgLevelEditor\obj\Debug\RetroRpgLevelEditor.Properties.Resources.resources
 C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRpgLevelEditor\RetroRpgLevelEditor\obj\Debug\RetroRpgLevelEditor.csproj.GenerateResource.Cache
-C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRpgLevelEditor\RetroRpgLevelEditor\bin\Debug\RetroRpgLevelEditor.exe.CodeAnalysisLog.xml
-C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRpgLevelEditor\RetroRpgLevelEditor\bin\Debug\RetroRpgLevelEditor.exe.lastcodeanalysissucceeded

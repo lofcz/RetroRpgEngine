@@ -28,7 +28,7 @@ namespace RetroRpgLevelEditor
             shtb.Location = new Point(0, 0);
             shtb.Dock = DockStyle.Left;
             shtb.Width = 850;
-            shtb.Font = new Font("LucidaConsole", 12, FontStyle.Bold);
+            shtb.Font = new Font("Lucida Console", 12, FontStyle.Regular);
            // shtb.DoubleClick += new EventHandler(shtbDoubleClick);
             shtb.Seperators.Add(' ');
             shtb.Seperators.Add('\r');
@@ -503,6 +503,7 @@ namespace RetroRpgLevelEditor
             int y = 0;
             int minID = 1;
             int point = shtb.SelectionStart;
+            int datalinePos = 0;
             // MessageBox.Show(Convert.ToString(point));       
             int dataLine = 0;
             foreach (string line in shtb.Lines)
@@ -518,6 +519,7 @@ namespace RetroRpgLevelEditor
             if (!shtb.Text.Contains("@DataPipeline"))
             {
                 shtb.AppendText("\n@DataPipeline\n");
+                datalinePos = shtb.Text.LastIndexOf("@DataPipeline");
             }
 
             foreach (string line in shtb.Lines)
@@ -547,6 +549,7 @@ namespace RetroRpgLevelEditor
                         }
                         else if (znak == '¤')
                         {
+                            datalinePos = shtb.Text.LastIndexOf("@DataPipeline");
                             bool parsing = false;
                             int xx = 0;
 
@@ -567,8 +570,11 @@ namespace RetroRpgLevelEditor
                                     if (znak1 == ']')
                                     {
                                         int returnToY = y;
-                                       // ScrollToLine(dataLine);
-                                        shtb.AppendText("[ " + id + " ]" + "[ oCoin; ]" + "\n");
+                                        // ScrollToLine(dataLine);
+                                        if (shtb.Text.LastIndexOf("[ " + id + " ]") < datalinePos)
+                                        {
+                                            shtb.AppendText("[ " + id + " ]" + "[ oCoin; ]" + "\n");
+                                        }
                                      //   ScrollToLine(returnToY);
                                         break;
                                     }

@@ -158,8 +158,11 @@
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.oLoad);
             this.Controls.Add(this.oSave);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "RetroRPG Level editor";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
