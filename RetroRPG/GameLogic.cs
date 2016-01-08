@@ -43,7 +43,7 @@ namespace RetroRPG.Objects
             Render.getInstance.Buffer.Clear();
             Render.getInstance.Buffer.Print();
             //    Intro.getInstance.DisplayIntro();
-            Parser.getInstance.parseImage("award.txt",true,ConsoleColor.Gray, Parser.Effects.typewriter);
+    //        Parser.getInstance.parseImage("award.txt",true,ConsoleColor.Gray, Parser.Effects.typewriter);
             Console.SetCursorPosition(0, 0);
             Console.ReadKey();
             Render.getInstance.Buffer.Clear();
@@ -59,7 +59,7 @@ namespace RetroRPG.Objects
             Inventory.getInstance.itemAdd(item);
             Inventory.getInstance.itemAdd(item1);
             
-            Inventory.getInstance.drawInventory();
+        //    Inventory.getInstance.drawInventory();
 
             // *****
             Render.getInstance.Buffer.NewLine();

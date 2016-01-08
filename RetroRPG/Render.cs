@@ -100,7 +100,7 @@ namespace RetroRPG
             }
 
             Console.CursorVisible = true;
-            Render.getInstance.Buffer.Print();
+            //Render.getInstance.Buffer.Print();
         }
 
         private void DrawIndex(GameWorld.state stav,int x, int y)
@@ -212,20 +212,23 @@ namespace RetroRPG
             Buffer.Print();
         }
 
-        void DrawBar(decimal variable, decimal variable_max, string text, ConsoleColor color)
+        public void DrawBar(decimal variable, decimal variable_max, string text, ConsoleColor color, char znak = '█', bool newLine = true, int size = 20)
         {
-            decimal number = Math.Round((variable / variable_max) * 20);
-       //     int n = Convert.ToInt32(Math.Round(number * 20));
-         
-            
-            Buffer.Draw(text + " (" + variable + " / " + variable_max + "): ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+            decimal number = Math.Round((variable / variable_max) * size);
+            //     int n = Convert.ToInt32(Math.Round(number * 20));
 
+
+            if (text != "no_text") { Buffer.Draw(text + " (" + variable + " / " + variable_max + "): ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); }
+
+            Buffer.Draw("[", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+            int cl = Console.CursorLeft;
             for (int i = 0; i < number; i++)
             {
-                Buffer.Draw("█", Console.CursorLeft, Console.CursorTop, color);
+                Buffer.Draw(Convert.ToString(znak), Console.CursorLeft, Console.CursorTop, color);
             }
+            Buffer.Draw("]", cl + size, Console.CursorTop, ConsoleColor.Gray);
 
-            Buffer.NewLine();
+            if (newLine) { Buffer.NewLine(); }
         }
 
         public void DrawItem()

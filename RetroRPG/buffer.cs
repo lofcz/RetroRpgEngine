@@ -139,6 +139,7 @@ namespace RetroRPG
             Colors.Add('y', ConsoleColor.Yellow);
             Colors.Add('g', ConsoleColor.Green);
             Colors.Add('b', ConsoleColor.Blue);
+            Colors.Add('c', ConsoleColor.Cyan);
             Colors.Add('w', ConsoleColor.White);
 
             if (Width > wWidth || Height > wHeight)
@@ -373,6 +374,11 @@ namespace RetroRPG
                         break;
                     }
 
+                case ConsoleColor.Blue:
+                    {
+                        parsedAtribute = 9;
+                        break;
+                    }
                 case ConsoleColor.DarkGray:
                     {
                         parsedAtribute = 8;
@@ -454,6 +460,16 @@ namespace RetroRPG
                                     case ConsoleColor.Gray:
                                         {
                                             parsedAtribute2 = 7;
+                                            break;
+                                        }
+                                    case ConsoleColor.Cyan:
+                                        {
+                                            parsedAtribute2 = 11;
+                                            break;
+                                        }
+                                    case ConsoleColor.Blue:
+                                        {
+                                            parsedAtribute2 = 9;
                                             break;
                                         }
 
