@@ -816,6 +816,13 @@ namespace RetroRPG
             if (znak == 'Ú') { return 233; }
             if (znak == '»') { return 175; }
             if (znak == 'ú') { return 163; }
+            if (znak == '┐') { return 191; }
+            if (znak == '└') { return 192; }
+            if (znak == '│') { return 179; }
+            if (znak == '─') { return 196; }
+            if (znak == '┘') { return 217; }
+            if (znak == '┌') { return 218; }
+
 
             return 0;
         }

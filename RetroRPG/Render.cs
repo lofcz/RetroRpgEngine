@@ -240,5 +240,85 @@ namespace RetroRPG
             Console.ReadKey();
 
         }
+
+        public enum Outline
+        {
+            doubleLine,singleLine
+        }
+
+        public void drawBox(int x, int y, int width, int height, ConsoleColor color, Outline outline)
+        {
+            int top = Console.CursorTop;
+            buffer buffer = render.Buffer;
+
+            switch(outline)
+            {
+                case (Outline.doubleLine): { buffer.Draw("╔", x, y, color);  break; }
+                case (Outline.singleLine): { buffer.Draw("┌", x, y, color); break; }
+            }
+    
+
+            for(int i = 1; i < width; i++)
+            {
+                switch (outline)
+                {
+                    case (Outline.doubleLine): { buffer.Draw("═", x + i, y, color); break; }
+                    case (Outline.singleLine): { buffer.Draw("─", x + i, y, color); break; }
+                }              
+            }
+
+            switch (outline)
+            {
+                case (Outline.doubleLine): { buffer.Draw("╗", x + width, y, color);  break; }
+                case (Outline.singleLine): { buffer.Draw("┐", x + width, y, color); break; }
+            }
+           
+            Console.CursorLeft = 0;
+
+            for (int i = 1; i < height; i++)
+            {
+                switch (outline)
+                {
+                    case (Outline.doubleLine): { buffer.Draw("║", x, y + i, color); break; }
+                    case (Outline.singleLine): { buffer.Draw("│", x, y + i, color); break; }
+                }
+            }
+
+            switch (outline)
+            {
+                case (Outline.doubleLine): { buffer.Draw("╚", x, y + height, color); break; }
+                case (Outline.singleLine): { buffer.Draw("└", x, y + height, color); break; }
+            }
+           
+
+            for (int i = 1; i < width; i++)
+            {
+                switch (outline)
+                {
+                    case (Outline.doubleLine): { buffer.Draw("═", x + i, y + height, color); break; }
+                    case (Outline.singleLine): { buffer.Draw("─", x + i, y + height, color); break; }
+                }
+            }
+
+            switch (outline)
+            {
+                case (Outline.doubleLine): { buffer.Draw("╝", x + width, y + height, color); break; }
+                case (Outline.singleLine): { buffer.Draw("┘", x + width, y + height, color);  break; }
+            }
+            
+
+            Console.CursorLeft = 0;
+            for (int i = 1; i < height; i++)
+            {
+                switch (outline)
+                {
+                    case (Outline.doubleLine): { buffer.Draw("║", x + width, y + i, color);  break; }
+                    case (Outline.singleLine): { buffer.Draw("│", x + width, y + i, color);  break; }
+                }
+               
+            }
+
+            Console.CursorTop = top;
+        }
     }
 }

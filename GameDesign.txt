@@ -1,0 +1,95 @@
+Status
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Zna?ky
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Vlastnosti: Název (char), barva, viditelnost, událost odpalu
+Událost odpalu: Po?et kol do odpalu, event (spouš)
+
+[#yX]  - Znamení osudu: {KOMBO} jakéhokoli úderu odpálí všechna znamení osudu, které ud?lí
+pøímé poškození s (2,5+n)* násobi?em za každou odpálenou zna?ku. 
+
+[#drX] - Znamení hada: {2 Tahy} Po odpálení ozna?í zna?ku na konci aplikovaných zna?ek soupe?e, zni?í ji a zni?í všechny další aplikované zna?ky tohoto typu, 
+dokud nenarazí na zna?ku jiného typu.
+
+[#cX]  - Znamení r?stu: {2 Tahy} Po odpálení vrátí 50% energie zahraného úderu. 
+
+Ukázkové komba (Komba, které budou hrát primárn? AI, hrá? je m?že také používat)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Osud, tv?j osud, tv?j hrozný osud.
+n* [#yX] --> Vyskoký STACK znamení osudu zp?sobí vysoké / fatální p?ímé poškození. Jednoduché prolomení pomocí znamení hada, na zna?ky se dá aplikovat SUPPRES.
+
+
+Údery [--> Kombo m?že být tvo?eno max. 4. údery <---]
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+(start)       = 0. level komba
+(prodloužení) = 1. level komba 
+(kombo)       = 2. level komba
+(finesa)      = 3. level komba
+
+NEW    - Nové kombo.
+SHIELD - Obrana proti kombu.
+TRAP   - Odpálení zna?ky s efektem p?erušení komba
+
+
+ 
+1) Vyvážený úder (V)
+- Základní útok, malá náro?nost na energii, konzistentní kombo, bezpe?ná reakce na SHIELD a TRAP.
+
+                 |             (start)               |              (prodloužení)             |            (kombo)               |               (finesa)           |
+                 |NEW      :                         |V,O      :                              |V,V     :                         |V,V,V    :                        |
+                 |E        :                         |V,E      :                              |V,V,E   :                         |                                  |
+                 |E,E      :                         |V,O,O    :                              |V,V,O   :                         |                                  |
+                 |E,E,E    :                         |V,E,E    :                              |E,V,V   :                         |                                  |
+                 |O        :                         |O,V,O    :                              |O,V,V   :                         |                                  |
+                 |O,O      :                         |O,O,V    :                              |V,E,V   :                         |                                  |
+                 |O,O,O    :                         |E,V,E    :                              |V,O,V   :                         |                                  |
+                 |E,O,E    :                         |E,E,V    :                              |                                  |                                  |
+                 |O,E,O    :                         |O,V      :                              |                                  |                                  |
+                 |O,O,E    :                         |E,V      :                              |                                  |                                  |
+                 |E,E,O    :                         |V        :                              |                                  |                                  |
+                 |         :                         |         :                              |                                  |                                  |
+                 |SHIELD   :                         |SHIELD   :                              |SHIELD                            |SHIELD                            |
+                 |TRAP     :                         |TRAP     :                              |TRAP                              |TRAP                              |
+                 |         :                         |         :                              |                                  |                                  |
+                 |         :                         |         :                              |                                  |                                  |
+
+                 
+2) Energetický úder (E) 
+- Vysoká náro?nost na energii, nekonzistentní kombo, proráží [SHIELD], p?i zni?ení komba na 3+ úrovní penalizuje energii / život. 
+
+                 |             (start)              |              (prodloužení)             |            (kombo)               |               (finesa)           |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+
+
+
+3) Obranný úder (O)
+- Nízká náro?nost na energii, snižuje poškození 
+
+                 |             (start)              |              (prodloužení)             |            (kombo)               |               (finesa)           |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+                 |                                  |                                        |                                  |                                  |
+
+4) Nabrat dech (N)
+- Zruší aktuální kombo, zvýší šanci na uhnutí a obnoví energii / život / manu.
