@@ -433,7 +433,17 @@ namespace RetroRPG
 
                         DrawColored(strBackup.Remove(0, 1), 0, Height, color, false);
                         break;
-                    }                   
+                    }
+                    else if (temp[i] == '\a')  //◙
+                    {
+                        NewLine();
+                        CurrentChar = 0;
+                        Height++;
+
+                        DrawColored(strBackup.Remove(0, 1), 66, Height, color, false);
+                        break;
+                    }
+
                     else
                     {
 

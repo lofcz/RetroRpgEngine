@@ -10,6 +10,7 @@ namespace RetroRPG
     // V této třídě proběhne pohyb jednotek
     class PreRender
     {
+        public Combat combat;
         private static PreRender render;
         int playerXprev = 0;
         int playerYprev = 0;
@@ -106,7 +107,7 @@ namespace RetroRPG
                         {
                             if (enemy.x == x && enemy.y == y)
                             {
-                                Combat combat = new Combat(enemy);
+                                combat = new Combat(enemy);
                                 combat.drawEntrance();
                                 GameWorld.getInstance.player.setPosition(playerXprev, playerYprev);
                                // GameWorld.getInstance.enemyList.Remove(enemy);
