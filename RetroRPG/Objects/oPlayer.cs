@@ -21,6 +21,12 @@ namespace RetroRPG.Objects
         public int level = 1;
         public int xp = 0;
         public int max_xp = 100;
+        public int physicalDamage = 2;
+        public int fyzicalDamage = 2;
+        public int mana = 50;
+        public int max_mana = 50;
+        public int energy = 10;
+        public int max_energy = 10;
 
 
         public int lvlupVlastnosti = 5;
