@@ -21,10 +21,11 @@ namespace RetroRPG
         public int tempInt = 0;
         public string drawEnemyMarkStr = "";
         public int drawEnemyMarkStrLenght = 0;
+        public string enemy_log;
 
         string[] kombo = { "", "", "", "" };
 
-        enum attackType
+        public enum attackType
         {
             vyvazenyUder, energickyUder, obrannyUder
         };
@@ -80,10 +81,10 @@ namespace RetroRPG
             // /TEST
 
             bool combatFlow = true;
-            string enemy_log = enemy.battleTag;
+            enemy_log = enemy.battleTag;
             bool showHp = true;
             bool showMaxHp = true;
-            bool showDamage = false;
+            bool showDamage = true;
             bool showMana = false;
             bool showEnergy = false;
 
@@ -92,6 +93,7 @@ namespace RetroRPG
 
             while (combatFlow)
             {
+                buffer.NewLine();
                 enemyOutput = "Zdraví: ";
                 bool choosingAction = true;
 
@@ -134,8 +136,9 @@ namespace RetroRPG
                     enemyMark.drawMark(Mark.Vlastnik.souper);
                 }
                 if (drawEnemyMarkStr.Length > 0) { drawEnemyMarkStr = drawEnemyMarkStr.Remove(drawEnemyMarkStr.Length - 1, 1); }// odstraníme poslední čárku z řetězce
+                buffer.NewLine();
                 Render.getInstance.Buffer.DrawColored(drawEnemyMarkStr, 66, Console.CursorTop, ConsoleColor.Gray, true, false);
-                Render.getInstance.drawBox(65, 2, 33, 9, ConsoleColor.Gray, Render.Outline.singleLine);
+                Render.getInstance.drawBox(65, 3, 33, 9, ConsoleColor.Gray, Render.Outline.singleLine);
 
                 //buffer.Print();
 
@@ -154,6 +157,7 @@ namespace RetroRPG
 
                     for (int k = 0; k < items.Length; k++)
                     {
+                        Console.CursorLeft = 0;
                         if (k != 1)
                         {
                             if (k != choosed) { buffer.DrawColored("> " + items[k], Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true); }
@@ -245,6 +249,7 @@ namespace RetroRPG
                                 }
 
                                 choosingAction = false;
+
                                 break;
                             }
                     }
@@ -258,12 +263,26 @@ namespace RetroRPG
                     Console.CursorLeft = 0;
                 }
 
+                enemy.EnemyPlayTurn(enemy);
                 Console.SetCursorPosition(0, 0);
                 buffer.Clear();
                 //Console.CursorVisible = true;
                 //enemyMarkLog = "";
                 //tempInt = 0;
                 // buffer.Print();
+
+                if (player.hp <= 0 || enemy.hp <= 0) { combatFlow = false; }
+            }
+
+            // Vyhodnocení
+
+            if (enemy.hp <= 0)
+            {
+                buffer.DrawColored("Tvůj soupeř se válí v prachu a krvi", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
+                enemyLoot(enemy);
+                GameWorld.getInstance.enemyList.Remove(enemy);
+                buffer.Print();
+                Console.ReadKey();
             }
         }
 
@@ -362,6 +381,11 @@ namespace RetroRPG
         }
 
         void activateEffects()
+        {
+
+        }
+
+        void enemyLoot(oEnemy enemy)
         {
 
         }

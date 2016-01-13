@@ -75,7 +75,7 @@ namespace RetroRPG.Objects
               //  Console.Clear();
               //  Render.getInstance.DrawHeader("Informace: ");
                // Render.getInstance.DrawMapInfo();
-                oEnemy.addEnemy(random.Next(1,5),random.Next(1,5));
+                oEnemy.addEnemy(random.Next(1,5),random.Next(1,5), oEnemy.EnemyType.Goblin);
               //  GameWorld.getInstance.ShowInfo();
                 Render.getInstance.drawWorld();             
                 Render.getInstance.DrawPlayerStats();
