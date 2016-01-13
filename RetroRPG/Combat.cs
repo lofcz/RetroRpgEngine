@@ -22,6 +22,10 @@ namespace RetroRPG
         public string drawEnemyMarkStr = "";
         public int drawEnemyMarkStrLenght = 0;
         public string enemy_log;
+        public string playerText = "Odhaduješ svého soupeře";
+        public int[] playerAttackCost = new int[4];
+       
+        
 
         string[] kombo = { "", "", "", "" };
 
@@ -64,11 +68,16 @@ namespace RetroRPG
 
         public void DrawCombat(oEnemy enemy)
         {
+            playerAttackCost[0] = 6;
+            playerAttackCost[1] = 8;
+            playerAttackCost[2] = 4;
+            playerAttackCost[3] = -15;
+
             Console.SetCursorPosition(0, 0);
             buffer.Clear();
             buffer.Print();
 
-            string playerText = "Odhaduješ svého soupeře";
+            
             int kolo = 0;
 
             string combo = "";
@@ -106,8 +115,8 @@ namespace RetroRPG
 
                 buffer.DrawColored(enemy.accessName, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
                 buffer.DrawColored(Strings.getInstance.horizontalLine, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
-                buffer.DrawColored(enemy_log, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
-                buffer.NewLine();
+                buffer.DrawColored(enemy_log, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, false);
+                buffer.NewLine(2);
                 buffer.DrawColored(enemyOutput, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
                 Render.getInstance.DrawBar(enemy.hp, enemy.max_hp, "no_text", ConsoleColor.Green, ':', false, 60);
                 buffer.NewLine(2);
@@ -116,9 +125,17 @@ namespace RetroRPG
                 enemyMarkLog = "";
 
                 // Status hráče
-                buffer.NewLine(4);
-                Console.CursorTop = 12;
-                buffer.DrawColored(player.name + " (#y" + player.level + "#x)" + " - #y" + player.xp + "#x / #y" + player.max_xp + "#x       Kombo: " + "[" + kombo[0] + "]" + "  " + "[" + kombo[1] + "]" + "  " + "[" + kombo[2] + "]" + "  " + "[" + kombo[3] + "]" + " ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
+                buffer.NewLine(5);
+                Console.CursorTop = 14;
+                string[] kKombo = new string[4];
+
+                for(int i = 0; i < 4; i++)
+                {
+                    kKombo[i] = kombo[i];
+                    if (kKombo[i] == "") { kKombo[i] = " "; }
+                }
+
+                buffer.DrawColored(player.name + " (#y" + player.level + "#x)" + " - #y" + player.xp + "#x / #y" + player.max_xp + "#x       Kombo: " + "[#y" + kKombo[0] + "#x]" + "  " + "[#y" + kKombo[1] + "#x]" + "  " + "[#y" + kKombo[2] + "#x]" + "  " + "[#y" + kKombo[3] + "#x]" + " ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
                 buffer.DrawColored(Strings.getInstance.horizontalLine, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
                 buffer.DrawColored("> " + playerText, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
                 buffer.NewLine();
@@ -136,9 +153,9 @@ namespace RetroRPG
                     enemyMark.drawMark(Mark.Vlastnik.souper);
                 }
                 if (drawEnemyMarkStr.Length > 0) { drawEnemyMarkStr = drawEnemyMarkStr.Remove(drawEnemyMarkStr.Length - 1, 1); }// odstraníme poslední čárku z řetězce
-                buffer.NewLine();
+                buffer.NewLine(2);
                 Render.getInstance.Buffer.DrawColored(drawEnemyMarkStr, 66, Console.CursorTop, ConsoleColor.Gray, true, false);
-                Render.getInstance.drawBox(65, 3, 33, 9, ConsoleColor.Gray, Render.Outline.singleLine);
+                Render.getInstance.drawBox(65, 4, 33, 9, ConsoleColor.Gray, Render.Outline.singleLine);
 
                 //buffer.Print();
 
@@ -148,6 +165,8 @@ namespace RetroRPG
                 Console.CursorTop = 23;
                 int choosed = 0;
                 string[] items = { "Vyvážený úder", "Energický úder", "Obranný úder", "Nabrat dech" };
+
+                if (player.energy > )
                 int top = Console.CursorTop;
                 string choosing;
                 while (choosingAction)
@@ -186,7 +205,7 @@ namespace RetroRPG
                             }
                         }
                     }
-                    Render.getInstance.drawBox(65, 14, 33, 9, ConsoleColor.Gray, Render.Outline.singleLine);
+                    Render.getInstance.drawBox(65, 17, 33, 9, ConsoleColor.Gray, Render.Outline.singleLine);
                     buffer.DrawColored("[#yX#x] - Znamení", 50, 25, ConsoleColor.Gray, true, false);
                     buffer.DrawColored("[#yC#x] - Kombinace", 50, 26, ConsoleColor.Gray, true, false);
                     buffer.Print();
@@ -309,6 +328,7 @@ namespace RetroRPG
                     }
             }
 
+
             // Snížíme časomíru u značek
             string[] tempOutputStr = new string[Enum.GetNames(typeof(Mark.Znameni)).Length];
             int[] tempOutputInt = new int[Enum.GetNames(typeof(Mark.Znameni)).Length];
@@ -330,6 +350,8 @@ namespace RetroRPG
             }
 
             enemy.hp -= tempOutputInt[(int)Mark.Znameni.znameniOsudu];
+
+            getPlayerText();
         }
 
         void addToCombo(attackType type)
@@ -340,19 +362,19 @@ namespace RetroRPG
                
                 case attackType.vyvazenyUder:
                     {
-                        add = "#yV#x";
+                        add = "V";
                         break;
                     }
 
                 case attackType.energickyUder:
                     {
-                        add = "#yE#x";
+                        add = "E";
                         break;
                     }
 
                 case attackType.obrannyUder:
                     {
-                        add = "#yO#x";
+                        add = "O";
                         break;
                     }
 
@@ -388,6 +410,52 @@ namespace RetroRPG
         void enemyLoot(oEnemy enemy)
         {
 
+        }
+
+        void getPlayerText()
+        {
+            int dmg = player.dealDamage(enemy);
+
+            // PRMUTACE ********************************************************************************************************
+
+            // Vyvážený úder
+            if (kombo[0] == "V" && kombo[1] == "" && kombo[2] == "" && kombo[3] == "")
+            {
+                playerText = "Zaútočil jsi rovným úderem a způsobil #y" + dmg + "#x " + skolonuj("body", dmg) + " poškození.";
+            }
+            if (kombo[0] == "V" && kombo[1] == "V" && kombo[2] == "" && kombo[3] == "")
+            {
+                playerText = "Pokračuješ bočním úderem a udržuješ si rovnováhu. Způsobil jsi #y" + dmg + "#x " + skolonuj("body", dmg) + " poškození.";
+            }
+            if (kombo[0] == "V" && kombo[1] == "V" && kombo[2] == "V" && kombo[3] == "")
+            {
+                playerText = "Sled protahuješ rubovým sekem a chystáš se na finesu. udělil jsi #y" + dmg + "#x " + skolonuj("body", dmg) + " poškození.";
+            }
+            if (kombo[0] == "V" && kombo[1] == "V" && kombo[2] == "V" && kombo[3] == "V")
+            {
+                playerText = "#yDokočil jsi kombo.#x Udělil jsi #r" + dmg + "#x " + skolonuj("body", dmg) + " kritického poškození.";
+            }
+        }
+
+        string skolonuj(string slovo, int cislovka)
+        {
+            if (slovo == "body")
+            {
+                if (cislovka == 1)
+                {
+                    return "bod";
+                }
+                else if (cislovka > 1 && cislovka < 5)
+                {
+                    return "body";
+                }
+                else
+                {
+                    return "bodů";
+                }
+            }
+
+            return "";
         }
     }
 }

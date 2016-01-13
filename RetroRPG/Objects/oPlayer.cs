@@ -66,8 +66,24 @@ namespace RetroRPG.Objects
             this.x = x;
             this.y = y;
         }
-      
 
-        
+        public int dealDamage(oEnemy enemy)
+        {
+            Random random = new Random();
+
+            double luckBonus = random.Next(Vlastnosti[(int)vlastnosti.stesti] / 3, (Vlastnosti[(int)vlastnosti.stesti] * 2) + 1);
+            double redukce = 6 * Math.Log(enemy.defense) * Math.Log(enemy.defense, Math.E);
+            redukce = Math.Min(redukce, 90);
+
+            double vysledek = (enemy.physicalDamge + luckBonus) * ((100 - redukce) / 100);
+            // MessageBox.Show(Convert.ToString(vysledek));
+            //  MessageBox.Show(Convert.ToString(physicalDamge));
+            enemy.hp -= Convert.ToInt32(Math.Round(vysledek));
+
+            return Convert.ToInt32(Math.Round(vysledek));
+        }
+
+
+
     }
 }

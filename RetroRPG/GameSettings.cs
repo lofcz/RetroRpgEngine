@@ -28,7 +28,7 @@ namespace RetroRPG
         public void SetResolution()
         {
             Console.Title = "RetroRPG";
-            Console.SetWindowSize(100, 28);
+            Console.SetWindowSize(100, 30);
             Console.SetBufferSize(100, 40);
         }
     }

@@ -20,6 +20,7 @@ namespace RetroRPG
         public int max_energy;
         public int physicalDamge;
         public GameItem[] lootItems;
+        public int defense;
         EnemyType type;
 
         public enum EnemyType
@@ -27,7 +28,7 @@ namespace RetroRPG
             Goblin
         };
 
-        public oEnemy(char symbol, string accessName, ConsoleColor color, int x, int y, int hp, string imageFile, string quote, string battleTag, int fDamage, int pDamage, int mana, int energy, params GameItem[] lootItems) : base(symbol, accessName, color, x, y, hp)
+        public oEnemy(char symbol, string accessName, ConsoleColor color, int x, int y, int hp, string imageFile, string quote, string battleTag, int fDamage, int pDamage, int mana, int energy, int defense, params GameItem[] lootItems) : base(symbol, accessName, color, x, y, hp)
         {
             this.imageFile = imageFile;
             this.quote = quote;
@@ -39,6 +40,7 @@ namespace RetroRPG
             this.energy = energy;
             this.max_energy = energy;
             this.lootItems = lootItems;
+            this.defense = defense;
         }
 
 
@@ -52,7 +54,7 @@ namespace RetroRPG
             {
                 case EnemyType.Goblin:
                     {
-                        enemy = new oEnemy('E', "Goblin", ConsoleColor.Red, x, y, 20, ResourceTree.graphicsFoes + "enemyGoblinSimple.txt", "Vysměju se smrti do tváře!", "#g>#x #rGoblin#x si tě zlostně prohlíží. Boji se nevyhneš.", 20, 5, 30, 40);
+                        enemy = new oEnemy('E', "Goblin", ConsoleColor.Red, x, y, 20, ResourceTree.graphicsFoes + "enemyGoblinSimple.txt", "Vysměju se smrti do tváře!", "#g>#x #rGoblin#x si tě zlostně prohlíží. Boji se nevyhneš.", 20, 5, 30, 40, 7);
                         break;
                     }
             }
@@ -83,14 +85,13 @@ namespace RetroRPG
             decimal percentMana = (enemy.mana / enemy.max_mana);
             decimal percentStamina = (enemy.energy / enemy.max_energy);
 
-            // Decide, which stat is priority;
-            Combat combat = PreRender.getInstance.combat;
+            // Decide, which stat is priority;          
             Random random = new Random();
 
             // Decide, which attack will we do;
             // At first choose random attack, and calc chance to do it
 
-            combat.enemy_log = "> " + enemy.accessName + " prudce vyrazil vpřed a zaútočil střechou.";
+       //     combat.enemy_log = "> " + enemy.accessName + " prudce vyrazil vpřed a zaútočil střechou";
 
 
 
@@ -101,6 +102,8 @@ namespace RetroRPG
 
         void dealDamage(Combat.attackType type, oEnemy enemy)
         {
+            Combat combat = PreRender.getInstance.combat;
+
             oPlayer player = GameWorld.getInstance.player;
 
             switch (type)
@@ -114,6 +117,7 @@ namespace RetroRPG
                         // MessageBox.Show(Convert.ToString(vysledek));
                         //  MessageBox.Show(Convert.ToString(physicalDamge));
                         player.hp -= Convert.ToInt32(Math.Round(vysledek));
+                        combat.enemy_log =  "> " + enemy.accessName + " prudce vyrazil vpřed a zaútočil střechou, čímž ti způsobil #y" + Convert.ToInt32(Math.Round(vysledek)) + "#x bodů poškození.";
                         break;
                     }
                 case Combat.attackType.energickyUder:
