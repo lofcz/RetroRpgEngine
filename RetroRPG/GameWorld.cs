@@ -15,12 +15,16 @@ namespace RetroRPG
             free,wall,enemy,player,gold
         };
 
-        public int width = 100;
-        public int height = 100;
+        public const int width = 1000;
+        public const int height = 1000;
 
-        public state[,] map = new state[100, 200];
+        //public state[,] map = new state[100, 100];
+        public state[] map = new state[width * height];
 
-        
+        public state getMap(int x, int y)
+        {
+            return map[y * width + x];
+        }
 
         public int id = 100;
         public oPlayer player = new oPlayer('P', "oPlayer",ConsoleColor.Green, 10, 3, 40);
@@ -35,7 +39,7 @@ namespace RetroRPG
                 {
                  for (int x = 0; x < width; x++)
                   {
-                  map[x, y] = state.free;
+                  map[y * width + x] = state.free;
                   }
                 }
         }

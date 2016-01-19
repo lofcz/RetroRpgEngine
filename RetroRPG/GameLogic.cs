@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -58,26 +59,33 @@ namespace RetroRPG.Objects
 
             Inventory.getInstance.itemAdd(item);
             Inventory.getInstance.itemAdd(item1);
-            
-        //    Inventory.getInstance.drawInventory();
 
-            // *****
-            Render.getInstance.Buffer.NewLine();
-            Render.getInstance.Buffer.DrawColored("#rDvojitý buffer#x teď umí parsovat #ycolorflagy!#x ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false);
             Render.getInstance.Buffer.Print();
             Console.ReadKey();
+
             Parser.getInstance.ParseMap();
 
             while (true)
-            {
+            {           
                 Console.SetCursorPosition(0, 0);
                 Render.getInstance.Buffer.Clear();
-              //  Console.Clear();
-              //  Render.getInstance.DrawHeader("Informace: ");
-               // Render.getInstance.DrawMapInfo();
+
+                Thread oThread = new Thread(new ThreadStart(Render.getInstance.drawWorld));
+                oThread.Start();
+
+               // while (!oThread.IsAlive) ;
+               // Thread.Sleep(1);
+              //  oThread.Abort();
+                oThread.Join();
+               
+
+
+                //  Console.Clear();
+                //  Render.getInstance.DrawHeader("Informace: ");
+                // Render.getInstance.DrawMapInfo();
                 oEnemy.addEnemy(random.Next(1,5),random.Next(1,5), oEnemy.EnemyType.Goblin);
-              //  GameWorld.getInstance.ShowInfo();
-                Render.getInstance.drawWorld();             
+                //  GameWorld.getInstance.ShowInfo();
+               // Render.getInstance.drawWorld();             
                 Render.getInstance.DrawPlayerStats();
                 PreRender.getInstance.PlayerMove();
             }

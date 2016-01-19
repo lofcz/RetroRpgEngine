@@ -12,6 +12,7 @@ namespace RetroRPG
     {
         public Combat combat;
         private static PreRender render;
+        GameWorld gameWorld = GameWorld.getInstance;
         int playerXprev = 0;
         int playerYprev = 0;
 
@@ -39,7 +40,7 @@ namespace RetroRPG
             {
                 case ConsoleKey.W:
                     {
-                        if (GameWorld.getInstance.map[GameWorld.getInstance.player.x, GameWorld.getInstance.player.y-1] != GameWorld.state.wall)
+                        if (gameWorld.getMap(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y-1) != GameWorld.state.wall)
                         {
                             GameWorld.getInstance.player.y--;
                         }
@@ -48,7 +49,7 @@ namespace RetroRPG
                     }
                 case ConsoleKey.S:
                     {
-                        if (GameWorld.getInstance.map[GameWorld.getInstance.player.x, GameWorld.getInstance.player.y + 1] != GameWorld.state.wall)
+                        if (GameWorld.getInstance.getMap(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y + 1) != GameWorld.state.wall)
                         {
                             GameWorld.getInstance.player.y++; 
                         }
@@ -56,7 +57,7 @@ namespace RetroRPG
                     }
                 case ConsoleKey.A:
                     {
-                        if (GameWorld.getInstance.map[GameWorld.getInstance.player.x - 1, GameWorld.getInstance.player.y] != GameWorld.state.wall)
+                        if (GameWorld.getInstance.getMap(GameWorld.getInstance.player.x - 1, GameWorld.getInstance.player.y) != GameWorld.state.wall)
                         {
                             GameWorld.getInstance.player.x--;
                         }
@@ -64,7 +65,7 @@ namespace RetroRPG
                     }
                 case ConsoleKey.D:
                     {
-                        if (GameWorld.getInstance.map[GameWorld.getInstance.player.x + 1, GameWorld.getInstance.player.y] != GameWorld.state.wall)
+                        if (GameWorld.getInstance.getMap(GameWorld.getInstance.player.x + 1, GameWorld.getInstance.player.y) != GameWorld.state.wall)
                         {
                             GameWorld.getInstance.player.x++;
                         }
@@ -84,7 +85,7 @@ namespace RetroRPG
         void CollisionAfter(int x, int y)
         {
 
-            switch (GameWorld.getInstance.map[GameWorld.getInstance.player.x,GameWorld.getInstance.player.y])
+            switch (GameWorld.getInstance.getMap(GameWorld.getInstance.player.x,GameWorld.getInstance.player.y))
             {
                 case GameWorld.state.gold:
                     {                     

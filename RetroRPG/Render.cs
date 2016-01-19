@@ -16,7 +16,7 @@ namespace RetroRPG
         private int mapYmin = -1;
         private int mapYmax = -1;
 
-        const int viewWidth = 40;
+        const int viewWidth = 60;
         const int viewHeight = 20;
 
         private static Render render;
@@ -24,7 +24,9 @@ namespace RetroRPG
 
         private Render()  { }
         public buffer Buffer = new buffer(110,60,110,60);
-        
+
+        string renderOutput = "";
+
         public static Render getInstance
         {
             get
@@ -41,6 +43,9 @@ namespace RetroRPG
         // Mapa
         public void drawWorld()
         {
+            Console.SetCursorPosition(0, 0);
+            renderOutput = "";
+            
             //Buffer.Clear();
 
             cameraX = GameWorld.getInstance.player.x - (viewWidth / 2);
@@ -48,59 +53,68 @@ namespace RetroRPG
 
             Console.CursorVisible = false;
 
-            for (int y = 0; y < GameWorld.getInstance.height; y++)
+            
+            for (int y = Math.Max(0, cameraY); y < Math.Min(cameraY + viewHeight, GameWorld.height); y++)
             {
-                for (int x = 0; x < GameWorld.getInstance.width; x++)
+                for (int x = Math.Max(0, cameraX + 10); x < Math.Min(cameraX + viewWidth, GameWorld.width); x++)
                 {
-                    GameWorld.getInstance.map[x, y] = GameWorld.state.free;
+                    GameWorld.getInstance.map[y * GameWorld.width + x] = GameWorld.state.free;
                 }
             }
 
+            
             foreach (oEnemy enemy in GameWorld.getInstance.enemyList)
             {
-                GameWorld.getInstance.map[enemy.x, enemy.y] = GameWorld.state.enemy;                 
+                GameWorld.getInstance.map[enemy.y * GameWorld.width + enemy.x] = GameWorld.state.enemy;         
             }
 
             foreach (oWall wall in GameWorld.getInstance.wallList)
             {
-                GameWorld.getInstance.map[wall.x, wall.y] = GameWorld.state.wall;
+                GameWorld.getInstance.map[wall.y * GameWorld.width + wall.x] = GameWorld.state.wall;
             }
 
             foreach (oGold gold in GameWorld.getInstance.goldList)
             {
-                GameWorld.getInstance.map[gold.x, gold.y] = GameWorld.state.gold;
+                GameWorld.getInstance.map[gold.y * GameWorld.width + gold.x] = GameWorld.state.gold;
             }
+            
+
+            GameWorld.getInstance.map[GameWorld.getInstance.player.y * GameWorld.width + GameWorld.getInstance.player.x] = GameWorld.state.player;
 
 
-            GameWorld.getInstance.map[GameWorld.getInstance.player.x, GameWorld.getInstance.player.y] = GameWorld.state.player;
-
-
-            for (int y = Math.Max(0, cameraY); y < Math.Min(cameraY + viewHeight, GameWorld.getInstance.height); y++) // Interujeme sloupce v dohledu kamery
+            for (int y = Math.Max(0, cameraY); y < Math.Min(cameraY + viewHeight, GameWorld.height); y++) // Interujeme sloupce v dohledu kamery
             {
                 if (y == Math.Max(0, cameraY))
                 {
                     Buffer.Draw("╔", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
-                    for (int i = Math.Max(0, cameraX + 10); i < Math.Min(cameraX + viewWidth, GameWorld.getInstance.width); i++) { Buffer.Draw("═", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); }
+                    for (int i = Math.Max(0, cameraX + 10); i < Math.Min(cameraX + viewWidth, GameWorld.width); i++) { Buffer.Draw("═", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); }
                      Buffer.Draw("╗", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
                     Buffer.NewLine();
                 }
 
-                for (int x = Math.Max(0, cameraX + 10); x < Math.Min(cameraX+viewWidth,GameWorld.getInstance.width); x++) // Iterujeme řádky v dohledu kamery
+                for (int x = Math.Max(0, cameraX + 10); x < Math.Min(cameraX+viewWidth,GameWorld.width); x++) // Iterujeme řádky v dohledu kamery
                 {
                     if (x == Math.Max(0, cameraX + 10)) { Buffer.Draw("║", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); }
 
-                    GameWorld.state stav = GameWorld.getInstance.map[x, y];
+                    GameWorld.state stav = GameWorld.getInstance.map[y * GameWorld.width + x];
                     DrawIndex(stav,x,y);
      
-                    if (x == Math.Min(cameraX + viewWidth, GameWorld.getInstance.width) - 1) { Buffer.Draw("║", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); }
+                    if (x == Math.Min(cameraX + viewWidth, GameWorld.width) - 1) { renderOutput += "║"; /*Buffer.Draw("║", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);*/ }
                 }
-
+               // renderOutput += "\n";
+                Buffer.DrawColored(renderOutput, 1, Console.CursorTop, ConsoleColor.Gray, false);
                 Buffer.NewLine();
-                if (y == Math.Min(cameraY + viewHeight, GameWorld.getInstance.height) - 1) { Buffer.Draw("╚", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); for (int i = Math.Max(0, cameraX + 10); i < Math.Min(cameraX + viewWidth, GameWorld.getInstance.width); i++) { Buffer.Draw("═", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); } Buffer.Draw("╝", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); Buffer.NewLine(); }
+                if (y == Math.Min(cameraY + viewHeight, GameWorld.height) - 1) { Buffer.Draw("╚", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); for (int i = Math.Max(0, cameraX + 10); i < Math.Min(cameraX + viewWidth, GameWorld.width); i++) { Buffer.Draw("═", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); } Buffer.Draw("╝", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); Buffer.NewLine(); }
+
+                renderOutput = "";
+
             }
 
+            //Buffer.DrawColored(renderOutput, 0, 0, ConsoleColor.Gray, true);
             Console.CursorVisible = true;
-            //Render.getInstance.Buffer.Print();
+            Buffer.Draw("Iterované Y: " + Convert.ToString(Math.Min(cameraY + viewHeight, GameWorld.height)));
+            Buffer.NewLine();
+            Buffer.Draw("Iterované X: FROM:" + Convert.ToString(Math.Max(0, cameraX + 10)) + " TO: " +  Convert.ToString(Math.Min(cameraX + viewWidth, GameWorld.width)));
         }
 
         private void DrawIndex(GameWorld.state stav,int x, int y)
@@ -111,12 +125,14 @@ namespace RetroRPG
             {
                 case (GameWorld.state.free):
                     {
-                        Buffer.Draw(" ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                      //  Buffer.Draw(" ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                        renderOutput += " ";
                         break;
                     }
                 case (GameWorld.state.player):
                     {
-                        Buffer.Draw("P", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
+                     //   Buffer.Draw("P", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
+                        renderOutput += "‡#gP#x‡";
                         break;
                     }
                 case (GameWorld.state.enemy):
@@ -131,14 +147,16 @@ namespace RetroRPG
                            
                         }
 
-                        Buffer.Draw("E", Console.CursorLeft, Console.CursorTop, ConsoleColor.Red);
+                       // Buffer.Draw("E", Console.CursorLeft, Console.CursorTop, ConsoleColor.Red);
+                        renderOutput += "‡#rE#x‡";
 
                         Console.ForegroundColor = ConsoleColor.Gray;
                         break;
                     }
                 case (GameWorld.state.wall):
                     {
-                        Buffer.Draw("#", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                      //  Buffer.Draw("#", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                        renderOutput += "~";
                         break;
                     }
                 case (GameWorld.state.gold):
@@ -158,7 +176,8 @@ namespace RetroRPG
                             }
                         }
 
-                        Buffer.Draw("◎", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow);
+                        // Buffer.Draw("◎", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow);
+                        renderOutput += "‡#y◎#x‡";
                         break;
                     }
 
@@ -199,8 +218,8 @@ namespace RetroRPG
         public void DrawPlayerStats()
         {
             Console.CursorVisible = false;
-            Console.SetCursorPosition(0, 3);
-            int startX = 40;
+            Console.SetCursorPosition(0, 5);
+            int startX = 55;
 
             Buffer.Draw(GameWorld.getInstance.player.name,startX,Console.CursorTop,ConsoleColor.Green);
             Buffer.NewLine();

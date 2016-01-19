@@ -343,6 +343,7 @@ namespace RetroRPG
         // ***********************************************************************************************************************************
         public void DrawColored(String str, int Width, int Height, ConsoleColor color, bool insert, bool newLine = false, type type = type.common, int typeValue = 0) //Draws the image to the buffer
         {
+
             if (type == type.characterCreation && typeValue != 0)
             {
                 string brake = "";
@@ -431,7 +432,14 @@ namespace RetroRPG
                        CurrentChar = 0;
                        Height++;
 
-                        DrawColored(strBackup.Remove(0, 1), 0, Height, color, false);
+                        try
+                        {
+                            DrawColored(strBackup.Remove(0, 1), 0, Height, color, false);
+                        }
+                        catch
+                        {
+
+                        }
                         break;
                     }
                     else if (temp[i] == '\a')  //◙
@@ -508,28 +516,38 @@ namespace RetroRPG
                                         }
                                 }
                             }
+
                         }
 
                         if (isSpecialOn) { specialColor = true; }
 
+                        if (temp[i] == '~') { temp[i] = '#'; }
+
                         short special = SpecialChars(temp[i]);
-                        if (special != 0) { buf[(Width + tc) + (Height * width)].Char.UnicodeChar = (char)special; cont = false; }
 
-                        if (cont)
-                        {
-                            buf[(Width + tc) + (Height * width)].Char.UnicodeChar = (char)temp[i]; //Height * width is to get to the correct spot (since this array is not two dimensions).
-                        }
 
-                        if (!specialColor)
+
+                        if (temp[i] != '‡')
                         {
-                            if (parsedAtribute != 0)
-                                buf[(Width + tc) + (Height * width)].Attributes = parsedAtribute;
+
+                            if (special != 0) { buf[(Width + tc) + (Height * width)].Char.UnicodeChar = (char)special; cont = false; }
+
+                            if (cont)
+                            {
+                                buf[(Width + tc) + (Height * width)].Char.UnicodeChar = (char)temp[i]; //Height * width is to get to the correct spot (since this array is not two dimensions).
+                            }
+
+                            if (!specialColor)
+                            {
+                                if (parsedAtribute != 0)
+                                    buf[(Width + tc) + (Height * width)].Attributes = parsedAtribute;
+                            }
+                            else
+                            {
+                                buf[(Width + tc) + (Height * width)].Attributes = parsedAtribute2;
+                            }
+                            tc++;
                         }
-                        else
-                        {
-                            buf[(Width + tc) + (Height * width)].Attributes = parsedAtribute2;
-                        }
-                        tc++;
 
                         if (CurrentChar >= 100)
                         {
@@ -694,8 +712,15 @@ namespace RetroRPG
         /// <param name="times">Number of new lines</param>
         public void NewLine(int times = 1)
         {
-            Console.CursorTop += times;
-            Console.CursorLeft = 0;
+            try
+            {
+                Console.CursorTop += times;
+                Console.CursorLeft = 0;
+            }
+            catch
+            {
+
+            }
         }
         /// <summary>
         /// Prints the buffer to the screen.

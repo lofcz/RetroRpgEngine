@@ -166,7 +166,7 @@ namespace RetroRPG
                 int choosed = 0;
                 string[] items = { "Vyvážený úder", "Energický úder", "Obranný úder", "Nabrat dech" };
 
-                if (player.energy > )
+               // if (player.energy > )
                 int top = Console.CursorTop;
                 string choosing;
                 while (choosingAction)
