@@ -79,6 +79,7 @@
     <Compile Include="Objects\oEnemy.cs" />
     <Compile Include="GameSettings.cs" />
     <Compile Include="GameWorld.cs" />
+    <Compile Include="Objects\oWallMoveable.cs" />
     <Compile Include="ResourceTree.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="GameLogic.cs" />

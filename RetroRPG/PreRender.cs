@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RetroRPG.Objects;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 
 namespace RetroRPG
 {
@@ -29,58 +31,94 @@ namespace RetroRPG
             }
         }
 
-        public void PlayerMove()
+
+        [DllImport("user32.dll", EntryPoint = "GetKeyboardState", SetLastError = true)]
+        private static extern bool NativeGetKeyboardState([Out] byte[] keyStates);
+
+        private static bool GetKeyboardState(byte[] keyStates)
+        {
+            if (keyStates == null)
+                throw new ArgumentNullException("keyState");
+            if (keyStates.Length != 256)
+                throw new ArgumentException("The buffer must be 256 bytes long.", "keyState");
+            return NativeGetKeyboardState(keyStates);
+        }
+
+        private static byte[] GetKeyboardState()
+        {
+            byte[] keyStates = new byte[256];
+            if (!GetKeyboardState(keyStates))
+                throw new Win32Exception(Marshal.GetLastWin32Error());
+            return keyStates;
+        }
+
+        private static bool AnyKeyPressed()
+        {
+            byte[] keyState = GetKeyboardState();
+            // skip the mouse buttons
+            return keyState.Skip(8).Any(state => (state & 0x80) != 0);
+        }
+
+
+        public bool PlayerMove()
         {
             playerXprev = GameWorld.getInstance.player.x;
             playerYprev = GameWorld.getInstance.player.y;
 
-            ConsoleKey key = Console.ReadKey(true).Key;
-
-            switch(key)
+            if (Console.KeyAvailable == true)
             {
-                case ConsoleKey.W:
-                    {
-                        if (gameWorld.getMap(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y-1) != GameWorld.state.wall)
-                        {
-                            GameWorld.getInstance.player.y--;
-                        }
-                       
-                        break;
-                    }
-                case ConsoleKey.S:
-                    {
-                        if (GameWorld.getInstance.getMap(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y + 1) != GameWorld.state.wall)
-                        {
-                            GameWorld.getInstance.player.y++; 
-                        }
-                        break;
-                    }
-                case ConsoleKey.A:
-                    {
-                        if (GameWorld.getInstance.getMap(GameWorld.getInstance.player.x - 1, GameWorld.getInstance.player.y) != GameWorld.state.wall)
-                        {
-                            GameWorld.getInstance.player.x--;
-                        }
-                        break;
-                    }
-                case ConsoleKey.D:
-                    {
-                        if (GameWorld.getInstance.getMap(GameWorld.getInstance.player.x + 1, GameWorld.getInstance.player.y) != GameWorld.state.wall)
-                        {
-                            GameWorld.getInstance.player.x++;
-                        }
-                        break;
-                    }
+                ConsoleKey key = Console.ReadKey(true).Key;
 
-                case ConsoleKey.I:
-                    {
-                        Inventory.getInstance.drawInventory();
-                        break;
-                    }
+                switch (key)
+                {
+                    case ConsoleKey.W:
+                        {
+                            if (gameWorld.getMap(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y - 1) != GameWorld.state.wall)
+                            {
+                                GameWorld.getInstance.player.y--;
+                            }
+
+                            break;
+                        }
+                    case ConsoleKey.S:
+                        {
+                            if (GameWorld.getInstance.getMap(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y + 1) != GameWorld.state.wall)
+                            {
+                                GameWorld.getInstance.player.y++;
+                            }
+                            break;
+                        }
+                    case ConsoleKey.A:
+                        {
+                            if (GameWorld.getInstance.getMap(GameWorld.getInstance.player.x - 1, GameWorld.getInstance.player.y) != GameWorld.state.wall)
+                            {
+                                GameWorld.getInstance.player.x--;
+                            }
+                            break;
+                        }
+                    case ConsoleKey.D:
+                        {
+                            if (GameWorld.getInstance.getMap(GameWorld.getInstance.player.x + 1, GameWorld.getInstance.player.y) != GameWorld.state.wall)
+                            {
+                                GameWorld.getInstance.player.x++;
+                            }
+                            break;
+                        }
+
+                    case ConsoleKey.I:
+                        {
+                            Inventory.getInstance.drawInventory();
+                            break;
+                        }
+                }
+
+                CollisionAfter(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y);
+                return true;
             }
 
-            CollisionAfter(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y);
+            return false;
         }
+        
 
         void CollisionAfter(int x, int y)
         {
@@ -112,6 +150,20 @@ namespace RetroRPG
                                 combat.drawEntrance();
                                 GameWorld.getInstance.player.setPosition(playerXprev, playerYprev);
                                // GameWorld.getInstance.enemyList.Remove(enemy);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+
+                case GameWorld.state.movingWall:
+                    {
+                        foreach (oWallMoveable wall in GameWorld.getInstance.moveableWallList)
+                        {
+                            if (wall.x == x && wall.y == y)
+                            {
+                                wall.active = true;
+                                GameWorld.getInstance.gameSpeed--;
                                 break;
                             }
                         }

@@ -68,6 +68,11 @@ namespace RetroRPG
                 GameWorld.getInstance.map[enemy.y * GameWorld.width + enemy.x] = GameWorld.state.enemy;         
             }
 
+            foreach (oWallMoveable wall in GameWorld.getInstance.moveableWallList)
+            {
+                GameWorld.getInstance.map[wall.y * GameWorld.width + wall.x] = GameWorld.state.movingWall;
+            }
+
             foreach (oWall wall in GameWorld.getInstance.wallList)
             {
                 GameWorld.getInstance.map[wall.y * GameWorld.width + wall.x] = GameWorld.state.wall;
@@ -111,11 +116,16 @@ namespace RetroRPG
             }
 
             //Buffer.DrawColored(renderOutput, 0, 0, ConsoleColor.Gray, true);
-            Console.CursorVisible = true;
-            Buffer.Draw("Iterované Y: " + Convert.ToString(Math.Min(cameraY + viewHeight, GameWorld.height)));
+           // Console.CursorVisible = true;
+
+           // /* DEBUG
+            Buffer.Draw("Drawing Y: " + Convert.ToString(Math.Min(cameraY + viewHeight, GameWorld.height)));
             Buffer.NewLine();
-            Buffer.Draw("Iterované X: FROM:" + Convert.ToString(Math.Max(0, cameraX + 10)) + " TO: " +  Convert.ToString(Math.Min(cameraX + viewWidth, GameWorld.width)));
-        }
+            Buffer.Draw("Drawing X: FROM:" + Convert.ToString(Math.Max(0, cameraX + 10)) + " TO: " +  Convert.ToString(Math.Min(cameraX + viewWidth, GameWorld.width)));
+            Buffer.NewLine();
+            Buffer.DrawColored("Game speed: #y" + Convert.ToString(GameWorld.getInstance.gameSpeed) + "#x ", 0, Console.CursorTop, ConsoleColor.Gray, false, true);
+            //*/
+    }
 
         private void DrawIndex(GameWorld.state stav,int x, int y)
         {
@@ -133,6 +143,12 @@ namespace RetroRPG
                     {
                      //   Buffer.Draw("P", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
                         renderOutput += "‡#gP#x‡";
+                        break;
+                    }
+                case (GameWorld.state.movingWall):
+                    {
+                        //   Buffer.Draw("P", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
+                        renderOutput += "‡#y~#x‡";
                         break;
                     }
                 case (GameWorld.state.enemy):
@@ -170,7 +186,7 @@ namespace RetroRPG
 
                                 if (dis < 5)
                                 {
-                                    Buffer.DrawInsert(str, (int)(Console.CursorLeft - Math.Round((Convert.ToDouble(str.Length / 2)))), Console.CursorTop - 1, ConsoleColor.Green);
+                                    Buffer.DrawInsert(str, (int)(x - Math.Round((Convert.ToDouble(str.Length / 2)))) + 1, Console.CursorTop - 1, ConsoleColor.Green);
                                 }
                                     break;
                             }
@@ -338,6 +354,24 @@ namespace RetroRPG
             }
 
             Console.CursorTop = top;
+        }
+
+        public void fps()
+        {
+            foreach(oWallMoveable wall in GameWorld.getInstance.moveableWallList)
+            {
+                if (wall.active)
+                {
+                    if (GameWorld.getInstance.getMap(wall.x + 1, wall.y) != GameWorld.state.wall)
+                    {
+                        wall.x++;
+                    }
+                    else
+                    {
+                        wall.active = false;
+                    }
+                }
+            }
         }
     }
 }

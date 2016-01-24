@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using RetroRPG.Objects;
 using System.Diagnostics;
+using System.Threading;
 
 namespace RetroRPG
 {
     class Program
-    {
+    { 
+
         static void Main(string[] args)
         {
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
