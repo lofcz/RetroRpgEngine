@@ -73,6 +73,7 @@
     <Compile Include="Crafting.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="GameItem.cs" />
+    <Compile Include="GameMaterial.cs" />
     <Compile Include="Intro.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="Objects\Mark.cs" />
