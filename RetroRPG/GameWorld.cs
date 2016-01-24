@@ -12,11 +12,12 @@ namespace RetroRPG
     {
         public enum state
         {
-            free,wall,enemy,player,gold
+            free,wall,enemy,player,gold,movingWall
         };
 
         public const int width = 1000;
         public const int height = 1000;
+        public int gameSpeed = 4;
 
         //public state[,] map = new state[100, 100];
         public state[] map = new state[width * height];
@@ -30,6 +31,7 @@ namespace RetroRPG
         public oPlayer player = new oPlayer('P', "oPlayer",ConsoleColor.Green, 10, 3, 40);
         public List<oEnemy> enemyList = new List<oEnemy>();
         public List<oWall> wallList = new List<oWall>();
+        public List<oWallMoveable> moveableWallList = new List<oWallMoveable>();
         public List<oGold> goldList = new List<oGold>();
 
         private static GameWorld gameWorld;

@@ -37,7 +37,7 @@ namespace RetroRPG
             [MarshalAs(UnmanagedType.U4)] uint fileAccess,
             [MarshalAs(UnmanagedType.U4)] uint fileShare,
             IntPtr securityAttributes,
-            [MarshalAs(UnmanagedType.U4)] FileMode creationDisposition,
+            [MarshalAs(UnmanagedType.U4)] FileMode creationDisposition, 
             [MarshalAs(UnmanagedType.U4)] int flags,
             IntPtr template);
 
