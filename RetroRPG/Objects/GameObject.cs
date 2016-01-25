@@ -9,13 +9,16 @@ namespace RetroRPG.Objects
     // Třida pro vestavěné promměné, dědí z ní každý objekt
     class GameObject
     {
-        public int x,y;
+        public int x,y,xx,yy;
         public ConsoleColor color;
         public int hp;
         public int max_hp;
         public char symbol;
         public int value;
         public string accessName;
+        public Queue<int> targetX = new Queue<int>();
+        public Queue<int> targetY = new Queue<int>();
+        public bool active = false;
 
         int id;
 
@@ -33,6 +36,8 @@ namespace RetroRPG.Objects
             Render.getInstance.actualID++;
             this.x = x;
             this.y = y;
+            xx = x;
+            yy = y;
             this.hp = hp;
             this.symbol = symbol;
             id = Render.getInstance.actualID;
@@ -56,6 +61,12 @@ namespace RetroRPG.Objects
             Console.WriteLine("Hp: " + hp);
             Console.WriteLine("Max hp: " + max_hp);
 
+        }
+
+        public void addPositionToQueue()
+        {
+            targetX.Enqueue(xx);
+            targetY.Enqueue(yy);
         }
 
     }

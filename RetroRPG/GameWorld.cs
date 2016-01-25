@@ -24,7 +24,14 @@ namespace RetroRPG
 
         public state getMap(int x, int y)
         {
-            return map[y * width + x];
+            try
+            {
+                return map[y * width + x];
+            }
+            catch
+            {
+                return state.free;
+            }
         }
 
         public int id = 100;

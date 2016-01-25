@@ -93,11 +93,12 @@ namespace RetroRPG.Objects
 
 
                bool activeStep = PreRender.getInstance.PlayerMove();
-
+               
                 // ACTIVE STEP
 
                 if (activeStep)
                 {
+                    ConsolePhysics.getInstance.getAngle(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y +1, GameWorld.getInstance.player.x + 1, GameWorld.getInstance.player.y, -1);
                     Render.getInstance.fps();
                     currentMsStep = 0;
                     oEnemy.addEnemy(random.Next(1, 5), random.Next(1, 5), oEnemy.EnemyType.Goblin);

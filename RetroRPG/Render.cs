@@ -358,7 +358,7 @@ namespace RetroRPG
 
         public void fps()
         {
-            foreach(oWallMoveable wall in GameWorld.getInstance.moveableWallList)
+            foreach (oWallMoveable wall in GameWorld.getInstance.moveableWallList)
             {
                 if (wall.active)
                 {
@@ -369,7 +369,31 @@ namespace RetroRPG
                     else
                     {
                         wall.active = false;
+                        Structs.Point point = new Structs.Point();
+                        point.x = wall.x;
+                        point.y = wall.y;
+
+                        ConsolePhysics.getInstance.explode(point, 10, 10);
                     }
+                }
+          }
+
+            foreach (oWall wall in GameWorld.getInstance.wallList)
+            {
+                if (wall.active && wall.targetX.Count > 0)
+                {
+                    if (GameWorld.getInstance.getMap(wall.x + wall.targetX.Peek(), wall.y + wall.targetY.Peek()) != GameWorld.state.wall)
+                    {
+                        wall.x = wall.targetX.Dequeue();
+                        wall.y = wall.targetY.Dequeue();
+                    }
+                    else
+                    {
+                        wall.targetX.Clear();
+                        wall.targetY.Clear();
+                    }
+
+                    if (wall.targetX.Count == 0) { wall.active = false; wall.xx = wall.x; wall.yy = wall.y; }
                 }
             }
         }

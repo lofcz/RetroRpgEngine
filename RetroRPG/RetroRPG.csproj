@@ -70,6 +70,7 @@
     <Compile Include="CharacterCreation.cs" />
     <Compile Include="ColorBuffer.cs" />
     <Compile Include="Combat.cs" />
+    <Compile Include="ConsolePhysics.cs" />
     <Compile Include="Crafting.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="GameItem.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Serialization.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Objects\oWall.cs" />
+    <Compile Include="Structs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

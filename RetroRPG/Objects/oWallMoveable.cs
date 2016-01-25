@@ -9,8 +9,6 @@ namespace RetroRPG
 {
     class oWallMoveable : GameObject
     {
-        public bool active = false;
-
         public oWallMoveable(char symbol, string accessName, ConsoleColor color, int x, int y)
         {
             this.x = x;
