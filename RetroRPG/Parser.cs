@@ -181,8 +181,16 @@ namespace RetroRPG
                     }
                     else
                     {
-                        Render.getInstance.Buffer.DrawColored(line, Console.CursorLeft + (Console.WindowWidth / 5) + 5, Console.CursorTop, color, true);
-                        Render.getInstance.Buffer.NewLine();
+                        if (center)
+                        {
+                            Render.getInstance.Buffer.DrawColored(line, Console.CursorLeft + (Console.WindowWidth / 5) + 5, Console.CursorTop, color, true); // + (Console.WindowWidth / 5) + 5 //+ ((Console.WindowWidth / 2) - (line.Length / 2))
+                            Render.getInstance.Buffer.NewLine();
+                        }
+                        else
+                        {
+                            Render.getInstance.Buffer.DrawColored(line, Console.CursorLeft, Console.CursorTop, color, true);
+                            Render.getInstance.Buffer.NewLine();
+                        }
                     }
                 }
             }

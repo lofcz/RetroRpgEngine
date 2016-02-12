@@ -12,10 +12,15 @@ namespace RetroRpgAsciiDesigner
 {
     class Program
     {
-      
+
         [STAThread]
         public static void Main()
         {
+            Console.Title = "RetroRPG Engine - ASCII Designer";
+            Console.SetWindowSize(100, 30);
+            bool showLine = true;
+
+
             OpenFileDialog choofdlog = new OpenFileDialog();
             choofdlog.Filter = "ASCII Art soubory (*.txt*)|*.txt*";
             choofdlog.FilterIndex = 1;
@@ -39,17 +44,66 @@ namespace RetroRpgAsciiDesigner
 
 
                 while (true)
-                  {
+                {
                     Console.Clear();
 
-                    foreach(string str in parsed)
+                    foreach (string str in parsed)
                     {
                         Console.WriteLine(str);
                     }
 
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("Offset: ");
-                    int offset = int.Parse(Console.ReadLine());
+                    Console.WriteLine("[ENTER] = +1");
+                    Console.WriteLine("[BACKSPACE] = -1");
+                    Console.WriteLine("[SPACE] = Save file");
+                    Console.WriteLine("[H] = Toggle help line");
+
+                    int offset = 1;
+
+
+                    if (showLine)
+                    {
+                        for (int j = 0; j < 30; j++)
+                        {
+                            Console.SetCursorPosition(49, j);
+                            Console.Write("|");
+                        }
+                    }
+
+                    Console.SetCursorPosition(0, 0);
+
+
+                    ConsoleKey key = Console.ReadKey().Key;
+
+                    switch (key)
+                    {
+                        case ConsoleKey.Backspace:
+                            {
+                                offset = -1;
+                                break;
+                            }
+                        case ConsoleKey.Spacebar:
+                            {
+                                offset = 666;
+                                break;
+                            }
+                        case ConsoleKey.H:
+                            {
+                                showLine = !showLine;
+                                offset = 0;
+                                break;
+                            }
+                    }
+
+                    /* try
+                     {
+                         offset = int.Parse(Console.ReadLine());
+                     }
+                     catch
+                     {
+
+                     }*/
+
                     Console.ForegroundColor = ConsoleColor.Gray;
 
                     if (offset != 666)
@@ -85,13 +139,14 @@ namespace RetroRpgAsciiDesigner
                     }
 
 
-                    
-                  } 
+                    //Console.SetCursorPosition(49, 25);
+
+                }
+
+                Console.ReadKey();
             }
 
-            Console.ReadKey();
-        }
 
- 
+        }
     }
 }

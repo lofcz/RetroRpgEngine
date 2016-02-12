@@ -41,12 +41,15 @@ namespace RetroRPG.Objects
             Render.getInstance.Buffer.Clear();
 
             /* Testy nových tříd (messages) */
-               Messages.getInstance.rainMessage("Vítej v RetroRPG Enginu vývojáři.", 50, -4, true, "Stiskni jakoukoli klávesu pro pokračování");
+            //  Messages.getInstance.rainMessage("Vítej v RetroRPG Enginu vývojáři.", 50, -4, true, "Stiskni jakoukoli klávesu pro pokračování");
             //   Messages.getInstance.basicMessage("Čekají tě ukázky:\n > Inventáře\n > Herní mapy\n > Bitevního systému", "#yStiskni jakoukoli klávesu pro pokračování#x ");
             //   Parser.getInstance.parseAnimatedImage("animationTest2.txt", 50);
 
             // TEST SKRIPTOVACÍHO JAZYKA
-            RetroLanguage.RetroLanguageInterpreter.getInstance.interpretCode("dlc.txt");
+            // RetroLanguage.RetroLanguageInterpreter.getInstance.interpretCode("dlc.txt");
+
+            // TEST HLAVNÍHO MENU
+            MainMenu.getInstance.showMainMenu();
 
             CharacterCreation.getInstance.GetPlayerClass();
             Console.SetCursorPosition(0, 0);
