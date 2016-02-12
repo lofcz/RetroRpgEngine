@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -225,6 +226,73 @@ namespace RetroRPG
             Render.getInstance.Buffer.Print();
             sr.Close();
 
+        }
+
+        public void parseAnimatedImage(string file, int animationSpeed)
+        {
+            buffer buffer = Render.getInstance.Buffer;
+
+            List<string> currentFrameList = new List<string>();
+            List<List<string>> frameList = new List<List<string>>();
+
+            string line;
+            StreamReader sr = new StreamReader(file);
+
+            // Parsování
+            while ((line = sr.ReadLine()) != null)
+            {
+                if (line != "#NewFrame" && line != "#EndAnimation")
+                {
+                    currentFrameList.Add(line);
+                }
+                else
+                {
+                    frameList.Add(currentFrameList.ToList());
+                    currentFrameList.Clear();
+                }
+            }
+
+            int frameNumber = frameList.Count;
+
+            // Vykreslení
+            int minY, maxY = 0,i = 0;
+
+            minY = Console.CursorTop;
+            maxY = minY;
+
+            while(frameNumber > 0)
+            {
+                List<string> frame = frameList[i];
+                      
+                    foreach (string ln in frame)
+                    {
+                        buffer.Draw(ln);
+                        buffer.NewLine();
+                    if (Console.CursorTop > maxY) { maxY = Console.CursorTop; }                    
+                    }
+
+                    buffer.Print();
+
+
+               
+
+                Thread.Sleep(animationSpeed);
+
+                for (int j = 0; j < frame.Count; j++)
+                {
+                     //buffer.clearColumn(minY + j);
+                    buffer.Clear();
+                }
+
+                Console.CursorTop = minY;
+                frameNumber--;
+                i++;
+                Console.CursorLeft = 0;
+                Console.CursorTop = minY;
+            }
+
+            Console.CursorTop = maxY;
+            Console.ReadKey();
         }
     }
 }

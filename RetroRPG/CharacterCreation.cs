@@ -62,7 +62,7 @@ namespace RetroRPG
                 {
                     case 0:
                         {
-                            buffer.DrawColored("+- Barbar -+", Console.CursorLeft + ((Console.WindowWidth / 2) - "+- Barbar +-".ToString().Length / 2) + 5, Console.CursorTop, ConsoleColor.Red, true);
+                            buffer.DrawColored("+- Barbar -+", Console.CursorLeft + ((Console.WindowWidth / 2) - "+- Barbar +-".ToString().Length / 2) +3, Console.CursorTop - 1, ConsoleColor.Red, true);
                             Console.CursorTop = 3;
                             Parser.getInstance.parseImage(ResourceTree.graphicsCharCreation + "/barbarian.txt", true, ConsoleColor.Gray, Parser.Effects.none);
                             break;
@@ -70,22 +70,29 @@ namespace RetroRPG
 
                     case 1:
                         {
+                            buffer.DrawColored("#c+- Mág -+#x ", Console.CursorLeft + ((Console.WindowWidth / 2) - "#c+- Mág -+#x ".ToString().Length / 2) +4, Console.CursorTop - 1, ConsoleColor.Gray, false);
                             Console.CursorTop = 3;
                             Parser.getInstance.parseImage(ResourceTree.graphicsCharCreation + "/mage.txt", true, ConsoleColor.Gray, Parser.Effects.none);
                             break;
                         }
                     case 2:
                         {
+                            buffer.DrawColored("#y+- Válečník -+#x ", Console.CursorLeft + ((Console.WindowWidth / 2) - "#y+- Válečník -+#x ".ToString().Length / 2) + 2, Console.CursorTop - 1, ConsoleColor.Gray, false);
+                            Console.CursorTop = 2;
                             Parser.getInstance.parseImage(ResourceTree.graphicsCharCreation + "/warrior.txt", true, ConsoleColor.Gray, Parser.Effects.none);
                             break;
                         }
                     case 3:
                         {
+                            buffer.DrawColored("#g+- Mnich -+#x ", Console.CursorLeft + ((Console.WindowWidth / 2) - "#g+- Mnich -+#x ".ToString().Length / 2) + 2, Console.CursorTop - 1, ConsoleColor.Gray, false);
+                            Console.CursorTop = 2;
                             Parser.getInstance.parseImage(ResourceTree.graphicsCharCreation + "/priest.txt", true, ConsoleColor.Gray, Parser.Effects.none);
                             break;
                         }
                     case 4:
                         {
+                            buffer.DrawColored("#m+- Zloděj -+#x ", Console.CursorLeft + ((Console.WindowWidth / 2) - "#m+- Zloděj -+#x ".ToString().Length / 2) + 2, Console.CursorTop - 1, ConsoleColor.Gray, false);
+                            Console.CursorTop = 2;
                             Parser.getInstance.parseImage(ResourceTree.graphicsCharCreation + "/thief.txt", true, ConsoleColor.Gray, Parser.Effects.none);
                             break;
                         }
@@ -106,18 +113,22 @@ namespace RetroRPG
 
                     case 1:
                         {
+                            buffer.DrawColored("Mýty opředená skupina vzdělanců, posouvající čas i prostor do nových dimenzí. Sídlí na\n#hBouřném ostrovu#x, který od zbytku světa odděluje magická bariéra. Mágové propadli #cliteratuře#x,\nza každou přečtenou knihu získávají bonusové zkušenosti. Jejich slabostí jsou #hšpičaté klobouky#x,\n#hplnovousy#x, #hhole#x a #hartefakty#x. Mágové mohou v boji využívat sílu #cčtyř elementů#x a #crunové magie#x.\nPasivně dokáží v blízkém okolí vycítit #czřídla many#x.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true);
                             break;
                         }
                     case 2:
                         {
+                            buffer.DrawColored("Elitní skupina královských vojáků, jejichž posvátným úkolem je chránit #hLetní palác#x. Naprostá\nšpička jednotek království prošla smrtícím tréninkem, kterýpřežil každý pátý uchazeč.\nVýsledkem jsou precizní stroje na zabíjení, ovládající taje boje s #ymečem#x a #yštítem#x.\nV boji využívají #ystandartu království#x, která jim poskytuje bonusové značky.\nKromě štítů se chrání #ytěžkou zbrojí#x, což maximalizuje jejich obranu.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true);
                             break;
                         }
                     case 3:
                         {
+                            buffer.DrawColored("Řád #hČerného orla#x existuje déle než samotné království. Složitá organizace kněží, zabývajících se \n#gléčením#x a #gzaklínaním#x, stejně jako #grunami#x. Kněží mohou v boji očarovat značky a tím jim #gpřidat \nbonusové účinky. Pasivně mají velkou odolnost proti nemocem a magii. Kněží používají #glehké zbroje#x,\n#gbitevní hole#x a v menší míře #grituální dýky#x. U občanů království mají kněží díky svým léčícím \nschopnostem velmi dobrou pověst.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true);
                             break;
                         }
                     case 4:
                         {
+                            buffer.DrawColored("Cech zlodějů má bohatou a dlouholetou tradici. #hMistři noci#x, vůdci cechu ví o každém šustnutí v\nkrálovství dřív, než se stane. Není tajemstvím, že nedávnou vraždu krále #hJarvana#x má cech na svědomí. \nZloději mají #mhbité prsty#x, dokonale ovládají #mplížení#x a umí #msplynout se stínem#x. Skvěle \n#mvyhrožují#x, stejně jako #mlichotí#x. Rozumí bylinám a #mjedům#x, v noci rychleji regenerují zdraví. \nV boji používají #mdýky#x, #mluky#x, #mskryté čepele#h #xa #mpasti#x. Obrana je nesmí zpomalovat a proto se odívají\npouze do lehké látky.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true);
                             break;
                         }
                 }

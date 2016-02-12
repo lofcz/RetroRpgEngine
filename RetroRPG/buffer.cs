@@ -141,6 +141,7 @@ namespace RetroRPG
             Colors.Add('b', ConsoleColor.Blue);
             Colors.Add('c', ConsoleColor.Cyan);
             Colors.Add('w', ConsoleColor.White);
+            Colors.Add('m', ConsoleColor.Magenta);
 
             if (Width > wWidth || Height > wHeight)
             {
@@ -403,6 +404,11 @@ namespace RetroRPG
                         parsedAtribute = 14;
                         break;
                     }
+                case ConsoleColor.Magenta:
+                    {
+                        parsedAtribute = 13;
+                        break;
+                    }
             }
 
             if (Width > windowWidth - 1 || Height > windowHeight - 1)
@@ -512,6 +518,11 @@ namespace RetroRPG
                                     case ConsoleColor.Yellow:
                                         {
                                             parsedAtribute2 = 14;
+                                            break;
+                                        }
+                                    case ConsoleColor.Magenta:
+                                        {
+                                            parsedAtribute2 = 13;
                                             break;
                                         }
                                 }
@@ -832,6 +843,7 @@ namespace RetroRPG
             if (znak == '◎') { return 7; }
             if (znak == '░') { return 176; }
             if (znak == 'č') { return 159; }
+            if (znak == 'Č') { return 172; }
             if (znak == 'í') { return 161; }
             if (znak == 'á') { return 160; }
             if (znak == '█') { return 219; }
@@ -843,6 +855,7 @@ namespace RetroRPG
             if (znak == 'ě') { return 216; }
             if (znak == 'é') { return 130; }
             if (znak == 'ř') { return 253; }
+            if (znak == 'Ř') { return 252; }
             if (znak == 'ň') { return 229; }
             if (znak == '•') { return 7; }
             if (znak == ' ') { return 255; }

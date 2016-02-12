@@ -1,0 +1,22 @@
+﻿****************** Jmenné prostory ********************
+
+
+****************** Funkce *****************************
+print() - Standardní výstup
+read() - Standardní vstup
+
+
+****************** Proměnné ***************************
+Proměnná se definuje datovým typem, názvem a hodnotou, pokud není hodnota přiřazena je nastavena výchozí.
+
+Datové typy:
+[string] 
+[int]
+[float]
+[bool]
+
+****************** Direktivy **************************
+
+
+****************** Obecné *****************************
+For - Smyčka pro výpis

@@ -72,15 +72,22 @@ namespace RetroRPG
                                 }
                             case -45:
                                 {
-                                    wall.xx = wall.x + i;
-                                    wall.yy = wall.y + i;
+                                    if (i % 2 == 0)
+                                    {
+                                        wall.xx = wall.x + i;
+                                        wall.yy = wall.y + i;
+                                    }
+          
                                     wall.addPositionToQueue();
                                     break;
                                 }
                             case 45:
                                 {
-                                    wall.xx = wall.x + i;
-                                    wall.yy = wall.y - i;
+                                    if (i % 2 == 0)
+                                    {
+                                        wall.xx = wall.x + i;
+                                        wall.yy = wall.y - i;
+                                    }
                                     wall.addPositionToQueue();
                                     break;
                                 }

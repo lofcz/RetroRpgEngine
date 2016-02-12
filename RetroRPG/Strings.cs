@@ -10,7 +10,7 @@ namespace RetroRPG
     {
         // *********** Constants *************
         public string horizontalLine = "+-------------------------------------------------------------------------------------------------+";
-
+  
         private static Strings strings;
 
         public static Strings getInstance

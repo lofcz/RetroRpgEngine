@@ -77,6 +77,8 @@
     <Compile Include="GameMaterial.cs" />
     <Compile Include="Intro.cs" />
     <Compile Include="Inventory.cs" />
+    <Compile Include="MainMenu.cs" />
+    <Compile Include="Messages.cs" />
     <Compile Include="Objects\Mark.cs" />
     <Compile Include="Objects\oEnemy.cs" />
     <Compile Include="GameSettings.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Render.cs" />
+    <Compile Include="RetroLanguage\RetroLanguageInterpreter.cs" />
     <Compile Include="Serialization.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Objects\oWall.cs" />
@@ -99,6 +102,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="RetroLanguage\retroLanguage.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
