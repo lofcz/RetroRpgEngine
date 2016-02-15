@@ -140,6 +140,7 @@ namespace RetroRPG
             Colors.Add('g', ConsoleColor.Green);
             Colors.Add('b', ConsoleColor.Blue);
             Colors.Add('c', ConsoleColor.Cyan);
+            Colors.Add('v', ConsoleColor.DarkCyan);
             Colors.Add('w', ConsoleColor.White);
             Colors.Add('m', ConsoleColor.Magenta);
 
@@ -359,57 +360,10 @@ namespace RetroRPG
                 else { str = str + "#y" + typeValue + "#x" + brake +  "(#r---#x) "; }
             }
 
-            short parsedAtribute = 0;
+            short parsedAtribute = (short)color;
             short parsedAtribute2 = 0;
 
-            switch (color)
-            {
-                case ConsoleColor.Black:
-                    {
-
-                        break;
-                    }
-
-                case ConsoleColor.Gray:
-                    {
-                        parsedAtribute = 7;
-                        break;
-                    }
-
-                case ConsoleColor.Blue:
-                    {
-                        parsedAtribute = 9;
-                        break;
-                    }
-                case ConsoleColor.DarkGray:
-                    {
-                        parsedAtribute = 8;
-                        break;
-                    }
-
-                case ConsoleColor.Red:
-                    {
-                        parsedAtribute = 12;
-                        break;
-                    }
-
-                case ConsoleColor.Green:
-                    {
-                        parsedAtribute = 10;
-                        break;
-                    }
-
-                case ConsoleColor.Yellow:
-                    {
-                        parsedAtribute = 14;
-                        break;
-                    }
-                case ConsoleColor.Magenta:
-                    {
-                        parsedAtribute = 13;
-                        break;
-                    }
-            }
+            
 
             if (Width > windowWidth - 1 || Height > windowHeight - 1)
             {
@@ -472,60 +426,11 @@ namespace RetroRPG
                                 isSpecialOn = !isSpecialOn;
                                 strBackup = strBackup.Remove(0, 1);
 
+                                ConsoleColor c = Console.ForegroundColor;
 
-                                switch (Console.ForegroundColor)
-                                {
-                                    case ConsoleColor.Black:
-                                        {
+                                parsedAtribute2 = (short)c;
 
-                                            break;
-                                        }
-
-                                    case ConsoleColor.Gray:
-                                        {
-                                            parsedAtribute2 = 7;
-                                            break;
-                                        }
-                                    case ConsoleColor.Cyan:
-                                        {
-                                            parsedAtribute2 = 11;
-                                            break;
-                                        }
-                                    case ConsoleColor.Blue:
-                                        {
-                                            parsedAtribute2 = 9;
-                                            break;
-                                        }
-
-                                    case ConsoleColor.DarkGray:
-                                        {
-                                            parsedAtribute2 = 8;
-                                            break;
-                                        }
-
-                                    case ConsoleColor.Red:
-                                        {
-                                            parsedAtribute2 = 12;
-                                            break;
-                                        }
-
-                                    case ConsoleColor.Green:
-                                        {
-                                            parsedAtribute2 = 10;
-                                            break;
-                                        }
-
-                                    case ConsoleColor.Yellow:
-                                        {
-                                            parsedAtribute2 = 14;
-                                            break;
-                                        }
-                                    case ConsoleColor.Magenta:
-                                        {
-                                            parsedAtribute2 = 13;
-                                            break;
-                                        }
-                                }
+                               
                             }
 
                         }
@@ -870,7 +775,7 @@ namespace RetroRPG
             if (znak == '─') { return 196; }
             if (znak == '┘') { return 217; }
             if (znak == '┌') { return 218; }
-
+            if (znak == 'ó') { return 243; }
 
             return 0;
         }

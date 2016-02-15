@@ -52,7 +52,25 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>RetroIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NAudio">
+      <HintPath>..\..\netvorbis\NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.WindowsMediaFormat">
+      <HintPath>..\..\netvorbis\NAudio.WindowsMediaFormat.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis">
+      <HintPath>..\..\netvorbis\NVorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis.NAudioSupport">
+      <HintPath>..\..\netvorbis\NVorbis.NAudioSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis.OpenTKSupport">
+      <HintPath>..\..\netvorbis\NVorbis.OpenTKSupport.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -96,6 +114,7 @@
     <Compile Include="Render.cs" />
     <Compile Include="RetroLanguage\RetroLanguageInterpreter.cs" />
     <Compile Include="Serialization.cs" />
+    <Compile Include="Sound.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Objects\oWall.cs" />
     <Compile Include="Structs.cs" />
@@ -104,6 +123,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="RetroIcon.ico" />
     <Content Include="RetroLanguage\retroLanguage.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

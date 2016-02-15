@@ -238,6 +238,8 @@ namespace RetroRPG
 
         public void parseAnimatedImage(string file, int animationSpeed)
         {
+            Console.CursorVisible = false;
+
             buffer buffer = Render.getInstance.Buffer;
 
             List<string> currentFrameList = new List<string>();
@@ -274,8 +276,11 @@ namespace RetroRPG
                       
                     foreach (string ln in frame)
                     {
-                        buffer.Draw(ln);
-                        buffer.NewLine();
+                       //buffer.Draw(ln);
+                       // buffer.NewLine();
+
+                    buffer.DrawColored(ln, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
+
                     if (Console.CursorTop > maxY) { maxY = Console.CursorTop; }                    
                     }
 
@@ -299,7 +304,8 @@ namespace RetroRPG
                 Console.CursorTop = minY;
             }
 
-            Console.CursorTop = maxY;
+            Console.CursorVisible = false;
+            Console.SetCursorPosition(0, 0);
             Console.ReadKey();
         }
     }

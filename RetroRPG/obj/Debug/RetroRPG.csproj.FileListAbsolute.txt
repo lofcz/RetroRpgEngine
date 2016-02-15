@@ -22,3 +22,14 @@ C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\obj\Debug\RetroRPG.pdb
 C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\RetroRPG.exe
 C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\RetroRPG.pdb
 C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\obj\Debug\RetroRPG.csprojResolveAssemblyReference.cache
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\NAudio.dll
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\NAudio.WindowsMediaFormat.dll
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\NVorbis.dll
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\NVorbis.NAudioSupport.dll
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\NVorbis.OpenTKSupport.dll
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\OpenTK.dll
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\NVorbis.xml
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\NVorbis.NAudioSupport.xml
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\NVorbis.OpenTKSupport.xml
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\OpenTK.pdb
+C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\OpenTK.xml

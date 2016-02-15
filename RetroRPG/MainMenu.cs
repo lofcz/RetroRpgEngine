@@ -34,7 +34,9 @@ namespace RetroRPG
 
         public void showMainMenu()
         {
-            string[] menuItems = { "Pokračovat", "Začít nový příběh", "Uživatelské módy", "Autoři", "Konec hry" };
+            Console.CursorVisible = false;
+
+            string[] menuItems = { "Pokračovat", "Začít nový příběh", "Rozšíření", "Autoři", "Konec hry" };
             bool[] menuItemsEnabled = { false, true, true, true, true };
             bool selecting = true;
             int selectedItem = 1;
@@ -44,10 +46,42 @@ namespace RetroRPG
 
             // Vykreslíme splashscreen
             Parser.getInstance.parseImage("castle.txt", false, ConsoleColor.Gray, Parser.Effects.none);
-            buffer.Print();
+            Console.CursorTop += 2;
+
+            int y = Console.CursorTop;
 
             while (selecting)
             {
+                //Console.SetCursorPosition(0, 20);
+
+                // vykreslíme položky
+                for (int i = 0; i < menuItems.Length; i++)
+                {
+                    ConsoleColor color = ConsoleColor.Gray;
+
+                    if (selectedItem == i)
+                    {
+                        color = ConsoleColor.Yellow;
+                        buffer.DrawColored("> " + menuItems[i], Console.CursorLeft, Console.CursorTop, color, false, true);
+                    }
+                    else
+                    {
+                        if (menuItemsEnabled[i] == false)
+                        {
+                            color = ConsoleColor.DarkGray;
+                            buffer.DrawColored(menuItems[i], Console.CursorLeft, Console.CursorTop, color, false, true);
+                        }
+                        else
+                        {
+                            buffer.DrawColored(menuItems[i], Console.CursorLeft, Console.CursorTop, color, false, true);
+                        }
+                    }
+
+                    //buffer.DrawColored(menuItems[i], Console.CursorLeft, Console.CursorTop, color, false, true);
+                }
+
+                buffer.Print();
+
                 ConsoleKey key = Console.ReadKey(true).Key;
 
                 switch(key)
@@ -57,11 +91,42 @@ namespace RetroRPG
                             selecting = false;
                             break;
                         }
+                    case ConsoleKey.S:
+                        {
+                            if (selectedItem < menuItems.Length - 1)
+                            {
+                                selectedItem++;
+                                int j = selectedItem; while (menuItemsEnabled[j] == false) { j++; selectedItem++; }
+                            }
+                            else { selectedItem = 0; int j = 0; while (menuItemsEnabled[j] == false) { j++; selectedItem++; } }
+
+                            break;
+                        }
+                    case ConsoleKey.W:
+                        {
+                            if (selectedItem > 0)
+                            {
+                                selectedItem--;
+                                int j = selectedItem; while (menuItemsEnabled[j] == false) { if (j > 0) { j--; selectedItem--; } else { selectedItem = menuItems.Length-1; j = menuItems.Length-1; break; } }
+                            }
+                            else { selectedItem = menuItems.Length; int j = menuItems.Length; while (menuItemsEnabled[j] == false) { j--; selectedItem--; } }
+
+                            break;
+                        }
                 }
+
+                // Vyčistíme výběr
+                for (int i = 0; i < menuItems.Length; i++)
+                {
+                    buffer.clearRow(y + i);
+                }
+
+                Console.SetCursorPosition(0, y);
             }
 
             buffer.Clear();
             buffer.Print();
+            Console.CursorVisible = true;
         }
     }
 }
