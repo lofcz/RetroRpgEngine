@@ -652,12 +652,17 @@ namespace RetroRPG
         /// <summary>
         /// Clears the buffer and resets all character values back to 32, and attribute values to 1.
         /// </summary>
-        public void Clear()
+        public void Clear(bool resetCursorPosition = false)
         {
             for (int i = 0; i < buf.Length; i++)
             {
                 buf[i].Attributes = 1;
                 buf[i].Char.AsciiChar = 32;
+            }
+
+            if (resetCursorPosition)
+            {
+                Console.SetCursorPosition(0, 0);
             }
         }
         /// <summary>

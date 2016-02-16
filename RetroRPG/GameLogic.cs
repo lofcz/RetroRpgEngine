@@ -80,7 +80,18 @@ namespace RetroRPG.Objects
             Inventory.getInstance.itemAdd(item1);*/
             for (int i = 0; i < 20; i++)
             {
-            GameItem item = new GameItem("Pirátská šavle" + i.ToString(), ConsoleColor.Yellow, "Stará šavle nějakého piráta.", oPlayer.ItemsEquiped.Weapon);
+                GameItem item;
+
+                if (i == 0)
+                {
+                     item = new GameItem("#yPirátská#x #ršavle#x #csmrti#x‡", ConsoleColor.Gray, "Stará šavle nějakého piráta.", oPlayer.ItemsEquiped.Weapon);
+
+                }
+                else
+                {
+                     item = new GameItem("#yPirátská šavle#x‡" + i.ToString(), ConsoleColor.Gray, "Stará šavle nějakého piráta.", oPlayer.ItemsEquiped.Weapon);
+                }
+
                 item.attributes[(int)GameItem.atr.damage] = i +1;
                 Inventory.getInstance.itemAdd(item);
             }

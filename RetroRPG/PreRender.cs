@@ -107,7 +107,7 @@ namespace RetroRPG
 
                     case ConsoleKey.I:
                         {
-                            Inventory.getInstance.drawInventory();
+                            Inventory.getInstance.drawInventory(10);
                             break;
                         }
                 }

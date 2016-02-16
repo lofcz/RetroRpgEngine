@@ -582,7 +582,7 @@ namespace RetroRPG
                                             Console.SetCursorPosition(0, 0);
                                             buffer.Print();
 
-                                            Inventory.getInstance.drawInventory();
+                                            Inventory.getInstance.drawInventory(10);
                                             choosing = "end";
                                             choosingAction = false;
                                             //   GetPlayerClass(index);

@@ -7,9 +7,19 @@ using RetroRPG.Objects;
 
 namespace RetroRPG
 {
+
+    /// <summary>
+    /// Třída herního inventáře.
+    /// </summary>
     class Inventory
     {
-         List<GameItem> items = new List<GameItem>();
+        #region Informace
+        // Verze: 1.0 -> 1.1
+        // Stabilní: Ne
+        #endregion
+        #region UML
+        // Singleton
+
         private static Inventory inventory;
 
         Inventory()
@@ -17,7 +27,7 @@ namespace RetroRPG
     
         }
 
-    public static Inventory getInstance
+        public static Inventory getInstance
         {
             get
             {
@@ -29,24 +39,29 @@ namespace RetroRPG
                 return inventory;
             }
         }
-        
-     public void drawInventory()
+        #endregion
+
+        List<GameItem> items = new List<GameItem>();
+
+        public void drawInventory(int drawItemsCount)
         {
-            int showItemsCount = 10;
-            int itemMin = 0;
+            int showItemsCount = drawItemsCount;
+            int itemMin = 0, itemMax;
 
             bool choosing = true;
             int itemSelected = 1;
             int actualItem = itemMin;
             int length = 0;
 
+            string tempOutput = ""; // Refactoring inventáře v1.1 - Výsledek vykreslení sjednotíme do stringu
+
             while (choosing)
             {
-                int itemMax = Math.Min(itemMin + showItemsCount, items.Count);
+                Render.getInstance.Buffer.Clear(true);
 
-                Render.getInstance.Buffer.Clear();
-                Console.SetCursorPosition(0, 0);
+                itemMax = Math.Min(itemMin + showItemsCount, items.Count);
                 actualItem = itemMin;
+
                 GameItem choosingItem = null;
                 int horizontalIndex = 0;
                 string[] equipedItems = {"","",""};
@@ -76,7 +91,7 @@ namespace RetroRPG
                 }
                 else
                 {
-                    Render.getInstance.Buffer.Draw(equipedItems[(int)oPlayer.ItemsEquiped.Weapon], Console.CursorLeft, Console.CursorTop, equipedItemsColors[(int)oPlayer.ItemsEquiped.Weapon]);
+                    Render.getInstance.Buffer.DrawColored(equipedItems[(int)oPlayer.ItemsEquiped.Weapon], Console.CursorLeft, Console.CursorTop, equipedItemsColors[(int)oPlayer.ItemsEquiped.Weapon], true);
                 }
                 Render.getInstance.Buffer.NewLine();
 
@@ -94,8 +109,8 @@ namespace RetroRPG
 
 
                 Render.getInstance.Buffer.Draw(Strings.getInstance.horizontalLine, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
-                Render.getInstance.Buffer.NewLine();
-                Render.getInstance.Buffer.NewLine();
+                Render.getInstance.Buffer.NewLine(2);
+
 
                 for (int i = itemMin; i < itemMax; i++ )
                 {
@@ -107,12 +122,14 @@ namespace RetroRPG
                     if (item.attributes[(int)GameItem.atr.equiped] == 1)
                     {
                         Render.getInstance.Buffer.Draw("[Nasazeno]", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
+                       // tempOutput += "#g[Nasazeno]#x";
                     }
 
                     // Vykreslí info o hover předmětu
                     if (itemSelected == actualItem)
                     {
                         Render.getInstance.Buffer.Draw(" > ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
+                        //tempOutput += "#g > #x";
                         item.drawItemStats();
                         item.drawItemOptions();
                         Render.getInstance.Buffer.NewLine();
