@@ -33,3 +33,9 @@ C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\NVorbis.NAudioSupport.
 C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\NVorbis.OpenTKSupport.xml
 C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\OpenTK.pdb
 C:\Users\Matěj\Desktop\RetroRpgEngine\RetroRPG\bin\Debug\OpenTK.xml
+C:\Users\Spravce\Documents\GitHub\RetroRpgEngine\RetroRPG\bin\Debug\OpenTK.dll
+C:\Users\Spravce\Documents\GitHub\RetroRpgEngine\RetroRPG\bin\Debug\NVorbis.xml
+C:\Users\Spravce\Documents\GitHub\RetroRpgEngine\RetroRPG\bin\Debug\NVorbis.NAudioSupport.xml
+C:\Users\Spravce\Documents\GitHub\RetroRpgEngine\RetroRPG\bin\Debug\NVorbis.OpenTKSupport.xml
+C:\Users\Spravce\Documents\GitHub\RetroRpgEngine\RetroRPG\bin\Debug\OpenTK.pdb
+C:\Users\Spravce\Documents\GitHub\RetroRpgEngine\RetroRPG\bin\Debug\OpenTK.xml

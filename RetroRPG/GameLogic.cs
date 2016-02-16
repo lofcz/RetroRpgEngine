@@ -43,7 +43,7 @@ namespace RetroRPG.Objects
             /* Testy nových tříd (messages) */
             //  Messages.getInstance.rainMessage("Vítej v RetroRPG Enginu vývojáři.", 50, -4, true, "Stiskni jakoukoli klávesu pro pokračování");
             //   Messages.getInstance.basicMessage("Čekají tě ukázky:\n > Inventáře\n > Herní mapy\n > Bitevního systému", "#yStiskni jakoukoli klávesu pro pokračování#x ");
-              Parser.getInstance.parseAnimatedImage("logo_animated.txt", 500);
+           //   Parser.getInstance.parseAnimatedImage("logo_animated.txt", 500);
 
             // TEST SKRIPTOVACÍHO JAZYKA
             // RetroLanguage.RetroLanguageInterpreter.getInstance.interpretCode("dlc.txt");
@@ -67,6 +67,7 @@ namespace RetroRPG.Objects
             Render.getInstance.Buffer.Clear();
 
             // TEST INVENTÁŘE   
+            /*
             GameItem item = new GameItem("Pirátská šavle", ConsoleColor.Yellow, "Stará šavle nějakého piráta.", oPlayer.ItemsEquiped.Weapon);
             GameItem item1 = new GameItem("Kožená vesta", ConsoleColor.Gray, "Zahřeje když je zima.", oPlayer.ItemsEquiped.Armor);
 
@@ -74,16 +75,24 @@ namespace RetroRPG.Objects
             item1.attributes[(int)GameItem.atr.damage] = 4;
             item.attributes[(int)GameItem.atr.hp] = 7;
 
-            Inventory.getInstance.itemAdd(item);
-            Inventory.getInstance.itemAdd(item1);
+                Inventory.getInstance.itemAdd(item);
+                Inventory.getInstance.itemAdd(item1);
+            Inventory.getInstance.itemAdd(item1);*/
+            for (int i = 0; i < 20; i++)
+            {
+            GameItem item = new GameItem("Pirátská šavle" + i.ToString(), ConsoleColor.Yellow, "Stará šavle nějakého piráta.", oPlayer.ItemsEquiped.Weapon);
+                item.attributes[(int)GameItem.atr.damage] = i +1;
+                Inventory.getInstance.itemAdd(item);
+            }
 
-            Render.getInstance.Buffer.Print();
+
+                Render.getInstance.Buffer.Print();
             Console.ReadKey();
 
             Parser.getInstance.ParseMap();
 
             // TEST
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
                 oWallMoveable testWall = new oWallMoveable('#', "movingWall", ConsoleColor.Yellow, 5, 5 + i);
                 GameWorld.getInstance.moveableWallList.Add(testWall);
