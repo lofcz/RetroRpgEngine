@@ -42,15 +42,15 @@ namespace RetroRPG
         #endregion
 
         List<GameItem> items = new List<GameItem>();
+        int itemMin = 0, itemMax;
+        int itemSelected = 1;
+        int actualItem = 0;
 
         public void drawInventory(int drawItemsCount)
         {
             int showItemsCount = drawItemsCount;
-            int itemMin = 0, itemMax;
 
             bool choosing = true;
-            int itemSelected = 1;
-            int actualItem = itemMin;
             int length = 0;
 
             string tempOutput = ""; // Refactoring inventáře v1.1 - Výsledek vykreslení sjednotíme do stringu
@@ -110,6 +110,7 @@ namespace RetroRPG
 
                 Render.getInstance.Buffer.Draw(Strings.getInstance.horizontalLine, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
                 Render.getInstance.Buffer.NewLine(2);
+                Render.getInstance.Buffer.DrawColored("Předmět " + itemSelected.ToString() + " / " + items.Count, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true, true);
 
 
                 for (int i = itemMin; i < itemMax; i++ )
@@ -130,50 +131,30 @@ namespace RetroRPG
                     {
                         Render.getInstance.Buffer.Draw(" > ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
                         //tempOutput += "#g > #x";
+                        item.drawItemName();
+
+                        int returnY = Console.CursorTop;
+
+                        Console.SetCursorPosition(0, 20);
+                        Render.getInstance.Buffer.Draw(Strings.getInstance.horizontalLine);
+                        Render.getInstance.Buffer.NewLine();
+
                         item.drawItemStats();
                         item.drawItemOptions();
                         Render.getInstance.Buffer.NewLine();
                         item.drawItemDescription();
+                        Console.SetCursorPosition(0, returnY);
                     }
                     else
                     {
                         Render.getInstance.Buffer.Draw("> ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
-                        item.drawItemStats();
+                        //item.drawItemStats();
+                        item.drawItemName();
                     }
 
                     Render.getInstance.Buffer.NewLine();
 
                 }
-
-                /*
-                foreach (GameItem item in items)
-                {
-                    actualItem++;
-                    if (itemSelected == actualItem) { choosingItem = item; }
-
-                    if (item.attributes[(int)GameItem.atr.equiped] == 1)
-                    {
-                        Render.getInstance.Buffer.Draw("[Nasazeno]", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
-                    }
-
-                    // Vykreslí info o hover předmětu
-                    if (itemSelected == actualItem) 
-                        { 
-                        Render.getInstance.Buffer.Draw(" > ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
-                        item.drawItemStats();
-                        item.drawItemOptions();
-                        Render.getInstance.Buffer.NewLine();
-                        item.drawItemDescription();
-                        }
-                    else
-                    {
-                        Render.getInstance.Buffer.Draw("> ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
-                        item.drawItemStats();
-                    }
-                   
-                    Render.getInstance.Buffer.NewLine();
-                }*/
-
 
                 // Vykreslí možnost "zpět"
                 if (itemSelected == itemMax + 1)
@@ -194,7 +175,7 @@ namespace RetroRPG
                 Render.getInstance.Buffer.Print();
 
 
-                ConsoleKey key = Console.ReadKey().Key;
+                ConsoleKey key = Console.ReadKey(true).Key;
 
                 if (key == ConsoleKey.W)
                 {
@@ -203,7 +184,7 @@ namespace RetroRPG
                         itemMin--;
                     }
 
-                    if (itemSelected > 0) { itemSelected--; }
+                    if (itemSelected > 1) { itemSelected--; }
                     else { itemSelected = items.Count + 1; itemMin = items.Count - showItemsCount; }
                     horizontalIndex = 0;
                 }
@@ -217,6 +198,10 @@ namespace RetroRPG
                     if (itemSelected < items.Count + 1) { itemSelected++; }
                     else { itemSelected = 1; itemMin = 0; }
                     horizontalIndex = 0;
+                }
+                if (key == ConsoleKey.I)
+                {
+                    choosing = false;
                 }
 
                 if (key == ConsoleKey.Enter)

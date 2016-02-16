@@ -93,6 +93,7 @@ namespace RetroRPG.Objects
                 }
 
                 item.attributes[(int)GameItem.atr.damage] = i +1;
+                item.attributes[(int)GameItem.atr.hp] = i + 1;
                 Inventory.getInstance.itemAdd(item);
             }
 

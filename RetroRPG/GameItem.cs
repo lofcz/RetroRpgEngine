@@ -52,11 +52,15 @@ namespace RetroRPG
             if (output != "")
             {
                 output = output.Remove(output.Length - 2); // Odstraním poslední čárku v řetěztci.
-                Render.getInstance.Buffer.DrawColored(itemName, Console.CursorLeft, Console.CursorTop, itemColor, true);
-                Render.getInstance.Buffer.Draw(": " + output, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                Render.getInstance.Buffer.Draw(output, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
                // Render.getInstance.Buffer.Print();
             }
          
+        }
+
+        public void drawItemName()
+        {
+            Render.getInstance.Buffer.DrawColored(itemName, Console.CursorLeft, Console.CursorTop, itemColor, true);
         }
 
         public void drawItemDescription()
