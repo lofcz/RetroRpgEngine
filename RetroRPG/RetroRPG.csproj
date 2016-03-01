@@ -84,47 +84,64 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="buffer.cs" />
-    <Compile Include="CharacterCreation.cs" />
-    <Compile Include="ColorBuffer.cs" />
-    <Compile Include="Combat.cs" />
-    <Compile Include="ConsolePhysics.cs" />
-    <Compile Include="Crafting.cs" />
-    <Compile Include="Events.cs" />
-    <Compile Include="GameItem.cs" />
-    <Compile Include="GameMaterial.cs" />
-    <Compile Include="Intro.cs" />
-    <Compile Include="Inventory.cs" />
-    <Compile Include="MainMenu.cs" />
-    <Compile Include="Messages.cs" />
-    <Compile Include="Objects\Mark.cs" />
-    <Compile Include="Objects\oEnemy.cs" />
-    <Compile Include="GameSettings.cs" />
-    <Compile Include="GameWorld.cs" />
-    <Compile Include="Objects\oWallMoveable.cs" />
-    <Compile Include="ResourceTree.cs" />
-    <Compile Include="Parser.cs" />
-    <Compile Include="GameLogic.cs" />
-    <Compile Include="Objects\GameObject.cs" />
-    <Compile Include="Objects\oGold.cs" />
-    <Compile Include="Objects\oPlayer.cs" />
-    <Compile Include="PreRender.cs" />
+    <Compile Include="Engine\buffer.cs" />
+    <Compile Include="Engine\CharacterCreation.cs" />
+    <Compile Include="Engine\ColorBuffer.cs" />
+    <Compile Include="Engine\Combat.cs" />
+    <Compile Include="Engine\ConsolePhysics.cs" />
+    <Compile Include="Engine\Crafting.cs" />
+    <Compile Include="Engine\Events.cs" />
+    <Compile Include="Engine\GameItem.cs" />
+    <Compile Include="Engine\GameMaterial.cs" />
+    <Compile Include="Engine\Intro.cs" />
+    <Compile Include="Engine\Inventory.cs" />
+    <Compile Include="Engine\MainMenu.cs" />
+    <Compile Include="Engine\Messages.cs" />
+    <Compile Include="Engine\Mark.cs" />
+    <Compile Include="GameObjects\oEnemy.cs" />
+    <Compile Include="Engine\GameSettings.cs" />
+    <Compile Include="Engine\GameWorld.cs" />
+    <Compile Include="GameObjects\oWallMoveable.cs" />
+    <Compile Include="Engine\ResourceTree.cs" />
+    <Compile Include="Engine\Parser.cs" />
+    <Compile Include="Engine\GameLogic.cs" />
+    <Compile Include="Engine\GameObject.cs" />
+    <Compile Include="GameObjects\oGold.cs" />
+    <Compile Include="GameObjects\oPlayer.cs" />
+    <Compile Include="Engine\PreRender.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Render.cs" />
-    <Compile Include="RetroLanguage\RetroLanguageInterpreter.cs" />
-    <Compile Include="Serialization.cs" />
-    <Compile Include="Sound.cs" />
-    <Compile Include="Strings.cs" />
-    <Compile Include="Objects\oWall.cs" />
-    <Compile Include="Structs.cs" />
+    <Compile Include="Engine\Render.cs" />
+    <Compile Include="Engine\Misc\RetroLanguage\RetroLanguageInterpreter.cs" />
+    <Compile Include="Engine\Serialization.cs" />
+    <Compile Include="Engine\Sound.cs" />
+    <Compile Include="Engine\Strings.cs" />
+    <Compile Include="GameObjects\oWall.cs" />
+    <Compile Include="Engine\Structs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Engine\Misc\EngineDocumentation\bac.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Engine\Misc\EngineDocumentation\Documentation.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Engine\Misc\EngineDocumentation\RetroCSS.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Engine\Misc\EngineDocumentation\semantic.css" />
+    <Content Include="Engine\Misc\EngineDocumentation\semantic.js" />
     <Content Include="RetroIcon.ico" />
-    <Content Include="RetroLanguage\retroLanguage.txt" />
+    <Content Include="Engine\Misc\RetroLanguage\retroLanguage.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Engine\Misc\EngineDocumentation\css\" />
+    <Folder Include="Engine\Misc\EngineDocumentation\images\" />
+    <Folder Include="Engine\Misc\EngineDocumentation\js\" />
+    <Folder Include="Engine\Misc\EngineDocumentation\themes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
