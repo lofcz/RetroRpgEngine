@@ -215,6 +215,16 @@ namespace RetroRPG
                 {
                     choosing = false;
                 }
+                if (key == ConsoleKey.C)
+                {
+                    getCommand();
+                }
+
+
+                if (key == ConsoleKey.H)
+                {
+                    drawKeyShortcuts();
+                }
 
                 if (key == ConsoleKey.Enter)
                 {
@@ -248,6 +258,32 @@ namespace RetroRPG
 
                
             }
+        }
+        void getCommand()
+        {
+            Console.CursorVisible = true;
+            string command = Console.ReadLine();
+            Console.CursorVisible = false;
+        }
+
+        void drawKeyShortcuts()
+        {
+            buffer buffer = Render.getInstance.Buffer;
+            buffer.Clear();
+            Console.SetCursorPosition(0, 0);
+
+            buffer.DrawColored("[#yC#x] - Konzole", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
+            buffer.NewLine();
+
+            buffer.DrawColored("jmp #gn#x     > Označí v inventáři předmět #gn#x jako aktivní.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
+            buffer.DrawColored("drop #gn#x    > Vyhodí z inventáře předmět #gn#x.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
+            buffer.DrawColored("del #gn#x     > Zničí v inventáři předmět #gn#x.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
+            buffer.DrawColored("drop junk > Vyhodí z inventáře všechny předměty označené jako odpad.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
+            buffer.DrawColored("del junk  > Zničí všechny předměty v inventáři, označené jako odpad.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
+            buffer.DrawColored("find #gitem#x > Prohledá inventář a vrátí indexy všech shod.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false, true);
+
+            buffer.Print();
+            Console.ReadKey();
         }
 
         public void itemAdd(GameItem item, int count = 1)
