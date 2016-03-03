@@ -13,6 +13,7 @@ namespace RetroRPG
         public int[] attributes = new int[total_attributes];      
         string[] attributesNames = {"Život","Poškození","Equiped","Typ předmětu" };
         public string itemName;
+        public string cleanName;
         public ConsoleColor itemColor;
         string itemDescription = "";
         public string[] itemOptions;
@@ -33,6 +34,7 @@ namespace RetroRPG
             }
 
             this.itemName = itemName;
+            this.cleanName = itemName;
             this.itemColor = itemColor;
             this.itemDescription = itemDescription;
             this.attributes[(int)atr.type] = (int)itemType;
@@ -51,6 +53,24 @@ namespace RetroRPG
                         break;
                     }
             }
+
+            string str = "";
+            bool escape = false;
+
+            for(int i = 0; i < cleanName.Length; i++)
+            {
+                if (cleanName[i] == '#')
+                {
+                    escape = true;
+                    continue;
+                }
+
+                if (!escape) { str += cleanName[i];  } else { escape = false; }
+
+            }
+
+            cleanName = str;
+            //System.Windows.Forms.MessageBox.Show(cleanName);
         }
 
         public void drawItemStats()

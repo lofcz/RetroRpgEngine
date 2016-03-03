@@ -264,6 +264,32 @@ namespace RetroRPG
             Console.CursorVisible = true;
             string command = Console.ReadLine();
             Console.CursorVisible = false;
+
+            Render.getInstance.Buffer.Clear();
+            Console.SetCursorPosition(0, 0);
+
+            if (command.StartsWith("find", StringComparison.Ordinal))
+            {
+                command = command.Replace("find", "");
+                int i = 0;
+
+                foreach(GameItem itm in items)
+                {
+                    
+                    if (itm.cleanName.Contains(command))
+                    {
+                        itm.drawItemName();
+                        Render.getInstance.Buffer.Draw(i.ToString());
+                        Render.getInstance.Buffer.NewLine();
+                    }
+
+                    i++;
+                }
+            }
+
+            Render.getInstance.Buffer.Print();
+
+            Console.ReadKey(true);
         }
 
         void drawKeyShortcuts()
