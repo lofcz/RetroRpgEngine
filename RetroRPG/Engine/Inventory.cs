@@ -217,6 +217,8 @@ namespace RetroRPG
                 }
                 if (key == ConsoleKey.C)
                 {
+                    Render.getInstance.Buffer.DrawColored("#g>>#x ", 0, Console.CursorTop, ConsoleColor.Gray, false);
+                    Render.getInstance.Buffer.Print();
                     getCommand();
                 }
 
@@ -261,35 +263,144 @@ namespace RetroRPG
         }
         void getCommand()
         {
-            Console.CursorVisible = true;
-            string command = Console.ReadLine();
+            string[] commands = { "find", "jmp" };
+            bool input = true;
+            string command = "";
+            while(input)
+            {
+                Console.CursorLeft = 3;
+
+                ConsoleKeyInfo mkey = Console.ReadKey(true);
+                ConsoleKey key = mkey.Key;
+
+                if (key != ConsoleKey.Enter && key != ConsoleKey.Backspace)
+                {
+                    command += mkey.KeyChar;
+                }
+                else
+                {
+                    if (key == ConsoleKey.Backspace)
+                    {
+                        if (command.Length > 0)
+                        {
+                            command = command.Remove(command.Length - 1);
+                        }
+                    }
+
+                    if (key == ConsoleKey.Enter)
+                    {
+                        input = false;
+                    }
+                }
+                Render.getInstance.Buffer.clearRow(Console.CursorTop);
+                Render.getInstance.Buffer.DrawColored("#g>>#x ", 0, Console.CursorTop, ConsoleColor.Gray, false);
+
+                if (command.StartsWith("find"))
+                {
+                    Render.getInstance.Buffer.DrawColored("#gfind#x‡#h" + command.Replace("find","") + " #x‡", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false);
+                }
+                else if (command.StartsWith("jmp"))
+                {
+                    Render.getInstance.Buffer.DrawColored("#gjmp#x‡#h" + command.Replace("jmp", "") + " #x‡", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false);
+                }
+                else
+                {
+                    Render.getInstance.Buffer.DrawColored(command, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false);
+
+                }
+                Render.getInstance.Buffer.Print();
+            }
             Console.CursorVisible = false;
 
             Render.getInstance.Buffer.Clear();
+
+            string searchString = command;
+
+            for (int i = 0; i < commands.Length; i++)
+            {
+                if (searchString.ToLower().StartsWith(commands[i].ToLower()))
+                {
+                    searchString = searchString.Replace(commands[i], "");
+                    searchString = searchString.Replace(" ", "");
+                }
+            }
             Console.SetCursorPosition(0, 0);
+            Render.getInstance.Buffer.Draw(Strings.getInstance.horizontalLine);
+            Render.getInstance.Buffer.NewLine();
+            Render.getInstance.Buffer.DrawColored("Vyhledávání na dotaz \"#y" + searchString + "#x\"", 0, Console.CursorTop, ConsoleColor.Gray, false, true);
+            Render.getInstance.Buffer.Draw(Strings.getInstance.horizontalLine);
+            Console.SetCursorPosition(0, 5);
 
             if (command.StartsWith("find", StringComparison.Ordinal))
             {
                 command = command.Replace("find", "");
                 int i = 0;
+                int pocetNalezu = 0;
 
                 foreach(GameItem itm in items)
                 {
                     
-                    if (itm.cleanName.Contains(command))
+                    if (itm.cleanName.ToLower().Contains(command.ToLower()))
                     {
+                        pocetNalezu++;
+                        Render.getInstance.Buffer.Draw(" > ");
                         itm.drawItemName();
-                        Render.getInstance.Buffer.Draw(i.ToString());
+
+                        int xx = Console.CursorLeft;
+                        string center = "";
+
+                        while (xx < 40) { center += " "; xx++; }
+                        Render.getInstance.Buffer.Draw(center + "[" +i.ToString() + "]");
                         Render.getInstance.Buffer.NewLine();
                     }
 
                     i++;
                 }
+
+                Console.SetCursorPosition(0, 4);
+                string sklonujPocetNalezu = "";
+                if (pocetNalezu == 0) { sklonujPocetNalezu = "#rNenalezeny žádné odpovídají předměty. :(#x "; }
+                else if (pocetNalezu == 1) { sklonujPocetNalezu = "Nalezen #yjeden#x odpovídající předmět."; }
+                else if (pocetNalezu > 1 && pocetNalezu < 5) { sklonujPocetNalezu = "Nalezeny #y" + pocetNalezu.ToString() + "#x odpovídající předměty."; }
+                else { sklonujPocetNalezu = "Nalezeno #y" + pocetNalezu.ToString() + "#x odpovídajících předmětů."; }
+
+                Render.getInstance.Buffer.DrawColored(sklonujPocetNalezu, 0, Console.CursorTop, ConsoleColor.Gray, false);
+                Render.getInstance.Buffer.Print();
+                Console.ReadKey(true);
             }
 
-            Render.getInstance.Buffer.Print();
+            if (command.StartsWith("jmp", StringComparison.Ordinal))
+            {
+                command = command.Replace("jmp", "");
 
-            Console.ReadKey(true);
+                try
+                {
+                    int index = Convert.ToInt32(command);
+
+                    if (index > -1 && index < items.Count)
+                    {
+                        itemSelected = index + 1;
+
+                        if (index <= 4)
+                        {
+                            itemMin = 0;
+                        }
+                        else if (index > items.Count - 10)
+                        {
+                            itemMin = items.Count - 10;
+                        }
+                        else
+                        {
+                            itemMin = index - 4;
+                        }
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+
         }
 
         void drawKeyShortcuts()

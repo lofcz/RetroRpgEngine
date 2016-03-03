@@ -206,6 +206,7 @@ namespace RetroRPG
             }
 
 
+
             StreamReader sr = new StreamReader(ResourceTree.dataClasses + fileString, Encoding.UTF8);
             string line = "";
             string header = "";
