@@ -304,19 +304,28 @@ namespace RetroRPG
         }
         void getCommand()
         {
-            string[] commands = { "find", "jmp" };
+            string[] commands = { "find", "jmp", "filter" };
+            string[,] commandsTips = new string[commands.Length, 20];
+            int recogniser = 0;
+
+            commandsTips[2, 0] = "starred";
+            commandsTips[2, 1] = "junk";
+            commandsTips[2, 2] = "all";
+
             bool input = true;
             string command = "";
             while(input)
             {
                 Console.CursorLeft = 3;
+                int recognisedCommand = -1;
 
                 ConsoleKeyInfo mkey = Console.ReadKey(true);
                 ConsoleKey key = mkey.Key;
 
-                if (key != ConsoleKey.Enter && key != ConsoleKey.Backspace)
+                if (key != ConsoleKey.Enter && key != ConsoleKey.Backspace && key != ConsoleKey.DownArrow)
                 {
                     command += mkey.KeyChar;
+
                 }
                 else
                 {
@@ -332,7 +341,40 @@ namespace RetroRPG
                     {
                         input = false;
                     }
+
+                    if (key == ConsoleKey.DownArrow)
+                    {
+
+                        for (int i = 0; i < commands.Length; i++)
+                        {
+                            if (command.StartsWith(commands[i]))
+                            {
+                                recognisedCommand = i;
+                            }
+                        }
+
+                        if (recognisedCommand != -1)
+                        {
+                            if (commandsTips[recognisedCommand, recogniser] != "")
+                            {
+                                command = commands[recognisedCommand] + " " + commandsTips[recognisedCommand, recogniser];
+
+                                recogniser++;
+                                if (recogniser > 19 || commandsTips[recognisedCommand, recogniser] == null)
+                                {
+                                    recogniser = 0;
+                                }
+
+                            }
+                            }
+                        }
+
+                        
+                    
                 }
+
+
+              
                 Render.getInstance.Buffer.clearRow(Console.CursorTop);
                 Render.getInstance.Buffer.DrawColored("#g>>#x ", 0, Console.CursorTop, ConsoleColor.Gray, false);
 
@@ -343,6 +385,10 @@ namespace RetroRPG
                 else if (command.StartsWith("jmp"))
                 {
                     Render.getInstance.Buffer.DrawColored("#gjmp#x‡#h" + command.Replace("jmp", "") + " #x‡", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false);
+                }
+                else if (command.StartsWith("filter"))
+                {
+                    Render.getInstance.Buffer.DrawColored("#gfilter#x‡#h" + command.Replace("filter", "") + " #x‡", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, false);
                 }
                 else
                 {
