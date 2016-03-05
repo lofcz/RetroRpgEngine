@@ -42,9 +42,17 @@ namespace RetroRPG
         #endregion
 
         List<GameItem> items = new List<GameItem>();
+        List<GameItem> filteredList = new List<GameItem>();
+
         int itemMin = 0, itemMax;
         int itemSelected = 1;
         int actualItem = 0;
+        showFilter filter = showFilter.all;
+
+        enum showFilter
+        {
+            all,starred,junk
+        }
 
         public void drawInventory(int drawItemsCount)
         {
@@ -58,9 +66,18 @@ namespace RetroRPG
 
             while (choosing)
             {
+                if (filter == showFilter.starred)
+                {
+                   filteredList = items.Where( itm => itm.starMarked == 1).ToList();
+                }
+                else
+                {
+                    filteredList = items;
+                }
+
                 Render.getInstance.Buffer.Clear(true);
 
-                itemMax = Math.Min(itemMin + showItemsCount, items.Count);
+                itemMax = Math.Min(itemMin + showItemsCount, filteredList.Count);
                 actualItem = itemMin;
 
                 GameItem choosingItem = null;              
@@ -107,16 +124,40 @@ namespace RetroRPG
                 }
                 Render.getInstance.Buffer.NewLine();
 
+                int itemsCountFiltered = 0;
+
+                for (int i = 0; i < items.Count; i++)
+                {
+                    GameItem item = items[i];
+
+                    if (filter == showFilter.starred)
+                    {
+                        if (item.starMarked == 1)
+                        {
+                            itemsCountFiltered++;
+                        }
+                    }
+                    else
+                    {
+                        itemsCountFiltered++;
+                    }
+                }
 
                 Render.getInstance.Buffer.Draw(Strings.getInstance.horizontalLine, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
                 Render.getInstance.Buffer.NewLine(2);
-                Render.getInstance.Buffer.DrawColored("Předmět " + itemSelected.ToString() + " / " + items.Count, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true, true);
+                Render.getInstance.Buffer.DrawColored("Předmět " + itemSelected.ToString() + " / " + itemsCountFiltered, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true, true);
 
 
                 for (int i = itemMin; i < itemMax; i++ )
                 {
                     actualItem++;
-                    GameItem item = items[i];
+                    GameItem item = filteredList[i];
+
+                    // Filtrování
+                    if (filter == showFilter.starred)
+                    {
+                        if (item.starMarked != 1) { continue; }
+                    }
 
                     if (itemSelected == actualItem) { choosingItem = item; }
 
@@ -179,23 +220,23 @@ namespace RetroRPG
 
                 if (key == ConsoleKey.W)
                 {
-                    if (itemMin > 0 && (items.Count - itemSelected > 5)) 
+                    if (itemMin > 0 && (filteredList.Count - itemSelected > 5)) 
                     {
                         itemMin--;
                     }
 
                     if (itemSelected > 1) { itemSelected--; }
-                    else { itemSelected = items.Count + 1; itemMin = items.Count - showItemsCount; }
+                    else { itemSelected = filteredList.Count + 1; itemMin = Math.Max(0,filteredList.Count - showItemsCount); }
                     horizontalIndex = 0;
                 }
                 if (key == ConsoleKey.S)
                 {
-                    if (itemMin < items.Count - showItemsCount && itemSelected > 5)
+                    if (itemMin < filteredList.Count - showItemsCount && itemSelected > 5)
                     {
                         itemMin++;
                     }
 
-                    if (itemSelected < items.Count + 1) { itemSelected++; }
+                    if (itemSelected < filteredList.Count + 1) { itemSelected++; }
                     else { itemSelected = 1; itemMin = 0; }
                     horizontalIndex = 0;
                 }
@@ -255,7 +296,7 @@ namespace RetroRPG
                     
                   */
 
-                    if (itemSelected == items.Count + 1) { choosing = false; } 
+                    if (itemSelected == filteredList.Count + 1) { choosing = false; } 
                 }
 
                
@@ -398,6 +439,24 @@ namespace RetroRPG
                 catch
                 {
 
+                }
+            }
+
+            if (command.StartsWith("filter", StringComparison.Ordinal))
+            {
+                command = command.Replace("filter", "");
+
+                if (command.Contains("starred"))
+                {
+                    filter = showFilter.starred;
+                    itemMin = 0;
+                    itemSelected = 1;
+                }
+                if (command.Contains("all"))
+                {
+                    filter = showFilter.all;
+                    itemMin = 0;
+                    itemSelected = 1;
                 }
             }
 
