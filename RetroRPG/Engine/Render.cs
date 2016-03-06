@@ -82,7 +82,12 @@ namespace RetroRPG
             {
                 GameWorld.getInstance.map[gold.y * GameWorld.width + gold.x] = GameWorld.state.gold;
             }
-            
+
+            foreach (GameItem item in GameWorld.getInstance.itemsList)
+            {
+                GameWorld.getInstance.map[item.y * GameWorld.width + item.x] = GameWorld.state.item;
+            }
+
 
             GameWorld.getInstance.map[GameWorld.getInstance.player.y * GameWorld.width + GameWorld.getInstance.player.x] = GameWorld.state.player;
 
@@ -196,8 +201,29 @@ namespace RetroRPG
                         renderOutput += "‡#y◎#x‡";
                         break;
                     }
+                case (GameWorld.state.item):
+                    {
+                        foreach (GameItem item in GameWorld.getInstance.itemsList)
+                        {
+                            if (item.x == x && item.y == y)
+                            {
+                                int dis = (int)item.distanceToPoint(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y);
+                                string str = item.cleanName;
 
-                   
+                                if (dis < 5)
+                                {
+                                    Buffer.DrawColored(item.itemName, (int)(x - Math.Round((Convert.ToDouble(str.Length / 2)))) + 1, Console.CursorTop - 1, ConsoleColor.Gray, true);
+                                }
+                                break;
+                            }
+                        }
+
+                        // Buffer.Draw("◎", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow);
+                        renderOutput += "‡#yI#x‡";
+                        break;
+                    }
+
+
             }
            
          

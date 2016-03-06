@@ -19,6 +19,8 @@ namespace RetroRPG
         public string[] itemOptions;
         public itemActions act;
         public int starMarked = 0;
+        public int x, y;
+        public bool messageOnPickup = false;
         //string[] itemOptions = {"Nasadit};
 
         public enum atr
@@ -38,6 +40,8 @@ namespace RetroRPG
             this.itemColor = itemColor;
             this.itemDescription = itemDescription;
             this.attributes[(int)atr.type] = (int)itemType;
+            this.x = 0;
+            this.y = 0;
 
             this.act = action;
             switch (action)
@@ -94,6 +98,14 @@ namespace RetroRPG
                // Render.getInstance.Buffer.Print();
             }
          
+        }
+
+        public double distanceToPoint(int xx, int yy)
+        {
+            double distance = -1;
+
+            distance = Math.Round(Math.Sqrt(Math.Pow(Math.Abs(x - xx), 2) + Math.Pow(Math.Abs(y - yy), 2)));
+            return distance;
         }
 
         public void drawItemName()
@@ -219,6 +231,14 @@ namespace RetroRPG
                     }
 
             }
+        }
+
+        public void addItem(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+
+            GameWorld.getInstance.itemsList.Add(this);
         }
 
     }

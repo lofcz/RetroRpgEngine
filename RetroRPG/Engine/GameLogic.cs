@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RetroRPG.Engine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -57,7 +58,6 @@ namespace RetroRPG.GameObjects
             CharacterCreation.getInstance.GetPlayerClass();
 
             Console.SetCursorPosition(0, 0);
-            Console.SetCursorPosition(0, 0);
             Render.getInstance.Buffer.Clear();
             Render.getInstance.Buffer.Print();
             //    Intro.getInstance.DisplayIntro();
@@ -81,7 +81,6 @@ namespace RetroRPG.GameObjects
             for (int i = 0; i < 20; i++)
             {
                 GameItem item;
-                string[] options = { "Sníst", "Zničit", "Spapat" };
 
                 if (i == 0)
                 {
@@ -98,8 +97,11 @@ namespace RetroRPG.GameObjects
                 Inventory.getInstance.itemAdd(item);
             }
 
+            GameItem itm = new GameItem("#gPirátská#x #ršavle#x #csmrti#x‡", ConsoleColor.Gray, "Stará šavle nějakého piráta.", oPlayer.ItemsEquiped.Weapon, GameItem.itemActions.basicItem);
+            Spawner.getInstance.spawnItem(14, 8, itm, true); 
 
-                Render.getInstance.Buffer.Print();
+
+            Render.getInstance.Buffer.Print();
             Console.ReadKey();
 
             Parser.getInstance.ParseMap();

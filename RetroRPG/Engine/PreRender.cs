@@ -107,7 +107,8 @@ namespace RetroRPG
 
                     case ConsoleKey.I:
                         {
-                            Inventory.getInstance.drawInventory(10);
+                            //Inventory.getInstance.drawInventory(10);
+                            CharacterCreation.getInstance.increasePlayerStats(gameWorld.player.lvlupVlastnosti, gameWorld.player.lvlupDovednosti);
                             break;
                         }
                 }
@@ -140,6 +141,22 @@ namespace RetroRPG
                         }
                         break;
                     }
+
+                case GameWorld.state.item:
+                    {
+                        foreach (GameItem item in GameWorld.getInstance.itemsList)
+                        {
+                            if (item.x == x && item.y == y)
+                            {
+                                Inventory.getInstance.itemAdd(item);
+                                if (item.messageOnPickup) { Messages.getInstance.itemGetMessage("nadpis", item.itemName, item.cleanName); }
+                                GameWorld.getInstance.itemsList.Remove(item);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+
                 case GameWorld.state.enemy:
                     {
                         foreach (oEnemy enemy in GameWorld.getInstance.enemyList)

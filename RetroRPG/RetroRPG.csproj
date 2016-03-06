@@ -98,6 +98,7 @@
     <Compile Include="Engine\MainMenu.cs" />
     <Compile Include="Engine\Messages.cs" />
     <Compile Include="Engine\Mark.cs" />
+    <Compile Include="Engine\Spawner.cs" />
     <Compile Include="GameObjects\oEnemy.cs" />
     <Compile Include="Engine\GameSettings.cs" />
     <Compile Include="Engine\GameWorld.cs" />

@@ -244,5 +244,33 @@ namespace RetroRPG
 
             Console.SetCursorPosition(0, 0);
         }
+
+        public void itemGetMessage(string caption, string text, string clearText)
+        {
+            buffer.Clear();
+            Console.SetCursorPosition(0, 0);
+
+            for (int i = 0; i < 100; i++)
+            {
+                buffer.DrawColored("-", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true);
+                buffer.Print();
+                Thread.Sleep(20);
+            }
+            buffer.NewLine(2);
+            buffer.DrawColored(text, 50 - (int)Math.Round((Convert.ToDouble(clearText.Length / 2))), Console.CursorTop, ConsoleColor.Gray, false);
+            buffer.NewLine(2);
+
+            for (int i = 0; i < 100; i++)
+            {
+                buffer.DrawColored("-", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true);
+                buffer.Print();
+                Thread.Sleep(20);
+            }
+
+            buffer.Print();
+            Console.ReadKey(true);
+
+            Console.SetCursorPosition(0, 0);
+        }
     }
 }
