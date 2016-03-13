@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroRpgAnimationDesigner",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroRpgTextDesigner", "RetroRpgTextDesigner\RetroRpgTextDesigner.csproj", "{5FC91B9C-FAD1-4ABB-B748-AF9DF40256E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroRPGLevelEditor2", "..\..\Documents\Visual Studio 2015\Projects\RetroRPGLevelEditor2\RetroRPGLevelEditor2\RetroRPGLevelEditor2.csproj", "{9BEEF6E1-7A0A-4421-A85C-91861ACAB2D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,14 @@ Global
 		{5FC91B9C-FAD1-4ABB-B748-AF9DF40256E4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5FC91B9C-FAD1-4ABB-B748-AF9DF40256E4}.Release|x64.ActiveCfg = Release|Any CPU
 		{5FC91B9C-FAD1-4ABB-B748-AF9DF40256E4}.Release|x64.Build.0 = Release|Any CPU
+		{9BEEF6E1-7A0A-4421-A85C-91861ACAB2D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BEEF6E1-7A0A-4421-A85C-91861ACAB2D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BEEF6E1-7A0A-4421-A85C-91861ACAB2D9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9BEEF6E1-7A0A-4421-A85C-91861ACAB2D9}.Debug|x64.Build.0 = Debug|Any CPU
+		{9BEEF6E1-7A0A-4421-A85C-91861ACAB2D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BEEF6E1-7A0A-4421-A85C-91861ACAB2D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BEEF6E1-7A0A-4421-A85C-91861ACAB2D9}.Release|x64.ActiveCfg = Release|Any CPU
+		{9BEEF6E1-7A0A-4421-A85C-91861ACAB2D9}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -784,6 +784,7 @@ namespace RetroRPG
             if (znak == '♥') { return 3; }
             if (znak == '▲') { return 30; }
             if (znak == '▼') { return 31; }
+            if (znak == '■') { return 254; }
 
             return 0;
         }

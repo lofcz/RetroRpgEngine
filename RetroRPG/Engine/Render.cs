@@ -102,7 +102,7 @@ namespace RetroRPG
                     Buffer.NewLine();
                 }
 
-                for (int x = Math.Max(0, cameraX + 10); x < Math.Min(cameraX+viewWidth,GameWorld.width); x++) // Iterujeme řádky v dohledu kamery
+                for (int x = Math.Max(0, cameraX + 10); x < Math.Max(Math.Min(cameraX+viewWidth,GameWorld.width), viewWidth - 1); x++) // Iterujeme řádky v dohledu kamery
                 {
                     if (x == Math.Max(0, cameraX + 10)) { Buffer.Draw("║", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); }
 
@@ -191,7 +191,7 @@ namespace RetroRPG
 
                                 if (dis < 5)
                                 {
-                                    Buffer.DrawInsert(str, (int)(x - Math.Round((Convert.ToDouble(str.Length / 2)))) + 1, Console.CursorTop - 1, ConsoleColor.Green);
+                                    Buffer.DrawInsert(str, (int)(x - Math.Max(0, cameraX + 10) -  Math.Round((Convert.ToDouble(str.Length / 2)))) + 1, Console.CursorTop - 1, ConsoleColor.Green);
                                 }
                                     break;
                             }
@@ -260,26 +260,29 @@ namespace RetroRPG
         public void DrawPlayerStats()
         {
             Console.CursorVisible = false;
-            Console.SetCursorPosition(0, 5);
-            int startX = 55;
+            Console.SetCursorPosition(0, 1);
+            int startX = 54;
 
-            Buffer.Draw(GameWorld.getInstance.player.name,startX,Console.CursorTop,ConsoleColor.Green);
+            Buffer.DrawColored("#y" + GameWorld.getInstance.player.name + "#x (#g" + GameWorld.getInstance.player.level + ")#x (#h" + GameWorld.getInstance.player.xp + "#x/#h" + GameWorld.getInstance.player.max_xp + "#x)",startX,Console.CursorTop,ConsoleColor.Gray,false);
+            Buffer.NewLine();
+            Console.CursorLeft = startX;
+            Buffer.Draw("--------------------------------------------");
             Buffer.NewLine();
             Console.CursorLeft = startX;
             DrawBar(GameWorld.getInstance.player.hp, GameWorld.getInstance.player.max_hp, "Zdraví", ConsoleColor.Red);
             Console.CursorLeft = startX;
-            DrawBar(GameWorld.getInstance.player.stamina, GameWorld.getInstance.player.max_stamina, "Výdrž", ConsoleColor.Green);
+            DrawBar(GameWorld.getInstance.player.stamina, GameWorld.getInstance.player.max_stamina, "Výdrž ", ConsoleColor.Green);
 
             Buffer.Print();
         }
 
-        public void DrawBar(decimal variable, decimal variable_max, string text, ConsoleColor color, char znak = '█', bool newLine = true, int size = 20)
+        public void DrawBar(decimal variable, decimal variable_max, string text, ConsoleColor color, char znak = '■', bool newLine = true, int size = 20)
         {
             decimal number = Math.Round((variable / variable_max) * size);
             //     int n = Convert.ToInt32(Math.Round(number * 20));
 
 
-            if (text != "no_text") { Buffer.Draw(text + " (" + variable + " / " + variable_max + "): ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); }
+            if (text != "no_text") { Buffer.DrawColored(text + " (#g" + variable + "#x / #g" + variable_max + "#x): ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true); }
 
             Buffer.Draw("[", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
             int cl = Console.CursorLeft;
