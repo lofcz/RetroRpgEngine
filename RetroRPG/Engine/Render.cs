@@ -201,6 +201,7 @@ namespace RetroRPG
                         renderOutput += "‡#y◎#x‡";
                         break;
                     }
+
                 case (GameWorld.state.item):
                     {
                         foreach (GameItem item in GameWorld.getInstance.itemsList)
