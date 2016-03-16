@@ -851,9 +851,14 @@ namespace RetroRPGLevelEditor2
                             sw.Write("[");
                             foreach (string ln in csvParameters)
                             {                             
-                                sw.Write(ln + ";");
+                                sw.Write(ln);
+                                if (ln.Contains("secretX") || ln.Contains("secretY"))
+                                {
+                                    sw.Write("|");
+                                }
+                                sw.Write(";×");
                             }
-                            sw.Write("]");                   
+                            sw.Write("]");
                         }
 
                         sw.WriteLine();
@@ -872,6 +877,7 @@ namespace RetroRPGLevelEditor2
                             {
                                 sw.Write(ln + ";");
                             }
+                            sw.Write(" ;");
                             sw.Write("]");
                         }
 
@@ -891,6 +897,7 @@ namespace RetroRPGLevelEditor2
                             {
                                 sw.Write(ln + ";");
                             }
+                            sw.Write(" ;");
                             sw.Write("]");
                         }
 
@@ -910,6 +917,7 @@ namespace RetroRPGLevelEditor2
                             {
                                 sw.Write(ln + ";");
                             }
+                            sw.Write(" ;");
                             sw.Write("]");
                         }
 

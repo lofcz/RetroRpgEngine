@@ -169,7 +169,7 @@ namespace RetroRPG
                     {
                         oGold target = GameWorld.getInstance.goldList.Find(i => i.x == x && i.y == y);
 
-                        int dis = (int)target.distanceToPoint(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y);
+                        int dis = (int)target.distanceToPoint(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y, x, y);
                         string str = "Hodnota: " + target.value;
 
                          if (dis < 5)

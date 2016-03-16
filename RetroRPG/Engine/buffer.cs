@@ -168,7 +168,7 @@ namespace RetroRPG
         /// <param name="Width"></param>
         /// <param name="Height"></param>
         /// <param name="attribute"></param>
-        public void Draw(String str, int Width, int Height, ConsoleColor color) //Draws the image to the buffer
+        public void Draw(string str, int X, int Y, ConsoleColor color) //Draws the image to the buffer
         {
             short parsedAtribute = 0;
 
@@ -211,7 +211,7 @@ namespace RetroRPG
                     }
             }
 
-            if (Width > windowWidth - 1 || Height > windowHeight - 1)
+            if (X > windowWidth - 1 || Y > windowHeight - 1)
             {
                 //throw new System.ArgumentOutOfRangeException();
             }
@@ -224,16 +224,16 @@ namespace RetroRPG
                 {
                     bool cont = true;
                     short special = SpecialChars(le); // BYTE
-                    if (special != 0) { buf[(Width + tc) + (Height * width)].Char.AsciiChar = special; cont = false; }
+                    if (special != 0) { buf[(X + tc) + (Y * width)].Char.AsciiChar = special; cont = false; }
 
 
                     if (cont)
                     {
-                        buf[(Width + tc) + (Height * width)].Char.AsciiChar = (byte)le; //Height * width is to get to the correct spot (since this array is not two dimensions).
+                        buf[(X + tc) + (Y * width)].Char.AsciiChar = (byte)le; //Height * width is to get to the correct spot (since this array is not two dimensions).
                     }
 
                     if (parsedAtribute != 0)
-                        buf[(Width + tc) + (Height * width)].Attributes = parsedAtribute;
+                        buf[(X + tc) + (Y * width)].Attributes = parsedAtribute;
                     tc++;
                 }
             }
@@ -253,7 +253,7 @@ namespace RetroRPG
 
         }
 
-        public void Draw(String str, ConsoleColor color = ConsoleColor.Gray) //Draws the image to the buffer
+        public void Draw(string str, ConsoleColor color = ConsoleColor.Gray) //Draws the image to the buffer
         {
             short parsedAtribute = 0;
             int Width = Console.CursorLeft;
@@ -263,7 +263,6 @@ namespace RetroRPG
             {
                 case ConsoleColor.Black:
                     {
-
                         break;
                     }
 
@@ -343,7 +342,7 @@ namespace RetroRPG
 
 
         // ***********************************************************************************************************************************
-        public void DrawColored(String str, int Width, int Height, ConsoleColor color, bool insert, bool newLine = false, type type = type.common, int typeValue = 0) //Draws the image to the buffer
+        public void DrawColored(string str, int X, int Y, ConsoleColor color, bool insert, bool newLine = false, type type = type.common, int typeValue = 0) //Draws the image to the buffer
         {
 
             if (type == type.characterCreation && typeValue != 0)
@@ -365,7 +364,7 @@ namespace RetroRPG
 
             
 
-            if (Width > windowWidth - 1 || Height > windowHeight - 1)
+            if (X > windowWidth - 1 || Y > windowHeight - 1)
             {
                 //throw new System.ArgumentOutOfRangeException();
             }
@@ -390,11 +389,11 @@ namespace RetroRPG
                     {            
                        NewLine();
                        CurrentChar = 0;
-                       Height++;
+                       Y++;
 
                         try
                         {
-                            DrawColored(strBackup.Remove(0, 1), 0, Height, color, false);
+                            DrawColored(strBackup.Remove(0, 1), 0, Y, color, false);
                         }
                         catch
                         {
@@ -406,9 +405,9 @@ namespace RetroRPG
                     {
                         NewLine();
                         CurrentChar = 0;
-                        Height++;
+                        Y++;
 
-                        DrawColored(strBackup.Remove(0, 1), 66, Height, color, false);
+                        DrawColored(strBackup.Remove(0, 1), 66, Y, color, false);
                         break;
                     }
 
@@ -446,32 +445,27 @@ namespace RetroRPG
                         if (temp[i] != '‡')
                         {
 
-                            if (special != 0) { buf[(Width + tc) + (Height * width)].Char.UnicodeChar = (char)special; cont = false; }
+                            if (special != 0) { buf[(X + tc) + (Y * width)].Char.UnicodeChar = (char)special; cont = false; }
 
                             if (cont)
                             {
-                                buf[(Width + tc) + (Height * width)].Char.UnicodeChar = (char)temp[i]; //Height * width is to get to the correct spot (since this array is not two dimensions).
+                                buf[(X + tc) + (Y * width)].Char.UnicodeChar = (char)temp[i]; //Height * width is to get to the correct spot (since this array is not two dimensions).
                             }
 
                             if (!specialColor)
                             {
                                 if (parsedAtribute != 0)
-                                    buf[(Width + tc) + (Height * width)].Attributes = parsedAtribute;
+                                    buf[(X + tc) + (Y * width)].Attributes = parsedAtribute;
                             }
                             else
                             {
-                                buf[(Width + tc) + (Height * width)].Attributes = parsedAtribute2;
+                                buf[(X + tc) + (Y * width)].Attributes = parsedAtribute2;
                             }
                             tc++;
                         }
 
                         if (CurrentChar >= 100)
                         {
-                     //       NewLine();
-                       //     CurrentChar = 0;
-                       //     Height++;
-                          //  DrawColored(strBackup.Remove(0, 1), Width, Height, color, insert);
-
                         }
 
                         CurrentChar++;
@@ -516,7 +510,7 @@ namespace RetroRPG
 
 
 
-        public void DrawInsert(String str, int Width, int Height, ConsoleColor color) //Draws the image to the buffer
+        public void DrawInsert(string str, int X, int Y, ConsoleColor color) //Draws the image to the buffer
         {
             short parsedAtribute = 0;
 
@@ -553,7 +547,7 @@ namespace RetroRPG
                     }
             }
 
-            if (Width > windowWidth - 1 || Height > windowHeight - 1)
+            if (X > windowWidth - 1 || Y > windowHeight - 1)
             {
                 //throw new System.ArgumentOutOfRangeException();
             }
@@ -567,15 +561,15 @@ namespace RetroRPG
                     bool cont = true;
 
                     short special = SpecialChars(le); // BYTE
-                    if (special != 0) { buf[(Width + tc) + (Height * width)].Char.AsciiChar = special; cont = false; }
+                    if (special != 0) { buf[(X + tc) + (Y * width)].Char.AsciiChar = special; cont = false; }
 
                     if (cont)
                     {
-                        buf[(Width + tc) + (Height * width)].Char.AsciiChar = (byte)le; //Height * width is to get to the correct spot (since this array is not two dimensions).
+                        buf[(X + tc) + (Y * width)].Char.AsciiChar = (byte)le; //Height * width is to get to the correct spot (since this array is not two dimensions).
                     }
 
                     if (parsedAtribute != 0)
-                        buf[(Width + tc) + (Height * width)].Attributes = parsedAtribute;
+                        buf[(X + tc) + (Y * width)].Attributes = parsedAtribute;
                     tc++;
                 }
             }

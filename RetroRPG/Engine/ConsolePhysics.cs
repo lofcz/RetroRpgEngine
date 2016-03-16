@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RetroRPG.GameObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -52,7 +53,7 @@ namespace RetroRPG
                 {
                 currentRadius = 5;
 
-                    if (wall.distanceToPoint(point.x, point.y) <= currentRadius)
+                    if (wall.distanceToPoint(point.x, point.y, wall.x, wall.y) <= currentRadius)
                     {
                     for (int i = 0; i < cycles; i++)
                     {
@@ -99,6 +100,34 @@ namespace RetroRPG
                 }
 
                
+            }
+        }
+
+        public void Trail(GameObject target, Structs.Point point)
+        {
+            int xx = target.x;
+            int yy = target.y;
+            int i = 0;
+            target.active = true;
+
+            while (target.distanceToPoint(point.x, point.y, xx, yy) > 0)
+                {
+                i++;
+               double angle = getAngle(point.x, point.y, target.x, target.y);
+
+
+                switch (Convert.ToInt32(angle))
+                {
+                    case 180:
+                        {
+                            target.xx = target.x + i;
+                            target.yy = target.y;
+                            target.addPositionToQueue();
+
+                            xx++;
+                            break;
+                        }
+                }
             }
         }
     }

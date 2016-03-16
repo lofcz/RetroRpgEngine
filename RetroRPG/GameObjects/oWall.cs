@@ -21,13 +21,9 @@ namespace RetroRPG
             this.secret = secret;
         }
 
-        public static void addWall(int x, int y)
+        public static void addWall(int x, int y, bool isSecret, Structs.Point point)
         {
-            Structs.Point point = new Structs.Point();
-            point.x = x;
-            point.y = y;
-
-            oWall wall = new oWall('#', "Wall", ConsoleColor.Gray, x, y, new Structs.SecretMove(true,point));
+            oWall wall = new oWall('#', "Wall", ConsoleColor.Gray, x, y, new Structs.SecretMove(isSecret,point));
             GameWorld.getInstance.wallList.Add(wall);
         }
     }

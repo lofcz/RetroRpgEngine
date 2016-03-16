@@ -47,11 +47,11 @@ namespace RetroRPG.GameObjects
             max_hp = hp;
         }
 
-        public double distanceToPoint(int xx, int yy)
+        public double distanceToPoint(int xx, int yy, int startX, int startY)
         {
              double distance = -1;
 
-            distance = Math.Round(Math.Sqrt(Math.Pow(Math.Abs(x-xx),2) + Math.Pow(Math.Abs(y - yy), 2)));
+            distance = Math.Round(Math.Sqrt(Math.Pow(Math.Abs(startX - xx),2) + Math.Pow(Math.Abs(startY - yy), 2)));
             return distance;
         }
 

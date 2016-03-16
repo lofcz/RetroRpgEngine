@@ -8,6 +8,7 @@ using System.IO;
 using RetroRPG.GameObjects;
 using System.Threading;
 using System.Xml;
+using System.Windows.Forms;
 
 namespace RetroRPG
 {
@@ -61,7 +62,79 @@ namespace RetroRPG
                 {
                     if (line.Contains("[oWall]"))
                     {
-                        oWall.addWall(x, y);
+                        Structs.CSVList constructor = getCsv(line, "[oWall]");
+                        bool isSecret = false;
+                        int secretX = x;
+                        int secretY = y;
+
+                        for (int i = 0; i < constructor.CSVText.Count; i++)
+                        {
+                            string value = constructor.CSVText[i];
+
+                            if (value == "isSecret")
+                            {
+                                if (constructor.CSVValue[i] == "true")
+                                {
+                                    isSecret = true;
+                                }
+                                else
+                                {
+                                    isSecret = false;
+                                }
+
+                                continue;
+                            }
+
+                            if (value == "secretX")
+                            {
+                                string l = constructor.CSVValue[i];
+                                int xPos = 0;
+                                bool parsing = false;
+                                string parsingText = "";
+                                int ii = 0;
+
+                                foreach(char znak in l)
+                                {
+                                    if (znak == 'x') { xPos += x; }
+                                    else if (znak == '+' || znak == '|')
+                                        {
+                                        if (parsing == false)
+                                            {
+
+                                            }
+                                        else
+                                        {
+                                            if (parsingText != "")
+                                            {
+                                                xPos += Convert.ToInt32(parsingText);
+                                                parsingText = "";
+                                            }
+                                        }
+
+                                        parsing = !parsing;
+                                    }
+                                else
+                                    {
+                                        if (znak != ' ') { parsingText += znak; }
+                                    }
+
+                                    ii++;
+
+                                    if (ii == l.Count())
+                                    {
+                                        secretX = xPos;
+                                    }
+                                }
+
+                            }
+
+                        }
+
+                        Structs.Point point = new Structs.Point();
+                        point.x = secretX;
+                        point.y = secretY;
+
+                        oWall.addWall(x, y, isSecret, point);
                     }
                     else if (line.Contains("[oGold]"))
                     {
@@ -137,7 +210,7 @@ namespace RetroRPG
 
             foreach (char znak in line)
             {
-                if (znak != ' ' && znak != '[' && znak != ']' && znak != '=' && znak != ';')
+                if (znak != ' ' && znak != '[' && znak != ']' && znak != '=' && znak != ';' && znak != '×')
                 {
                     if (parsingValueText)
                     {
@@ -156,6 +229,13 @@ namespace RetroRPG
                 {
                     csvDeserializedText.Add(currentValueText);
                     csvDeserializedValue.Add(currentValueValue);
+                    currentValueText = "";
+                    currentValueValue = "";
+                }
+                if (znak == '×')
+                {
+                    csvDeserializedText.Add("void");
+                    csvDeserializedValue.Add("void");
                     currentValueText = "";
                     currentValueValue = "";
                 }
