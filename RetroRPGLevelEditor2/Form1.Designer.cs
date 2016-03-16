@@ -32,10 +32,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.oThumnail = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.oMapMeta = new System.Windows.Forms.Button();
+            this.oNewMap = new System.Windows.Forms.Button();
+            this.oEventLog = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.oBookmarks = new System.Windows.Forms.ComboBox();
+            this.treeView1 = new System.Windows.Forms.TreeView();
             this.button1 = new System.Windows.Forms.Button();
             this.oCamera = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -45,14 +48,11 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
-            this.oEventLog = new System.Windows.Forms.Label();
             this.EventLogTimer = new System.Windows.Forms.Timer(this.components);
-            this.treeView1 = new System.Windows.Forms.TreeView();
             this.TreeImageList = new System.Windows.Forms.ImageList(this.components);
-            this.oNewMap = new System.Windows.Forms.Button();
-            this.oMapMeta = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.oThumnail)).BeginInit();
+            this.oThumnail = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.oThumnail)).BeginInit();
             this.SuspendLayout();
             // 
             // timer1
@@ -78,16 +78,6 @@
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             this.comboBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBox1_KeyPress);
             // 
-            // oThumnail
-            // 
-            this.oThumnail.ErrorImage = global::RetroRPGLevelEditor2.Properties.Resources.wallThumnail;
-            this.oThumnail.InitialImage = global::RetroRPGLevelEditor2.Properties.Resources.wallThumnail;
-            this.oThumnail.Location = new System.Drawing.Point(125, 9);
-            this.oThumnail.Name = "oThumnail";
-            this.oThumnail.Size = new System.Drawing.Size(128, 128);
-            this.oThumnail.TabIndex = 2;
-            this.oThumnail.TabStop = false;
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.oMapMeta);
@@ -111,6 +101,35 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
+            // oMapMeta
+            // 
+            this.oMapMeta.Location = new System.Drawing.Point(10, 52);
+            this.oMapMeta.Name = "oMapMeta";
+            this.oMapMeta.Size = new System.Drawing.Size(113, 27);
+            this.oMapMeta.TabIndex = 12;
+            this.oMapMeta.Text = "Metatagy mapy";
+            this.oMapMeta.UseVisualStyleBackColor = true;
+            // 
+            // oNewMap
+            // 
+            this.oNewMap.Location = new System.Drawing.Point(9, 19);
+            this.oNewMap.Name = "oNewMap";
+            this.oNewMap.Size = new System.Drawing.Size(113, 27);
+            this.oNewMap.TabIndex = 11;
+            this.oNewMap.Text = "Nová mapa";
+            this.oNewMap.UseVisualStyleBackColor = true;
+            this.oNewMap.Click += new System.EventHandler(this.oNewMap_Click);
+            // 
+            // oEventLog
+            // 
+            this.oEventLog.AutoSize = true;
+            this.oEventLog.BackColor = System.Drawing.Color.Transparent;
+            this.oEventLog.Location = new System.Drawing.Point(113, 525);
+            this.oEventLog.Name = "oEventLog";
+            this.oEventLog.Size = new System.Drawing.Size(53, 13);
+            this.oEventLog.TabIndex = 6;
+            this.oEventLog.Text = "EventLog";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -130,6 +149,16 @@
             this.oBookmarks.TabIndex = 9;
             this.toolTip1.SetToolTip(this.oBookmarks, "Rychlé záložky\r\n");
             this.oBookmarks.SelectedIndexChanged += new System.EventHandler(this.oBookmarks_SelectedIndexChanged);
+            // 
+            // treeView1
+            // 
+            this.treeView1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.treeView1.Location = new System.Drawing.Point(9, 149);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.ShowNodeToolTips = true;
+            this.treeView1.Size = new System.Drawing.Size(244, 204);
+            this.treeView1.TabIndex = 6;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
             // button1
             // 
@@ -208,31 +237,11 @@
             this.hScrollBar1.TabIndex = 5;
             this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
             // 
-            // oEventLog
-            // 
-            this.oEventLog.AutoSize = true;
-            this.oEventLog.BackColor = System.Drawing.Color.Transparent;
-            this.oEventLog.Location = new System.Drawing.Point(113, 525);
-            this.oEventLog.Name = "oEventLog";
-            this.oEventLog.Size = new System.Drawing.Size(53, 13);
-            this.oEventLog.TabIndex = 6;
-            this.oEventLog.Text = "EventLog";
-            // 
             // EventLogTimer
             // 
             this.EventLogTimer.Enabled = true;
             this.EventLogTimer.Interval = 10;
             this.EventLogTimer.Tick += new System.EventHandler(this.EventLogTimer_Tick);
-            // 
-            // treeView1
-            // 
-            this.treeView1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.treeView1.Location = new System.Drawing.Point(9, 149);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.ShowNodeToolTips = true;
-            this.treeView1.Size = new System.Drawing.Size(244, 204);
-            this.treeView1.TabIndex = 6;
-            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
             // TreeImageList
             // 
@@ -241,23 +250,15 @@
             this.TreeImageList.Images.SetKeyName(0, "wallMoveable.png");
             this.TreeImageList.Images.SetKeyName(1, "coin.png");
             // 
-            // oNewMap
+            // oThumnail
             // 
-            this.oNewMap.Location = new System.Drawing.Point(9, 19);
-            this.oNewMap.Name = "oNewMap";
-            this.oNewMap.Size = new System.Drawing.Size(113, 27);
-            this.oNewMap.TabIndex = 11;
-            this.oNewMap.Text = "Nová mapa";
-            this.oNewMap.UseVisualStyleBackColor = true;
-            // 
-            // oMapMeta
-            // 
-            this.oMapMeta.Location = new System.Drawing.Point(10, 52);
-            this.oMapMeta.Name = "oMapMeta";
-            this.oMapMeta.Size = new System.Drawing.Size(113, 27);
-            this.oMapMeta.TabIndex = 12;
-            this.oMapMeta.Text = "Metatagy mapy";
-            this.oMapMeta.UseVisualStyleBackColor = true;
+            this.oThumnail.ErrorImage = global::RetroRPGLevelEditor2.Properties.Resources.wallThumnail;
+            this.oThumnail.InitialImage = global::RetroRPGLevelEditor2.Properties.Resources.wallThumnail;
+            this.oThumnail.Location = new System.Drawing.Point(125, 9);
+            this.oThumnail.Name = "oThumnail";
+            this.oThumnail.Size = new System.Drawing.Size(128, 128);
+            this.oThumnail.TabIndex = 2;
+            this.oThumnail.TabStop = false;
             // 
             // Form1
             // 
@@ -280,9 +281,9 @@
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
-            ((System.ComponentModel.ISupportInitialize)(this.oThumnail)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.oThumnail)).EndInit();
             this.ResumeLayout(false);
 
         }

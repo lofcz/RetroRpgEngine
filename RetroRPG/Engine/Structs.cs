@@ -65,5 +65,30 @@ namespace RetroRPG
                 }
             }
         };
+
+        public class SecretMove
+        {
+            public bool isSecret;
+            public Point secretPosition;
+
+            public SecretMove(bool Secret, Point secretPosition)
+            {
+                this.isSecret = Secret;
+                this.secretPosition = secretPosition;
+            }
+
+        };
+
+        public class CSVList
+        {
+            public List<string> CSVText { get; set; }
+            public List<string> CSVValue { get; set; }
+
+            public CSVList(List<string> text, List<string> values)
+            {
+                CSVText = text;
+                CSVValue = values;
+            }
+        };
     }
 }

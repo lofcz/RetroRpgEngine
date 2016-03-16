@@ -102,7 +102,7 @@ namespace RetroRPG
                     Buffer.NewLine();
                 }
 
-                for (int x = Math.Max(0, cameraX + 10); x < Math.Max(Math.Min(cameraX+viewWidth,GameWorld.width), viewWidth - 1); x++) // Iterujeme řádky v dohledu kamery
+                for (int x = Math.Max(0, cameraX + 10); x < Math.Min(cameraX+viewWidth,GameWorld.width); x++) // Iterujeme řádky v dohledu kamery
                 {
                     if (x == Math.Max(0, cameraX + 10)) { Buffer.Draw("║", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); }
 
@@ -158,15 +158,8 @@ namespace RetroRPG
                     }
                 case (GameWorld.state.enemy):
                     {
-                        foreach (oEnemy enemy in GameWorld.getInstance.enemyList)
-                        {
-                            if (enemy.x == x && enemy.y == y)
-                            {
-                                Console.ForegroundColor = enemy.color;
-                                break;
-                            }
-                           
-                        }
+                        oEnemy target = GameWorld.getInstance.enemyList.Find(i => i.x == x && i.y == y);
+                        Console.ForegroundColor = target.color;
 
                        // Buffer.Draw("E", Console.CursorLeft, Console.CursorTop, ConsoleColor.Red);
                         renderOutput += "‡#rE#x‡";
@@ -176,8 +169,17 @@ namespace RetroRPG
                     }
                 case (GameWorld.state.wall):
                     {
-                      //  Buffer.Draw("#", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
-                        renderOutput += "~";
+                        //  Buffer.Draw("#", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                        oWall target = GameWorld.getInstance.wallList.Find(i => i.x == x && i.y == y);
+
+                        if (target.color == ConsoleColor.Green)
+                        {
+                            renderOutput += "#g~#x‡";
+                        }
+                        else
+                        {
+                            renderOutput += "~";
+                        }
                         break;
                     }
                 case (GameWorld.state.gold):
@@ -229,6 +231,7 @@ namespace RetroRPG
            
          
         }
+
 
         public void DrawHeader(string text)
         {

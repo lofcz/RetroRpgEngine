@@ -65,55 +65,19 @@ namespace RetroRPG
                     }
                     else if (line.Contains("[oGold]"))
                     {
-                        string str = line;
-                        List<string> csvDeserializedText = new List<string>();
-                        List<string> csvDeserializedValue = new List<string>();
-
-                        line = line.Replace("[oGold]", "");
-                        string currentValueText = "";
-                        string currentValueValue = "";
-                        bool parsingValueText = true;
+                        Structs.CSVList constructor = getCsv(line, "[oGold]");
                         int coinValue = 5;
-                        int i = 0;
 
-
-                        foreach(char znak in line)
+                        for (int i = 0; i < constructor.CSVText.Count; i++)
                         {
-                            if (znak != ' ' && znak != '[' && znak != ']' && znak != '=' && znak != ';')
-                            {
-                                if (parsingValueText)
-                                {
-                                    currentValueText += znak;
-                                }
-                                else
-                                {
-                                    currentValueValue += znak;
-                                }
-                            }
-                            if (znak == '=')
-                            {
-                                parsingValueText = !parsingValueText;
-                            }
-                            if (znak == ';')
-                            {
-                                csvDeserializedText.Add(currentValueText);
-                                csvDeserializedValue.Add(currentValueValue);
+                            string value = constructor.CSVText[i];
 
-                                currentValueText = "";
-                                currentValueValue = "";
-                            }
-
-                        }
-
-                        foreach(string value in csvDeserializedText)
-                        {
                             if (value == "value")
                             {
-                                coinValue = Convert.ToInt32(csvDeserializedValue[i]);
+                                coinValue = Convert.ToInt32(constructor.CSVValue[i]);
                             }
-
-                            i++;
                         }
+
                         oGold.addGold(x, y, coinValue);
                     }
                     x++;
@@ -156,6 +120,49 @@ namespace RetroRPG
                 Render.getInstance.Buffer.Clear();
             }
             sr.Close();
+        }
+
+        Structs.CSVList getCsv(string line, string entityName)
+        {
+            string str = line;
+            List<string> csvDeserializedText = new List<string>();
+            List<string> csvDeserializedValue = new List<string>();
+
+            line = line.Replace(entityName, "");
+            string currentValueText = "";
+            string currentValueValue = "";
+            bool parsingValueText = true;
+            int i = 0;
+
+
+            foreach (char znak in line)
+            {
+                if (znak != ' ' && znak != '[' && znak != ']' && znak != '=' && znak != ';')
+                {
+                    if (parsingValueText)
+                    {
+                        currentValueText += znak;
+                    }
+                    else
+                    {
+                        currentValueValue += znak;
+                    }
+                }
+                if (znak == '=')
+                {
+                    parsingValueText = !parsingValueText;
+                }
+                if (znak == ';')
+                {
+                    csvDeserializedText.Add(currentValueText);
+                    csvDeserializedValue.Add(currentValueValue);
+                    currentValueText = "";
+                    currentValueValue = "";
+                }
+
+            }
+
+            return new Structs.CSVList(csvDeserializedText, csvDeserializedValue);
         }
 
         public void parseImage(string file, bool center, ConsoleColor color, Effects effect)

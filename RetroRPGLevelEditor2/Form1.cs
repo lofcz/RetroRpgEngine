@@ -23,8 +23,8 @@ namespace RetroRPGLevelEditor2
         int renderXSize = 33;
         int renderYSize = 22;
 
-        int mapWidth = 64;
-        int mapHeight = 64;
+        int mapWidth = 128;
+        int mapHeight = 128;
 
         int cameraXMin = 0;
         int cameraYMin = 0;
@@ -91,18 +91,17 @@ namespace RetroRPGLevelEditor2
             InitializeComponent();
             this.Focus();
             this.KeyPreview = true;
-
-            comboBox1.SelectedItem = "Zeď";
             oCamera.Top += 50;
-
+            comboBox1.SelectedItem = "Zeď";
             Pos pos = new Pos(0, 0, "Začátek úrovně (0,0)");
             oBookmarks.Items.Add(pos);
             oBookmarks.SelectedItem = oBookmarks.Items[0];
-
             AddNodes();
 
-            grid = new status[mapWidth, mapHeight];
+            hScrollBar1.Maximum = mapWidth - renderXSize;
+            vScrollBar1.Maximum = mapHeight - renderYSize;
 
+            grid = new status[mapWidth, mapHeight];
             for (int y = 0; y < mapHeight; y++)
             {
                 for (int x = 0; x < mapWidth; x++)
@@ -925,5 +924,50 @@ namespace RetroRPGLevelEditor2
             sw.Close();
         }
 
+        private void oNewMap_Click(object sender, EventArgs e)
+        {
+            NewMap testDialog = new NewMap(this);
+
+            if (testDialog.ShowDialog(this) == DialogResult.Cancel)
+            {
+                int prevWidth = mapWidth;
+                int prevHeight = mapHeight;
+
+                mapWidth = Convert.ToInt32(testDialog.textBox1.Text);
+                mapHeight = Convert.ToInt32(testDialog.textBox2.Text);
+
+                vScrollBar1.Maximum = mapWidth;
+                hScrollBar1.Maximum = mapHeight;
+
+                grid = new status[mapWidth, mapHeight];
+                for (int y = 0; y < mapHeight; y++)
+                {
+                    for (int x = 0; x < mapWidth; x++)
+                    {
+                        grid[x, y] = status.free;
+                    }
+                }
+
+                for (int y = 0; y < mapHeight; y++)
+                {
+                    for (int x = 0; x < mapWidth; x++)
+                    {
+                        if (x >= prevWidth || y >= prevHeight)
+                        {
+                            Tile tile = new Tile(status.free, Color.Black, rec, free);
+                            pointList.Add(tile);
+                        }
+
+                        Tile tl = pointList[y * mapHeight + x];
+                        tl.creationCode = "";
+                        tl.image = free;
+                        tl.tile = status.free;
+                    }
+                }
+
+            }
+
+            testDialog.Dispose();
+        }
     } 
 }

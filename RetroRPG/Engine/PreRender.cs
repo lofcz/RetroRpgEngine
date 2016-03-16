@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RetroRPG.GameObjects;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace RetroRPG
 {
@@ -73,6 +74,8 @@ namespace RetroRPG
                 {
                     case ConsoleKey.W:
                         {
+                            CollisionPre(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y - 1);
+
                             if (gameWorld.getMap(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y - 1) != GameWorld.state.wall)
                             {
                                 GameWorld.getInstance.player.y--;
@@ -82,6 +85,8 @@ namespace RetroRPG
                         }
                     case ConsoleKey.S:
                         {
+                            CollisionPre(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y + 1);
+
                             if (GameWorld.getInstance.getMap(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y + 1) != GameWorld.state.wall)
                             {
                                 GameWorld.getInstance.player.y++;
@@ -90,6 +95,8 @@ namespace RetroRPG
                         }
                     case ConsoleKey.A:
                         {
+                            CollisionPre(GameWorld.getInstance.player.x - 1, GameWorld.getInstance.player.y);
+
                             if (GameWorld.getInstance.getMap(GameWorld.getInstance.player.x - 1, GameWorld.getInstance.player.y) != GameWorld.state.wall)
                             {
                                 GameWorld.getInstance.player.x--;
@@ -98,6 +105,8 @@ namespace RetroRPG
                         }
                     case ConsoleKey.D:
                         {
+                            CollisionPre(GameWorld.getInstance.player.x + 1, GameWorld.getInstance.player.y);
+
                             if (GameWorld.getInstance.getMap(GameWorld.getInstance.player.x + 1, GameWorld.getInstance.player.y) != GameWorld.state.wall)
                             {
                                 GameWorld.getInstance.player.x++;
@@ -184,6 +193,25 @@ namespace RetroRPG
                                 break;
                             }
                         }
+                        break;
+                    }
+            }
+        }
+
+        void CollisionPre(int x, int y)
+        {
+            switch (GameWorld.getInstance.getMap(x, y))
+            {
+                case GameWorld.state.wall:
+                    {
+                        oWall wall = GameWorld.getInstance.wallList.Find(i => i.x == x && i.y == y);
+
+                        if (wall.secret.isSecret)
+                        {
+                            wall.secret.isSecret = false;
+                            wall.color = ConsoleColor.Green;
+                        }
+
                         break;
                     }
             }
