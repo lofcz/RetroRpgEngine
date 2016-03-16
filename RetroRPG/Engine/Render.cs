@@ -11,21 +11,15 @@ namespace RetroRPG
     // Zde proběhne vykreslení herního světa
     public class Render
     {
-        int cameraX = 0;
-        int cameraY = 0;
-        private int mapYmin = -1;
-        private int mapYmax = -1;
-
-        const int viewWidth = 60;
-        const int viewHeight = 20;
+        #region Informace
+        // Verze: 1.1
+        // Stabilní: Ne
+        #endregion
+        #region UML
+        // Singleton
 
         private static Render render;
-        public int actualID = 100;
-
-        private Render()  { }
-        public buffer Buffer = new buffer(110,60,110,60);
-
-        string renderOutput = "";
+        private Render() { }
 
         public static Render getInstance
         {
@@ -39,20 +33,31 @@ namespace RetroRPG
                 return render;
             }
         }
+        #endregion
 
-        // Mapa
+        public buffer Buffer = new buffer(110, 60, 110, 60);
+
+        const int viewWidth = 60;
+        const int viewHeight = 20;
+
+        int cameraX = 0;
+        int cameraY = 0;
+        public int actualID = 100;
+        string renderOutput = "";
+
+       
+
+        /// <summary>
+        /// Vykreslí herní svět
+        /// </summary>
         public void drawWorld()
         {
             Console.SetCursorPosition(0, 0);
+            Console.CursorVisible = false;
             renderOutput = "";
-            
-            //Buffer.Clear();
 
             cameraX = GameWorld.getInstance.player.x - (viewWidth / 2);
             cameraY = GameWorld.getInstance.player.y - (viewHeight / 2);
-
-            Console.CursorVisible = false;
-
             
             for (int y = Math.Max(0, cameraY); y < Math.Min(cameraY + viewHeight, GameWorld.height); y++)
             {
@@ -88,7 +93,6 @@ namespace RetroRPG
                 GameWorld.getInstance.map[item.y * GameWorld.width + item.x] = GameWorld.state.item;
             }
 
-
             GameWorld.getInstance.map[GameWorld.getInstance.player.y * GameWorld.width + GameWorld.getInstance.player.x] = GameWorld.state.player;
 
 
@@ -109,127 +113,114 @@ namespace RetroRPG
                     GameWorld.state stav = GameWorld.getInstance.map[y * GameWorld.width + x];
                     DrawIndex(stav,x,y);
      
-                    if (x == Math.Min(cameraX + viewWidth, GameWorld.width) - 1) { renderOutput += "║"; /*Buffer.Draw("║", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);*/ }
+                    if (x == Math.Min(cameraX + viewWidth, GameWorld.width) - 1) { renderOutput += "║"; }
                 }
-               // renderOutput += "\n";
+
                 Buffer.DrawColored(renderOutput, 1, Console.CursorTop, ConsoleColor.Gray, false);
                 Buffer.NewLine();
                 if (y == Math.Min(cameraY + viewHeight, GameWorld.height) - 1) { Buffer.Draw("╚", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); for (int i = Math.Max(0, cameraX + 10); i < Math.Min(cameraX + viewWidth, GameWorld.width); i++) { Buffer.Draw("═", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); } Buffer.Draw("╝", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray); Buffer.NewLine(); }
 
                 renderOutput = "";
-
             }
 
-            //Buffer.DrawColored(renderOutput, 0, 0, ConsoleColor.Gray, true);
-           // Console.CursorVisible = true;
-
-           // /* DEBUG
+            // DEBUG 
             Buffer.Draw("Drawing Y: " + Convert.ToString(Math.Min(cameraY + viewHeight, GameWorld.height)));
             Buffer.NewLine();
             Buffer.Draw("Drawing X: FROM:" + Convert.ToString(Math.Max(0, cameraX + 10)) + " TO: " +  Convert.ToString(Math.Min(cameraX + viewWidth, GameWorld.width)));
             Buffer.NewLine();
             Buffer.DrawColored("Game speed: #y" + Convert.ToString(GameWorld.getInstance.gameSpeed) + "#x ", 0, Console.CursorTop, ConsoleColor.Gray, false, true);
-            //*/
+            
     }
 
         private void DrawIndex(GameWorld.state stav,int x, int y)
         {
-          //  Buffer.Draw("░", Console.CursorLeft - 1, Console.CursorTop, ConsoleColor.Gray);
 
             switch(stav)
             {
                 case (GameWorld.state.free):
                     {
-                      //  Buffer.Draw(" ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
                         renderOutput += " ";
                         break;
                     }
                 case (GameWorld.state.player):
                     {
-                     //   Buffer.Draw("P", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
                         renderOutput += "‡#gP#x‡";
                         break;
                     }
                 case (GameWorld.state.movingWall):
                     {
-                        //   Buffer.Draw("P", Console.CursorLeft, Console.CursorTop, ConsoleColor.Green);
-                        renderOutput += "‡#y~#x‡";
+                        oWallMoveable target = GameWorld.getInstance.moveableWallList.Find(i => i.x == x && i.y == y);
+                        AddRenderOutput('~', target.color);
                         break;
                     }
                 case (GameWorld.state.enemy):
                     {
                         oEnemy target = GameWorld.getInstance.enemyList.Find(i => i.x == x && i.y == y);
-                        Console.ForegroundColor = target.color;
-
-                       // Buffer.Draw("E", Console.CursorLeft, Console.CursorTop, ConsoleColor.Red);
-                        renderOutput += "‡#rE#x‡";
-
-                        Console.ForegroundColor = ConsoleColor.Gray;
+                        AddRenderOutput('~', target.color);
                         break;
                     }
                 case (GameWorld.state.wall):
                     {
-                        //  Buffer.Draw("#", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
                         oWall target = GameWorld.getInstance.wallList.Find(i => i.x == x && i.y == y);
-
-                        if (target.color == ConsoleColor.Green)
-                        {
-                            renderOutput += "#g~#x‡";
-                        }
-                        else
-                        {
-                            renderOutput += "~";
-                        }
+                        AddRenderOutput('~', target.color);
                         break;
                     }
                 case (GameWorld.state.gold):
                     {
-                        foreach (oGold gold in GameWorld.getInstance.goldList)
-                        {
-                          if(gold.x == x && gold.y == y)
+                        oGold target = GameWorld.getInstance.goldList.Find(i => i.x == x && i.y == y);
+
+                        int dis = (int)target.distanceToPoint(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y);
+                        string str = "Hodnota: " + target.value;
+
+                         if (dis < 5)
                             {
-                                int dis = (int)gold.distanceToPoint(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y);
-                                string str = "Hodnota: " + gold.value;
-
-                                if (dis < 5)
-                                {
-                                    Buffer.DrawInsert(str, (int)(x - Math.Max(0, cameraX + 10) -  Math.Round((Convert.ToDouble(str.Length / 2)))) + 1, Console.CursorTop - 1, ConsoleColor.Green);
-                                }
-                                    break;
+                             Buffer.DrawInsert(str, (int)(x - Math.Max(0, cameraX + 10) -  Math.Round((Convert.ToDouble(str.Length / 2)))) + 1, Console.CursorTop - 1, ConsoleColor.Green);
                             }
-                        }
 
-                        // Buffer.Draw("◎", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow);
-                        renderOutput += "‡#y◎#x‡";
+                        AddRenderOutput('◎', target.color);
                         break;
                     }
 
                 case (GameWorld.state.item):
                     {
-                        foreach (GameItem item in GameWorld.getInstance.itemsList)
-                        {
-                            if (item.x == x && item.y == y)
-                            {
-                                int dis = (int)item.distanceToPoint(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y);
-                                string str = item.cleanName;
+                        GameItem target = GameWorld.getInstance.itemsList.Find(i => i.x == x && i.y == y);
 
-                                if (dis < 5)
+                        int dis = (int)target.distanceToPoint(GameWorld.getInstance.player.x, GameWorld.getInstance.player.y);
+                        string str = target.cleanName;
+
+                        if (dis < 5)
                                 {
-                                    Buffer.DrawColored(item.itemName, (int)(x - Math.Round((Convert.ToDouble(str.Length / 2)))) + 1, Console.CursorTop - 1, ConsoleColor.Gray, true);
+                                    Buffer.DrawColored(target.itemName, (int)(x - Math.Round((Convert.ToDouble(str.Length / 2)))) + 1, Console.CursorTop - 1, ConsoleColor.Gray, true);
                                 }
-                                break;
-                            }
-                        }
 
-                        // Buffer.Draw("◎", Console.CursorLeft, Console.CursorTop, ConsoleColor.Yellow);
-                        renderOutput += "‡#yI#x‡";
+                        AddRenderOutput('I', target.itemColor);
                         break;
                     }
+            }                    
+        }
 
-
+        void AddRenderOutput(char znak, ConsoleColor color)
+        {
+            if (color == ConsoleColor.Green)
+            {
+                renderOutput += "‡#g" + znak + "#x‡";
             }
-           
-         
+            else if (color == ConsoleColor.Red)
+            {
+                renderOutput += "‡#r" + znak + "#x‡";
+            }
+            else if (color == ConsoleColor.Yellow)
+            {
+                renderOutput += "‡#y" + znak + "#x‡";
+            }
+            else if (color == ConsoleColor.DarkGray)
+            {
+                renderOutput += "‡#h" + znak + "#x‡";
+            }
+            else
+            {
+                renderOutput += znak;
+            }
         }
 
 
@@ -283,8 +274,6 @@ namespace RetroRPG
         public void DrawBar(decimal variable, decimal variable_max, string text, ConsoleColor color, char znak = '■', bool newLine = true, int size = 20)
         {
             decimal number = Math.Round((variable / variable_max) * size);
-            //     int n = Convert.ToInt32(Math.Round(number * 20));
-
 
             if (text != "no_text") { Buffer.DrawColored(text + " (#g" + variable + "#x / #g" + variable_max + "#x): ", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true); }
 
