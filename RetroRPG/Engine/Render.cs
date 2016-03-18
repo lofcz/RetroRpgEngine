@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RetroRPG.GameObjects;
 using System.Windows.Forms;
+using RetroRPG.Engine;
 
 namespace RetroRPG
 {
@@ -44,8 +45,26 @@ namespace RetroRPG
         int cameraY = 0;
         public int actualID = 100;
         string renderOutput = "";
+        public List<LogItem> logList = new List<LogItem>();
 
-       
+
+       public void AddLog(LogItem logItem)
+        {
+            logList.Insert(0, logItem);
+        }
+
+       void RemoveLog(bool firstLog = false)
+        {
+            if (!firstLog)
+            {
+                logList.Remove(logList[logList.Count - 1]);
+            }
+            else
+            {
+                logList.Remove(logList[0]);
+            }
+        }
+
 
         /// <summary>
         /// Vykreslí herní svět
@@ -225,10 +244,35 @@ namespace RetroRPG
              }
          }
 
+       
          public void DrawLog()
          {
-             drawBox(0, 22, 99, 7, ConsoleColor.Gray, Outline.doubleLine);
-         }
+             drawBox(0, 22, 99, 7, ConsoleColor.Gray, Outline.singleLine);
+
+            Console.CursorTop = 23;
+
+            for (int i = 0; i < logList.Count; i++)
+            {
+                if (logList[i].logPrefix == LogItem.LogPrefix.standard)
+                {
+                    Buffer.DrawColored(logList[i].text, 1, Console.CursorTop, ConsoleColor.Gray, false, true);
+                }
+                if (logList[i].logPrefix == LogItem.LogPrefix.achievment)
+                {
+                    Buffer.DrawColored(logList[i].text, logList[i].time / 10, Console.CursorTop, logList[i].color, false, true);
+                    logList[i].time++;
+
+                    if (logList[i].time / 10 + logList[i].text.Length > 98)
+                    {                     
+                        if (logList[i].text.Length > 0) { logList[i].text = logList[i].text.Substring(0, logList[i].text.Length - 1); }
+                        else { RemoveLog(); }
+                        }
+                    }
+
+                  
+                }
+        }
+         
 
          public void DrawHeader(string text)
          {

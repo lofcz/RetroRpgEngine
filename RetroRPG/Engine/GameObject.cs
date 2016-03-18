@@ -69,5 +69,9 @@ namespace RetroRPG.GameObjects
             targetY.Enqueue(yy);
         }
 
+        public override string ToString()
+        {
+            return id.ToString();
+        }
     }
 }

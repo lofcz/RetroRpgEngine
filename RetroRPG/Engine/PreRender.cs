@@ -7,6 +7,7 @@ using RetroRPG.GameObjects;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using RetroRPG.Engine;
 
 namespace RetroRPG
 {
@@ -210,6 +211,8 @@ namespace RetroRPG
                         {
                             wall.secret.isSecret = false;
                             wall.color = ConsoleColor.Green;
+                            LogItem lI = new LogItem(LogItem.LogPrefix.achievment, string.Format("Našel jsi tajnou zeď {0}!", wall.ToString()), 60, ConsoleColor.Yellow);
+                            Render.getInstance.AddLog(lI);
 
                             Structs.Point point = new Structs.Point();
                             point.x = wall.secret.secretPosition.x;

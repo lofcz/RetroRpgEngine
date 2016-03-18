@@ -95,6 +95,7 @@
     <Compile Include="Engine\GameMaterial.cs" />
     <Compile Include="Engine\Intro.cs" />
     <Compile Include="Engine\Inventory.cs" />
+    <Compile Include="Engine\LogItem.cs" />
     <Compile Include="Engine\MainMenu.cs" />
     <Compile Include="Engine\Messages.cs" />
     <Compile Include="Engine\Mark.cs" />
