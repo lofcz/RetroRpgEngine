@@ -214,8 +214,6 @@ namespace RetroRPG
                             Structs.Point point = new Structs.Point();
                             point.x = wall.secret.secretPosition.x;
                             point.y = wall.secret.secretPosition.y;
-
-                            MessageBox.Show("x: " + x.ToString() + "\nTarget x: " + point.x.ToString());
                             ConsolePhysics.getInstance.Trail(wall, point);
                         }
 

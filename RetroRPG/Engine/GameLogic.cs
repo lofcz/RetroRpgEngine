@@ -42,8 +42,8 @@ namespace RetroRPG.GameObjects
             Render.getInstance.Buffer.Clear();
 
             /* Testy nových tříd (messages) */
-            //  Messages.getInstance.rainMessage("Vítej v RetroRPG Enginu vývojáři.", 50, -4, true, "Stiskni jakoukoli klávesu pro pokračování");
-            //   Messages.getInstance.basicMessage("Čekají tě ukázky:\n > Inventáře\n > Herní mapy\n > Bitevního systému", "#yStiskni jakoukoli klávesu pro pokračování#x ");
+             // Messages.getInstance.rainMessage("Kapitola první - Beránek a vlk.", 10, -4, true, "Stiskni jakoukoli klávesu pro pokračování");
+           //   Messages.getInstance.basicMessage("Čekají tě ukázky:\n > Inventáře\n > Herní mapy\n > Bitevního systému", "#yStiskni jakoukoli klávesu pro pokračování#x ");
            //   Parser.getInstance.parseAnimatedImage("logo_animated.txt", 500);
 
             // TEST SKRIPTOVACÍHO JAZYKA
@@ -119,10 +119,8 @@ namespace RetroRPG.GameObjects
             {           
                 Console.SetCursorPosition(0, 0);
                 Render.getInstance.Buffer.Clear();
-
-                Thread oThread = new Thread(new ThreadStart(Render.getInstance.drawWorld));
-                oThread.Start();
-                oThread.Join();
+                Render.getInstance.drawWorld();
+                Render.getInstance.DrawLog();
 
 
 
