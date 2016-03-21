@@ -151,6 +151,18 @@ namespace RetroRPG
                         }
                         break;
                     }
+                case GameWorld.state.action:
+                    {
+                        foreach (oAction action in GameWorld.getInstance.actionList)
+                        {
+                            if (action.x == x && action.y == y)
+                            {
+                                action.OnHitPlayer();
+                                break;
+                            }
+                        }
+                        break;
+                    }
 
                 case GameWorld.state.item:
                     {
@@ -211,7 +223,7 @@ namespace RetroRPG
                         {
                             wall.secret.isSecret = false;
                             wall.color = ConsoleColor.Green;
-                            LogItem lI = new LogItem(LogItem.LogPrefix.achievment, string.Format("Našel jsi tajnou zeď {0}!", wall.ToString()), 60, ConsoleColor.Yellow);
+                            LogItem lI = new LogItem(LogItem.LogPrefix.achievment, string.Format("Našel jsi tajnou zeď {0}!", wall.ToString()), 60, ConsoleColor.Gray);
                             Render.getInstance.AddLog(lI);
 
                             Structs.Point point = new Structs.Point();

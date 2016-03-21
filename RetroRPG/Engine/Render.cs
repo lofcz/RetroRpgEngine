@@ -112,7 +112,12 @@ namespace RetroRPG
             {
                 GameWorld.getInstance.map[item.y * GameWorld.width + item.x] = GameWorld.state.item;
             }
-            
+
+            foreach (oAction action in GameWorld.getInstance.actionList)
+            {
+                GameWorld.getInstance.map[action.y * GameWorld.width + action.x] = GameWorld.state.action;
+            }
+
 
             GameWorld.getInstance.map[GameWorld.getInstance.player.y * GameWorld.width + GameWorld.getInstance.player.x] = GameWorld.state.player;
             drawBox(0, 0, viewWidth - 9, viewHeight + 1, ConsoleColor.Gray, Outline.doubleLine);
@@ -168,7 +173,12 @@ namespace RetroRPG
                          renderOutput += "‡#gP#x‡";
                          break;
                      }
-                 case (GameWorld.state.movingWall):
+                case (GameWorld.state.action):
+                    {
+                        renderOutput += "‡#bA#x‡";
+                        break;
+                    }
+                case (GameWorld.state.movingWall):
                      {
                          oWallMoveable target = GameWorld.getInstance.moveableWallList.Find(i => i.x == x && i.y == y);
                          AddRenderOutput('~', target.color);
@@ -257,20 +267,28 @@ namespace RetroRPG
                 {
                     Buffer.DrawColored(logList[i].text, 1, Console.CursorTop, ConsoleColor.Gray, false, true);
                 }
-                if (logList[i].logPrefix == LogItem.LogPrefix.achievment)
+                if (logList[i].logPrefix == LogItem.LogPrefix.marquee)
                 {
                     Buffer.DrawColored(logList[i].text, logList[i].time / 10, Console.CursorTop, logList[i].color, false, true);
                     logList[i].time++;
 
                     if (logList[i].time / 10 + logList[i].text.Length > 98)
-                    {                     
+                    {
                         if (logList[i].text.Length > 0) { logList[i].text = logList[i].text.Substring(0, logList[i].text.Length - 1); }
                         else { RemoveLog(); }
-                        }
                     }
-
-                  
+                 }
+                if (logList[i].logPrefix == LogItem.LogPrefix.achievment)
+                {
+                    string coloredPart = logList[i].text.Substring(0, Math.Min(logList[i].time / 10, logList[i].text.Length));
+                    Buffer.DrawColored(logList[i].text, 1, Console.CursorTop, logList[i].color, true, false);
+                    Buffer.DrawColored(coloredPart, 1, Console.CursorTop, ConsoleColor.Yellow, true, false);
+                    Buffer.NewLine();
+                    logList[i].time++;
                 }
+
+
+            }
         }
          
 
@@ -321,7 +339,22 @@ namespace RetroRPG
              Buffer.Print();
          }
 
-         public void DrawBar(decimal variable, decimal variable_max, string text, ConsoleColor color, char znak = '■', bool newLine = true, int size = 20)
+        public void DrawCircle(int centerX, int centerY, int radius)
+        {
+            int x, y;
+            x = -radius;
+            while (x < radius)
+            {
+                y = Convert.ToInt32(Math.Sqrt(radius * radius - x * x));
+                Buffer.DrawColored("X", x + centerX, y + centerY, ConsoleColor.Gray, false, false);
+                y = -y;
+                Buffer.DrawColored("X", x + centerX, y + centerY, ConsoleColor.Gray, false, false);
+                x++;
+            }
+
+        }
+
+        public void DrawBar(decimal variable, decimal variable_max, string text, ConsoleColor color, char znak = '■', bool newLine = true, int size = 20)
          {
              decimal number = Math.Round((variable / variable_max) * size);
 

@@ -48,6 +48,8 @@ namespace RetroRPGLevelEditor2
             input.Seperators.Add('.');
             input.Seperators.Add('-');
             input.Seperators.Add('+');
+            input.Seperators.Add('(');
+            input.Seperators.Add(')');
             Controls.Add(input);
             input.WordWrap = true;
             input.ScrollBars = RichTextBoxScrollBars.Both;// & RichTextBoxScrollBars.ForcedVertical;
@@ -62,6 +64,10 @@ namespace RetroRPGLevelEditor2
             input.HighlightDescriptors.Add(new HighlightDescriptor("isSecret", Color.Chocolate, null, DescriptorType.Word, DescriptorRecognition.Contains, true));
             input.HighlightDescriptors.Add(new HighlightDescriptor("secretX", Color.Chocolate, null, DescriptorType.Word, DescriptorRecognition.Contains, true));
             input.HighlightDescriptors.Add(new HighlightDescriptor("secretY", Color.Chocolate, null, DescriptorType.Word, DescriptorRecognition.Contains, true));
+            input.HighlightDescriptors.Add(new HighlightDescriptor("onPlayerHit", Color.Green, null, DescriptorType.Word, DescriptorRecognition.Contains, true));
+            input.HighlightDescriptors.Add(new HighlightDescriptor("logListAdd", Color.Brown, null, DescriptorType.Word, DescriptorRecognition.Contains, true));
+            input.HighlightDescriptors.Add(new HighlightDescriptor("normalLog", Color.Orange, null, DescriptorType.Word, DescriptorRecognition.Contains, true));
+            input.HighlightDescriptors.Add(new HighlightDescriptor("achievmentLog", Color.Orange, null, DescriptorType.Word, DescriptorRecognition.Contains, true));
 
             // AutoComplete
             input.Text += " ";

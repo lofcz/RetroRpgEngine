@@ -10,7 +10,7 @@ namespace RetroRPG.Engine
     {
         public enum LogPrefix
         {
-            standard, system, achievment
+            standard, system, achievment, marquee
         }
 
         public LogPrefix logPrefix { get; set; }

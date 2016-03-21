@@ -37,6 +37,7 @@
             this.oNewMap = new System.Windows.Forms.Button();
             this.oEventLog = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.oThumnail = new System.Windows.Forms.PictureBox();
             this.oBookmarks = new System.Windows.Forms.ComboBox();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.button1 = new System.Windows.Forms.Button();
@@ -50,7 +51,6 @@
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.EventLogTimer = new System.Windows.Forms.Timer(this.components);
             this.TreeImageList = new System.Windows.Forms.ImageList(this.components);
-            this.oThumnail = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.oThumnail)).BeginInit();
             this.SuspendLayout();
@@ -70,7 +70,8 @@
             "Hráč",
             "Předmět",
             "Mince",
-            "Soupeř"});
+            "Soupeř",
+            "Oblast"});
             this.comboBox1.Location = new System.Drawing.Point(10, 85);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(112, 21);
@@ -138,6 +139,16 @@
             this.label1.Size = new System.Drawing.Size(24, 13);
             this.label1.TabIndex = 10;
             this.label1.Text = "text";
+            // 
+            // oThumnail
+            // 
+            this.oThumnail.ErrorImage = global::RetroRPGLevelEditor2.Properties.Resources.wallThumnail;
+            this.oThumnail.InitialImage = global::RetroRPGLevelEditor2.Properties.Resources.wallThumnail;
+            this.oThumnail.Location = new System.Drawing.Point(125, 9);
+            this.oThumnail.Name = "oThumnail";
+            this.oThumnail.Size = new System.Drawing.Size(128, 128);
+            this.oThumnail.TabIndex = 2;
+            this.oThumnail.TabStop = false;
             // 
             // oBookmarks
             // 
@@ -249,16 +260,6 @@
             this.TreeImageList.TransparentColor = System.Drawing.Color.Transparent;
             this.TreeImageList.Images.SetKeyName(0, "wallMoveable.png");
             this.TreeImageList.Images.SetKeyName(1, "coin.png");
-            // 
-            // oThumnail
-            // 
-            this.oThumnail.ErrorImage = global::RetroRPGLevelEditor2.Properties.Resources.wallThumnail;
-            this.oThumnail.InitialImage = global::RetroRPGLevelEditor2.Properties.Resources.wallThumnail;
-            this.oThumnail.Location = new System.Drawing.Point(125, 9);
-            this.oThumnail.Name = "oThumnail";
-            this.oThumnail.Size = new System.Drawing.Size(128, 128);
-            this.oThumnail.TabIndex = 2;
-            this.oThumnail.TabStop = false;
             // 
             // Form1
             // 

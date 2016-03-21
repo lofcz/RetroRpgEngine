@@ -153,6 +153,25 @@ namespace RetroRPG
 
                         oGold.addGold(x, y, coinValue);
                     }
+                    else if (line.Contains("[oArea]"))
+                    {
+                        List<string> readList = new List<string>();
+                        string l = line;
+                        l = line.Replace("[oArea]", "");
+                        string oL = "";
+
+                        foreach(char znak in l)
+                        {
+                            if (znak != '[' && znak != ']') 
+                            {
+                                oL += znak;
+                            }
+                        }
+                        l = oL;
+
+                        readList.Add(l);
+                        oAction.addAction(x, y, readList);
+                    }
                     x++;
                 }
                 if (line == "#NewLine") { y++; x = 0; }       
