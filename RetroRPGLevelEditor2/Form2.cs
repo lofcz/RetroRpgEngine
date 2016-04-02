@@ -68,6 +68,8 @@ namespace RetroRPGLevelEditor2
             input.HighlightDescriptors.Add(new HighlightDescriptor("logListAdd", Color.Brown, null, DescriptorType.Word, DescriptorRecognition.Contains, true));
             input.HighlightDescriptors.Add(new HighlightDescriptor("normalLog", Color.Orange, null, DescriptorType.Word, DescriptorRecognition.Contains, true));
             input.HighlightDescriptors.Add(new HighlightDescriptor("achievmentLog", Color.Orange, null, DescriptorType.Word, DescriptorRecognition.Contains, true));
+            input.HighlightDescriptors.Add(new HighlightDescriptor("achievmentLog", Color.Orange, null, DescriptorType.Word, DescriptorRecognition.Contains, true));
+            input.HighlightDescriptors.Add(new HighlightDescriptor("if", Color.Blue, null, DescriptorType.Word, DescriptorRecognition.Contains, true));
 
             // AutoComplete
             input.Text += " ";

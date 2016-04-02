@@ -123,7 +123,7 @@ namespace RetroRPG.GameObjects
                 Render.getInstance.DrawLog();
 
 
-                Render.getInstance.DrawCircle(80, 12, 1 + GameWorld.getInstance.player.x);
+                //Render.getInstance.DrawCircle(80, 12, 1 + GameWorld.getInstance.player.x);
                 //  Console.Clear();
                 //  Render.getInstance.DrawHeader("Informace: ");
                 // Render.getInstance.DrawMapInfo();

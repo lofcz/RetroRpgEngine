@@ -36,6 +36,11 @@ namespace RetroRPG
             barbarian, mage, warrior, monk, thief
         };
 
+        public enum stars
+        {
+            ram, bull, twins, crab, lion, virgin, balance, scorpion, archer, goat, aquarius, fishes
+        };
+
         /// <summary>
         /// Shows a list of current classes and force player to pick one.
         /// </summary>
@@ -190,6 +195,166 @@ namespace RetroRPG
                 }
             }
         }
+
+        /// <summary>
+        /// Shows a list of current classes and force player to pick one.
+        /// </summary>
+        public void GetPlayerStar(int index = 0)
+        {
+            Console.CursorVisible = false;
+
+            bool choosing = true;
+            int choosedIndex = index;
+            string[] items = { "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"  };
+            string[] itemsDescs =
+            {
+
+            };
+
+            while (choosing)
+            {
+                Render.getInstance.Buffer.Clear();
+                Console.SetCursorPosition(0, 0);
+
+
+                buffer.Draw(Strings.getInstance.horizontalLine, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                buffer.NewLine(2);
+                // INTRO HERE
+                switch (choosedIndex)
+                {
+                    case 0:
+                        {
+                            buffer.DrawColored("+- Beran -+", Console.CursorLeft + ((Console.WindowWidth / 2) - "+- Beran +-".ToString().Length / 2) - 1, Console.CursorTop - 1, ConsoleColor.Cyan, true);
+                            Console.CursorTop = 3;
+                            Console.CursorLeft = 0;
+                            Parser.getInstance.parseImage(ResourceTree.graphicsZodiac + "/aries.txt", false, ConsoleColor.Gray, Parser.Effects.none);
+                            break;
+                        }
+
+                    case 1:
+                        {
+                            buffer.DrawColored("#c+- Mág -+#x ", Console.CursorLeft + ((Console.WindowWidth / 2) - "#c+- Mág -+#x ".ToString().Length / 2) + 4, Console.CursorTop - 1, ConsoleColor.Gray, false);
+                            Console.CursorTop = 3;
+                            Parser.getInstance.parseImage(ResourceTree.graphicsCharCreation + "/mage.txt", true, ConsoleColor.Gray, Parser.Effects.none);
+                            break;
+                        }
+                    case 2:
+                        {
+                            buffer.DrawColored("#y+- Válečník -+#x ", Console.CursorLeft + ((Console.WindowWidth / 2) - "#y+- Válečník -+#x ".ToString().Length / 2) + 2, Console.CursorTop - 1, ConsoleColor.Gray, false);
+                            Console.CursorTop = 2;
+                            Parser.getInstance.parseImage(ResourceTree.graphicsCharCreation + "/warrior.txt", true, ConsoleColor.Gray, Parser.Effects.none);
+                            break;
+                        }
+                    case 3:
+                        {
+                            buffer.DrawColored("#g+- Mnich -+#x ", Console.CursorLeft + ((Console.WindowWidth / 2) - "#g+- Mnich -+#x ".ToString().Length / 2) + 2, Console.CursorTop - 1, ConsoleColor.Gray, false);
+                            Console.CursorTop = 2;
+                            Parser.getInstance.parseImage(ResourceTree.graphicsCharCreation + "/priest.txt", true, ConsoleColor.Gray, Parser.Effects.none);
+                            break;
+                        }
+                    case 4:
+                        {
+                            buffer.DrawColored("#m+- Zloděj -+#x ", Console.CursorLeft + ((Console.WindowWidth / 2) - "#m+- Zloděj -+#x ".ToString().Length / 2) + 2, Console.CursorTop - 1, ConsoleColor.Gray, false);
+                            Console.CursorTop = 2;
+                            Parser.getInstance.parseImage(ResourceTree.graphicsCharCreation + "/thief.txt", true, ConsoleColor.Gray, Parser.Effects.none);
+                            break;
+                        }
+                }
+                // /INTRO
+                Console.CursorLeft = 0;
+                buffer.Draw(Strings.getInstance.horizontalLine, Console.CursorLeft, 9, ConsoleColor.Gray);
+                Console.CursorTop = 9;
+                buffer.NewLine();
+                // CHARACTER STATS
+                switch (choosedIndex)
+                {
+                    case 0:
+                        {
+                            buffer.DrawColored("Živlem beranů je #roheň#x, proto mají vysokou životní energii. Jsou průbojní a ambiciózní, když se\npro něco nadchnou. Berani jsou spontánní a bezstarostní, život si užívají plnými doušky.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true);
+                            break;
+                        }
+
+                    case 1:
+                        {
+                            buffer.DrawColored("Mýty opředená skupina vzdělanců, posouvající čas i prostor do nových dimenzí. Sídlí na\n#hBouřném ostrovu#x, který od zbytku světa odděluje magická bariéra. Mágové propadli #cliteratuře#x,\nza každou přečtenou knihu získávají bonusové zkušenosti. Jejich slabostí jsou #hšpičaté klobouky#x,\n#hplnovousy#x, #hhole#x a #hartefakty#x. Mágové mohou v boji využívat sílu #cčtyř elementů#x a #crunové magie#x.\nPasivně dokáží v blízkém okolí vycítit #czřídla many#x.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true);
+                            break;
+                        }
+                    case 2:
+                        {
+                            buffer.DrawColored("Elitní skupina královských vojáků, jejichž posvátným úkolem je chránit #hLetní palác#x. Naprostá\nšpička jednotek království prošla smrtícím tréninkem, kterýpřežil každý pátý uchazeč.\nVýsledkem jsou precizní stroje na zabíjení, ovládající taje boje s #ymečem#x a #yštítem#x.\nV boji využívají #ystandartu království#x, která jim poskytuje bonusové značky.\nKromě štítů se chrání #ytěžkou zbrojí#x, což maximalizuje jejich obranu.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true);
+                            break;
+                        }
+                    case 3:
+                        {
+                            buffer.DrawColored("Řád #hČerného orla#x existuje déle než samotné království. Složitá organizace kněží, zabývajících se \n#gléčením#x a #gzaklínaním#x, stejně jako #grunami#x. Kněží mohou v boji očarovat značky a tím jim #gpřidat \nbonusové účinky. Pasivně mají velkou odolnost proti nemocem a magii. Kněží používají #glehké zbroje#x,\n#gbitevní hole#x a v menší míře #grituální dýky#x. U občanů království mají kněží díky svým léčícím \nschopnostem velmi dobrou pověst.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true);
+                            break;
+                        }
+                    case 4:
+                        {
+                            buffer.DrawColored("Cech zlodějů má bohatou a dlouholetou tradici. #hMistři noci#x, vůdci cechu ví o každém šustnutí v\nkrálovství dřív, než se stane. Není tajemstvím, že nedávnou vraždu krále #hJarvana#x má cech na svědomí. \nZloději mají #mhbité prsty#x, dokonale ovládají #mplížení#x a umí #msplynout se stínem#x. Skvěle \n#mvyhrožují#x, stejně jako #mlichotí#x. Rozumí bylinám a #mjedům#x, v noci rychleji regenerují zdraví. \nV boji používají #mdýky#x, #mluky#x, #mskryté čepele#h #xa #mpasti#x. Obrana je nesmí zpomalovat a proto se odívají\npouze do lehké látky.", Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray, true);
+                            break;
+                        }
+                }
+                // /CHARACTER STATS
+                buffer.NewLine();
+                buffer.Draw(Strings.getInstance.horizontalLine, Console.CursorLeft, Console.CursorTop, ConsoleColor.Gray);
+                buffer.NewLine();
+                Console.CursorTop = 17;
+                for (int i = 0; i < items.Length; i++)
+                {
+                    if (choosedIndex != i) { buffer.Draw("> " + items[i]); }
+                    else { buffer.Draw(">  " + items[i], ConsoleColor.Yellow); }
+
+                    buffer.NewLine();
+                }
+
+                buffer.Print();
+                ConsoleKey key = Console.ReadKey(true).Key;
+
+                switch (key)
+                {
+                    case ConsoleKey.W:
+                        {
+                            if (choosedIndex > 0)
+                            {
+                                choosedIndex--;
+                            }
+                            else
+                            {
+                                choosedIndex = items.Length - 1;
+                            }
+
+                            break;
+                        }
+
+                    case ConsoleKey.S:
+                        {
+                            if (choosedIndex < items.Length - 1)
+                            {
+                                choosedIndex++;
+                            }
+                            else
+                            {
+                                choosedIndex = 0;
+                            }
+
+                            break;
+                        }
+                    case ConsoleKey.Enter:
+                        {
+
+                            buffer.Clear();
+                            choosing = false;
+                            Console.SetCursorPosition(0, 0);
+                            buffer.Print();
+                            getName();
+                            increasePlayerStats(5, 5);
+                            break;
+                        }
+                }
+            }
+        }
+
 
         void GetPlayerClassPartTwo(int index)
         {
@@ -437,8 +602,7 @@ namespace RetroRPG
                                             player.Dovednosti[j] = parsedDovednosti[j];
                                         }
 
-                                        getName();
-                                        increasePlayerStats(5, 5);
+                                        GetPlayerStar();
                                         break;
                                     }
                             }

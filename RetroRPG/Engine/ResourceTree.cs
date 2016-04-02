@@ -10,6 +10,7 @@ namespace RetroRPG.GameObjects
     {
         public const string graphicsFoes = "graphics/foes/";
         public const string graphicsCharCreation = "graphics/charCreation/";
+        public const string graphicsZodiac = "graphics/zodiac/";
         public const string dataClasses = "data/classes/";
         public const string sound = "fx/";
     }
